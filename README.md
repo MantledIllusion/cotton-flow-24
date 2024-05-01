@@ -39,7 +39,7 @@ If you are creating libraries yourself and only require Cotton for a specific pa
 | Use Case                            |          Cotton Package           |        Vaadin Package        |
 |-------------------------------------|:---------------------------------:|:----------------------------:|
 | General Vaadin Platform Extension   |            cotton-core            |         vaadin-core          |
-| Specific Vaadin Component Extension | cotton-component-<component-name> | vaadin-<component-name>-flow |
+| Specific Vaadin Component Extension | cotton-component-[component-name] | vaadin-[component-name]-flow |
 | Custom Functional Vaadin Component  |       cotton-component-base       | vaadin-flow-components-base  |
 | Custom Data Vaadin Component        |       cotton-component-data       |          flow-data           |
 | Data Binding Library                |            cotton-data            |          flow-data           |
