@@ -22,10 +22,6 @@
 			<groupId>com.mantledillusion.data</groupId>
 			<artifactId>epiphy</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.mantledillusion.essentials</groupId>
-			<artifactId>expression-essentials</artifactId>
-		</dependency>
 
 		<!-- COTTON -->
 		<dependency>

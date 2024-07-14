@@ -5,6 +5,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.LabelBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.RouterLinkBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder;
 import com.mantledillusion.vaadin.cotton.demo.IndexView;
+import com.mantledillusion.vaadin.cotton.demo.UserView;
 import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -20,6 +21,7 @@ public class PermittedView extends AbstractView {
         return VerticalLayoutBuilder.create()
                 .setSizeFull()
                 .setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER)
+                .add(new UserView())
                 .add(HorizontalLayoutBuilder.create()
                         .setHeightFull()
                         .setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER)

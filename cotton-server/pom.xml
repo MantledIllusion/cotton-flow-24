@@ -17,6 +17,12 @@
 	<url>http://www.mantledillusion.com</url>
 
 	<dependencies>
+		<!-- MANTLEDILLUSION -->
+		<dependency>
+			<groupId>com.mantledillusion.essentials</groupId>
+			<artifactId>expression-essentials</artifactId>
+		</dependency>
+
 		<!-- VAADIN -->
 		<dependency>
 			<groupId>com.vaadin</groupId>

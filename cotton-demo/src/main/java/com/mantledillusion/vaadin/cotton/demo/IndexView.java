@@ -4,6 +4,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.HorizontalLayoutBuild
 import com.mantledillusion.vaadin.cotton.component.builder.RouterLinkBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder;
 import com.mantledillusion.vaadin.cotton.demo.injected.view.InjectedView;
+import com.mantledillusion.vaadin.cotton.demo.model.view.ModelView;
 import com.mantledillusion.vaadin.cotton.demo.mvp.view.MvpView;
 import com.mantledillusion.vaadin.cotton.demo.security.view.UnsecuredView;
 import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
@@ -20,7 +21,9 @@ public class IndexView extends AbstractView {
     protected Component buildUI() throws Exception {
         return VerticalLayoutBuilder.create()
                 .setSizeFull()
-                .add(FlexComponent.Alignment.CENTER, HorizontalLayoutBuilder.create()
+                .setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER)
+                .add(new UserView())
+                .add(HorizontalLayoutBuilder.create()
                         .setHeightFull()
                         .setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER)
                         .add(VerticalLayoutBuilder.create()
@@ -35,6 +38,10 @@ public class IndexView extends AbstractView {
                                 .add(RouterLinkBuilder.create()
                                         .setText("Secured Access")
                                         .setRoute(UnsecuredView.class)
+                                        .build())
+                                .add(RouterLinkBuilder.create()
+                                        .setText("Model Binding")
+                                        .setRoute(ModelView.class)
                                         .build())
                                 .build())
                         .build())

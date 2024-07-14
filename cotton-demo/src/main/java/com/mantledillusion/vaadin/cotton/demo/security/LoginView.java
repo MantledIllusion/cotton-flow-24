@@ -1,11 +1,12 @@
 package com.mantledillusion.vaadin.cotton.demo.security;
 
+import com.mantledillusion.vaadin.cotton.server.auth.Authorization;
+import com.mantledillusion.vaadin.cotton.server.router.Navigator;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 /**
@@ -13,7 +14,9 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
  */
 @Route("login")
 @AnonymousAllowed
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+public class LoginView extends VerticalLayout implements BeforeEnterObserver, AfterNavigationObserver {
+
+    public static final String FORWARD_URL = "forwardUrl";
 
     private LoginForm login = new LoginForm();
 
@@ -23,8 +26,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
-
-        login.setAction("login");
 
         add(new H1("Demo Application"), login);
     }
@@ -37,5 +38,24 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 .containsKey("error")) {
             login.setError(true);
         }
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        Navigator.popQueryParameter(FORWARD_URL)
+                // IF THERE IS A SPECIFIC FORWARD URL SET ...
+                .ifPresentOrElse(url -> {
+                    // ... ADD A LOGIN LISTENER ...
+                    login.addLoginListener(evt -> {
+                        // ... THAT LOGS THE NEW USER IN ...
+                        Authorization.loginPrincipal(evt.getUsername(), evt.getPassword());
+                        // ... AND THEN NAVIGATES TO THE FORWARD URL
+                        UI.getCurrent().navigate(url);
+                    });
+                // ... AND IF THERE ISN'T ...
+                }, () -> {
+                    // USE THE LOGIN FORM ACTION TO LET SPRING DO THE FORWARDING
+                    login.setAction("login");
+                });
     }
 }

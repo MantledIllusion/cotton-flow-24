@@ -4,6 +4,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.ButtonBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.HorizontalLayoutBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.RouterLinkBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder;
+import com.mantledillusion.vaadin.cotton.demo.UserView;
 import com.mantledillusion.vaadin.cotton.demo.mvp.presenter.MvpPresenter;
 import com.mantledillusion.vaadin.cotton.demo.IndexView;
 import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
@@ -25,6 +26,7 @@ public class MvpView extends AbstractView {
         return VerticalLayoutBuilder.create()
                 .setSizeFull()
                 .setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER)
+                .add(new UserView())
                 .add(HorizontalLayoutBuilder.create()
                         .setHeightFull()
                         .setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER)

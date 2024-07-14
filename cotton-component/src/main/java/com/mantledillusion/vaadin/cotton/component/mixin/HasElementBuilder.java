@@ -50,7 +50,7 @@ public interface HasElementBuilder<C extends HasElement, B extends HasElementBui
      * @return this
      */
     default B setVisibleIfPermitted(String... roles) {
-        return configure(hasElement -> hasElement.getElement().setVisible(Authorization.permitted(roles)));
+        return configure(hasElement -> hasElement.getElement().setVisible(Authorization.isPermitted(roles)));
     }
 
     /**

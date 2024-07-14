@@ -35,6 +35,6 @@ public interface HasEnabledBuilder<C extends HasEnabled, B extends HasEnabledBui
 	 * @return this
 	 */
 	default B setEnabledIfPermitted(String... roles) {
-		return configure(hasEnabled -> hasEnabled.setEnabled(Authorization.permitted(roles)));
+		return configure(hasEnabled -> hasEnabled.setEnabled(Authorization.isPermitted(roles)));
 	}
 }
