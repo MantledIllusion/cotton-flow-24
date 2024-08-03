@@ -5,7 +5,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.HorizontalLayoutBuild
 import com.mantledillusion.vaadin.cotton.component.builder.LabelBuilder;
 import com.mantledillusion.vaadin.cotton.demo.security.LoginView;
 import com.mantledillusion.vaadin.cotton.server.auth.Authorization;
-import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
+import com.mantledillusion.vaadin.cotton.view.AbstractView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;

@@ -5,7 +5,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.RouterLinkBuilder;
 import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder;
 import com.mantledillusion.vaadin.cotton.demo.IndexView;
 import com.mantledillusion.vaadin.cotton.demo.UserView;
-import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
+import com.mantledillusion.vaadin.cotton.view.AbstractView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.router.Route;

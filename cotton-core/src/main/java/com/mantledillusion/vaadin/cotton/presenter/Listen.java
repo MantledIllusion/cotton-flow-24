@@ -1,4 +1,4 @@
-package com.mantledillusion.vaadin.cotton.viewpresenter;
+package com.mantledillusion.vaadin.cotton.presenter;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;

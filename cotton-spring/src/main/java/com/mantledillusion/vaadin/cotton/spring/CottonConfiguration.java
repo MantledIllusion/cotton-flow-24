@@ -1,6 +1,6 @@
 package com.mantledillusion.vaadin.cotton.spring;
 
-import com.mantledillusion.vaadin.cotton.di.PresenterPostProcessor;
+import com.mantledillusion.vaadin.cotton.di.CottonPostProcessor;
 import com.mantledillusion.vaadin.cotton.spring.scopes.CottonAttachScope;
 
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -20,6 +20,6 @@ public class CottonConfiguration {
 
     @Bean
     public BeanPostProcessor presentablePostProcessor(ApplicationContext context) {
-        return new PresenterPostProcessor(context);
+        return new CottonPostProcessor(context);
     }
 }

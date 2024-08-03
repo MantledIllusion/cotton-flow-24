@@ -7,7 +7,7 @@ import com.mantledillusion.vaadin.cotton.demo.injected.view.InjectedView;
 import com.mantledillusion.vaadin.cotton.demo.model.view.ModelView;
 import com.mantledillusion.vaadin.cotton.demo.mvp.view.MvpView;
 import com.mantledillusion.vaadin.cotton.demo.security.view.UnsecuredView;
-import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
+import com.mantledillusion.vaadin.cotton.view.AbstractView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.router.Route;

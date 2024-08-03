@@ -9,7 +9,7 @@ import com.mantledillusion.vaadin.cotton.demo.model.SimplePojo;
 import com.mantledillusion.vaadin.cotton.demo.security.SecurityConfiguration;
 import com.mantledillusion.vaadin.cotton.model.Binding;
 import com.mantledillusion.vaadin.cotton.model.ModelContainer;
-import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
+import com.mantledillusion.vaadin.cotton.view.AbstractView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.router.Route;

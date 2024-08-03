@@ -3,8 +3,8 @@ package com.mantledillusion.vaadin.cotton.demo.mvp.presenter;
 import com.mantledillusion.vaadin.cotton.component.builder.NotificationBuilder;
 import com.mantledillusion.vaadin.cotton.demo.mvp.view.MvpView;
 import com.mantledillusion.vaadin.cotton.spring.annotation.AttachScope;
-import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractPresenter;
-import com.mantledillusion.vaadin.cotton.viewpresenter.Listen;
+import com.mantledillusion.vaadin.cotton.presenter.AbstractPresenter;
+import com.mantledillusion.vaadin.cotton.presenter.Listen;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 

@@ -1,8 +1,8 @@
 package com.mantledillusion.vaadin.cotton.di;
 
-import com.mantledillusion.vaadin.cotton.viewpresenter.Listen;
-import com.mantledillusion.vaadin.cotton.viewpresenter.Presented;
-import com.mantledillusion.vaadin.cotton.viewpresenter.Presenter;
+import com.mantledillusion.vaadin.cotton.presenter.Listen;
+import com.mantledillusion.vaadin.cotton.presenter.Presented;
+import com.mantledillusion.vaadin.cotton.presenter.Presenter;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentUtil;

@@ -7,8 +7,8 @@ import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder
 import com.mantledillusion.vaadin.cotton.demo.UserView;
 import com.mantledillusion.vaadin.cotton.demo.mvp.presenter.MvpPresenter;
 import com.mantledillusion.vaadin.cotton.demo.IndexView;
-import com.mantledillusion.vaadin.cotton.viewpresenter.AbstractView;
-import com.mantledillusion.vaadin.cotton.viewpresenter.Presented;
+import com.mantledillusion.vaadin.cotton.view.AbstractView;
+import com.mantledillusion.vaadin.cotton.presenter.Presented;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.router.Route;
