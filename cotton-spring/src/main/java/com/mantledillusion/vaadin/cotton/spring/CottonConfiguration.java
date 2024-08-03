@@ -1,6 +1,6 @@
 package com.mantledillusion.vaadin.cotton.spring;
 
-import com.mantledillusion.vaadin.cotton.viewpresenter.PresenterPostProcessor;
+import com.mantledillusion.vaadin.cotton.di.PresenterPostProcessor;
 import com.mantledillusion.vaadin.cotton.spring.scopes.CottonAttachScope;
 
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;

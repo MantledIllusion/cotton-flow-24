@@ -1,4 +1,4 @@
-package com.mantledillusion.vaadin.cotton.viewpresenter;
+package com.mantledillusion.vaadin.cotton.di;
 
 import com.vaadin.flow.component.Component;
 import org.springframework.beans.BeansException;
@@ -16,7 +16,7 @@ public class PresenterPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof Component) {
-            AbstractPresenter.present((Component) bean, context.getAutowireCapableBeanFactory()::createBean);
+            PresentableInjector.present((Component) bean, context.getAutowireCapableBeanFactory()::createBean);
         }
         return bean;
     }

@@ -1,4 +1,4 @@
-package com.mantledillusion.vaadin.cotton.viewpresenter;
+package com.mantledillusion.vaadin.cotton.di;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.di.DefaultInstantiator;
@@ -13,7 +13,7 @@ public class CottonInstantiator extends DefaultInstantiator {
     @Override
     public <T extends Component> T createComponent(Class<T> componentClass) {
         T component = super.createComponent(componentClass);
-        AbstractPresenter.present(component, this::getOrCreate);
+        PresentableInjector.present(component, this::getOrCreate);
         return component;
     }
 }
