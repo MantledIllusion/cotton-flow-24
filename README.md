@@ -33,6 +33,12 @@ Choose one of the following packages if you are planning to build a full applica
 | Vaadin 24 + Spring 6      |       cotton-spring        |       vaadin-spring        |
 | Vaadin 24 + Spring Boot 3 | cotton-spring-boot-starter | vaadin-spring-boot-starter |
 
+Cotton also offers additional extensions for the packages above to use for specific use cases:
+
+| Use Case                  |     Cotton Package      |         3rd Party Library         |
+|---------------------------|:-----------------------:|:---------------------------------:|
+| Extended Responsiveness   | cotton-responsive-yauaa | [YAUAA](https://yauaa.basjes.nl/) |
+
 ### For Vaadin Libraries
 If you are creating libraries yourself and only require Cotton for a specific part of Vaadin, you can select one of Cotton's low-level artifacts:
 
