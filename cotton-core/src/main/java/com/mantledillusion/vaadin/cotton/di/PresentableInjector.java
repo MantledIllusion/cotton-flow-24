@@ -12,13 +12,12 @@ import org.apache.commons.lang3.reflect.TypeUtils;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 class PresentableInjector {
 
-    static <P, V extends Component> Optional<P> present(V presentable, Function<Class<P>, P> presenterInstantiator) {
+    static <P, V extends Component> Optional<P> present(V presentable, Injector<P> injector) {
         if (presentable.getClass().isAnnotationPresent(Presented.class)) {
             Class<P> presenterType = (Class<P>) presentable.getClass().getAnnotation(Presented.class).value();
             if (Presenter.class.isAssignableFrom(presenterType)) {
@@ -94,7 +93,7 @@ class PresentableInjector {
             }
 
             // INSTANTIATE PRESENTER
-            P presenter = presenterInstantiator.apply(presenterType);
+            P presenter = injector.inject(presenterType);
 
             if (presenter instanceof Presenter) {
                 ((Presenter<V>) presenter).setView(presentable);

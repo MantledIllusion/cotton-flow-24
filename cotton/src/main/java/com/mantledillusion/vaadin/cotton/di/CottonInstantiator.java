@@ -11,9 +11,13 @@ public class CottonInstantiator extends DefaultInstantiator {
     }
 
     @Override
-    public <T extends Component> T createComponent(Class<T> componentClass) {
-        T component = super.createComponent(componentClass);
+    public <C extends Component> C createComponent(Class<C> componentClass) {
+        C component = ResponsiveInjector.respond(componentClass)
+                .map(super::createComponent)
+                .orElseGet(() -> super.createComponent(componentClass));
+
         PresentableInjector.present(component, this::getOrCreate);
+
         return component;
     }
 }

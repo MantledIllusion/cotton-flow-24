@@ -112,6 +112,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mantledillusion.vaadin</groupId>
+			<artifactId>cotton-responsive</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-server</artifactId>
 		</dependency>
 		<dependency>
@@ -123,6 +127,11 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

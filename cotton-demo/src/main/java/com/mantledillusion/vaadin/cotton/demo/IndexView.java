@@ -6,6 +6,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder
 import com.mantledillusion.vaadin.cotton.demo.injected.view.InjectedView;
 import com.mantledillusion.vaadin.cotton.demo.model.view.ModelView;
 import com.mantledillusion.vaadin.cotton.demo.mvp.view.MvpView;
+import com.mantledillusion.vaadin.cotton.demo.responsive.ResponsiveView;
 import com.mantledillusion.vaadin.cotton.demo.security.view.UnsecuredView;
 import com.mantledillusion.vaadin.cotton.view.AbstractView;
 import com.vaadin.flow.component.Component;
@@ -42,6 +43,10 @@ public class IndexView extends AbstractView {
                                 .add(RouterLinkBuilder.create()
                                         .setText("Model Binding")
                                         .setRoute(ModelView.class)
+                                        .build())
+                                .add(RouterLinkBuilder.create()
+                                        .setText("Responsiveness")
+                                        .setRoute(ResponsiveView.class)
                                         .build())
                                 .build())
                         .build())
