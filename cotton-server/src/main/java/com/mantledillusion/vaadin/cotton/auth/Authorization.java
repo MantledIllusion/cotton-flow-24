@@ -1,4 +1,4 @@
-package com.mantledillusion.vaadin.cotton.server.auth;
+package com.mantledillusion.vaadin.cotton.auth;
 
 
 import com.mantledillusion.essentials.expression.Expression;

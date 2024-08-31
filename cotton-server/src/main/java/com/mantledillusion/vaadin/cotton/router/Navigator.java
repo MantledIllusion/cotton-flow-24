@@ -1,4 +1,4 @@
-package com.mantledillusion.vaadin.cotton.server.router;
+package com.mantledillusion.vaadin.cotton.router;
 
 import com.vaadin.flow.component.UI;
 

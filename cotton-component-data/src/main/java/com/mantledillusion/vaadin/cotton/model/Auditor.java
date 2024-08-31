@@ -1,7 +1,7 @@
 package com.mantledillusion.vaadin.cotton.model;
 
 import com.mantledillusion.essentials.expression.Expression;
-import com.mantledillusion.vaadin.cotton.server.auth.Authorization;
+import com.mantledillusion.vaadin.cotton.auth.Authorization;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.EnumMap;

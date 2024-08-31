@@ -4,7 +4,7 @@ import com.mantledillusion.data.epiphy.Property;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.model.Converter;
 import com.mantledillusion.vaadin.cotton.model.ModelContainer;
-import com.mantledillusion.vaadin.cotton.server.auth.Authorization;
+import com.mantledillusion.vaadin.cotton.auth.Authorization;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 

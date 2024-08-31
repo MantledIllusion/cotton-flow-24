@@ -3,7 +3,7 @@ package com.mantledillusion.vaadin.cotton.component.mixin;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.css.CssStyle;
 import com.mantledillusion.vaadin.cotton.i18n.I18N;
-import com.mantledillusion.vaadin.cotton.server.auth.Authorization;
+import com.mantledillusion.vaadin.cotton.auth.Authorization;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 

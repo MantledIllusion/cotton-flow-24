@@ -1,7 +1,7 @@
 package com.mantledillusion.vaadin.cotton.demo.security;
 
-import com.mantledillusion.vaadin.cotton.server.auth.Authorization;
-import com.mantledillusion.vaadin.cotton.server.router.Navigator;
+import com.mantledillusion.vaadin.cotton.auth.Authorization;
+import com.mantledillusion.vaadin.cotton.router.Navigator;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
