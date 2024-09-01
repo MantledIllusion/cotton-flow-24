@@ -21,7 +21,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface Responsive {
 
     /**
-     * The {@link Component}s to injected instead of the annotated @{@link Component}.
+     * The @{@link Respond} / @{@link Refrain} {@link Component}s to injected instead of the annotated {@link Component}.
+     * <p>
+     * The {@link Component}s are iterated in order until a match is found. If none matches, no responsiveness is performed.
      *
      * @return The surrogate {@link Component}s, never null
      */

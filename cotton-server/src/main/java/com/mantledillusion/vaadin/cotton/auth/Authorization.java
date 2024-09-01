@@ -4,6 +4,10 @@ package com.mantledillusion.vaadin.cotton.auth;
 import com.mantledillusion.essentials.expression.Expression;
 import com.vaadin.flow.server.VaadinRequest;
 import com.vaadin.flow.server.VaadinServletRequest;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
+import jakarta.annotation.security.DenyAll;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.ServletException;
 
 import java.security.Principal;
@@ -109,5 +113,29 @@ public class Authorization {
                 .map(request -> Arrays.stream(roles)
                         .allMatch(request::isUserInRole))
                 .orElse(false);
+    }
+
+    /**
+     * Returns whether the {@link Principal} (or lack thereof) on the current {@link VaadinRequest} applies to
+     * the @{@link DenyAll}, @{@link AnonymousAllowed}, @{@link PermitAll} and @{@link RolesAllowed} annotations
+     * on the given type.
+     *
+     * @param type The type the anonymous user or {@link Principal} has to apply to; might <b>not</b> be null.
+     * @return True if the anonymous user or {@link Principal} applies to the type, false otherwise
+     */
+    public static boolean isPermitted(Class<?> type) {
+        // THE TYPE CANNOT HAVE @DenyAll
+        return !type.isAnnotationPresent(DenyAll.class)
+                    // ... AND EITHER HAS TO HAVE @PermitAll
+                    && (type.isAnnotationPresent(AnonymousAllowed.class)
+                        // ... OR DECLARES @PermitAll
+                        || (type.isAnnotationPresent(PermitAll.class)
+                            // ... AND THERE IS A PRINCIPAL
+                            && Authorization.hasPrincipal())
+                        // ... OR SPECIFIES @RolesAllows
+                        || (type.isAnnotationPresent(RolesAllowed.class)
+                            // ... OF WHICH THE PRINCIPAL HAS TO HAVE AT LEAST ONE
+                            && Arrays.stream(type.getAnnotation(RolesAllowed.class).value())
+                                .anyMatch(Authorization::isPermitted)));
     }
 }

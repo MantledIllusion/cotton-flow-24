@@ -11,6 +11,7 @@
 		<cotton.version>3.0.0-SNAPSHOT</cotton.version>
 		<vaadin.version>24.4.10</vaadin.version>
 		<servlet-api.version>6.0.0</servlet-api.version>
+		<annotation-api.version>2.1.1</annotation-api.version>
 
 		<epiphy.version>4.0.0</epiphy.version>
 		<expression-essentials.version>1.0.0</expression-essentials.version>
@@ -68,6 +69,12 @@
 				<groupId>jakarta.servlet</groupId>
 				<artifactId>jakarta.servlet-api</artifactId>
 				<version>${servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.annotation</groupId>
+				<artifactId>jakarta.annotation-api</artifactId>
+				<version>${annotation-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 

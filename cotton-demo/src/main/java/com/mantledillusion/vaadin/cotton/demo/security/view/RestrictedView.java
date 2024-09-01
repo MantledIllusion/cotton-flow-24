@@ -7,6 +7,7 @@ import com.mantledillusion.vaadin.cotton.component.builder.VerticalLayoutBuilder
 import com.mantledillusion.vaadin.cotton.demo.IndexView;
 import com.mantledillusion.vaadin.cotton.demo.UserView;
 import com.mantledillusion.vaadin.cotton.demo.security.SecurityConfiguration;
+import com.mantledillusion.vaadin.cotton.router.Reroute;
 import com.mantledillusion.vaadin.cotton.view.AbstractView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -15,6 +16,7 @@ import jakarta.annotation.security.RolesAllowed;
 
 @Route("secured/restricted")
 @RolesAllowed(SecurityConfiguration.Roles.ADMIN)
+@Reroute(value = {PermittedView.class, UnsecuredView.class}, changeUrl = true)
 public class RestrictedView extends AbstractView {
 
     @Override
