@@ -27,6 +27,17 @@ public interface HasThemeBuilder<C extends HasTheme, B extends HasThemeBuilder<C
     }
 
     /**
+     * Builder method, add the given theme names to the {@link Component}.
+     *
+     * @see HasTheme#addThemeNames(String...)
+     * @param themeName The theme names to add; might <b>not</b> be null.
+     * @return this
+     */
+    default B addThemeNames(String... themeName) {
+        return configure(hasTheme -> hasTheme.addThemeNames(themeName));
+    }
+
+    /**
      * Builder method, removes the given theme name from the {@link Component}.
      *
      * @see HasTheme#removeThemeName(String)
@@ -35,6 +46,17 @@ public interface HasThemeBuilder<C extends HasTheme, B extends HasThemeBuilder<C
      */
     default B removeThemeName(String themeName) {
         return configure(hasTheme -> hasTheme.removeThemeName(themeName));
+    }
+
+    /**
+     * Builder method, removes the given theme names from the {@link Component}.
+     *
+     * @see HasTheme#removeThemeNames(String...)
+     * @param themeName The theme names to remove; might <b>not</b> be null.
+     * @return this
+     */
+    default B removeThemeNames(String... themeName) {
+        return configure(hasTheme -> hasTheme.removeThemeNames(themeName));
     }
 
     /**

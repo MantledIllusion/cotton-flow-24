@@ -27,4 +27,15 @@ public interface HasTextBuilder<C extends HasText, B extends HasTextBuilder<C, B
 	default B setText(String msgId, Object... indexedMessageParameters) {
 		return configure(hasValue -> hasValue.setText(I18N.getTranslation(msgId, indexedMessageParameters)));
 	}
+
+	/**
+	 * Builder method, configures the whitespace behavior of the component after building.
+	 *
+	 * @see HasText#setWhiteSpace(HasText.WhiteSpace)
+	 * @param whiteSpace The behavior type, might <b>not</b> be null.
+	 * @return this
+	 */
+	default B setWhiteSpace(HasText.WhiteSpace whiteSpace) {
+		return configure(hasValue -> hasValue.setWhiteSpace(whiteSpace));
+	}
 }

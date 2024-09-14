@@ -28,14 +28,12 @@ public interface FocusableBuilder<C extends Component & Focusable<C>, B extends 
 	}
 
 	/**
-	 * Builder method, configures a listener for {@link BlurNotifier.BlurEvent}s.
+	 * Builder method, configures the @{@link Focusable} to be focused.
 	 *
-	 * @param listener
-	 * 			The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
-	default B addBlurListener(ComponentEventListener<BlurNotifier.BlurEvent<C>> listener) {
-		return configure(focusable -> focusable.addBlurListener(listener));
+	default B focus() {
+		return configure(Focusable::focus);
 	}
 
 	/**
@@ -47,5 +45,25 @@ public interface FocusableBuilder<C extends Component & Focusable<C>, B extends 
 	 */
 	default B addFocusListener(ComponentEventListener<FocusNotifier.FocusEvent<C>> listener) {
 		return configure(focusable -> focusable.addFocusListener(listener));
+	}
+
+	/**
+	 * Builder method, configures the @{@link Focusable} to be blurred.
+	 *
+	 * @return this
+	 */
+	default B blur() {
+		return configure(Focusable::blur);
+	}
+
+	/**
+	 * Builder method, configures a listener for {@link BlurNotifier.BlurEvent}s.
+	 *
+	 * @param listener
+	 * 			The listener to add; might <b>not</b> be null.
+	 * @return this
+	 */
+	default B addBlurListener(ComponentEventListener<BlurNotifier.BlurEvent<C>> listener) {
+		return configure(focusable -> focusable.addBlurListener(listener));
 	}
 }

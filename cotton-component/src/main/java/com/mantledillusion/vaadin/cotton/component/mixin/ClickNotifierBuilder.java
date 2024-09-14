@@ -26,6 +26,28 @@ public interface ClickNotifierBuilder<C extends Component & ClickNotifier<C>, B 
     }
 
     /**
+     * Builder method, configures a {@link ComponentEventListener} for the {@link Component}'s {@link ClickEvent}s.
+     *
+     * @see ClickNotifier#addDoubleClickListener(ComponentEventListener)
+     * @param listener The listener to add; might <b>not</b> be null.
+     * @return this
+     */
+    default B addDoubleClickListener(ComponentEventListener<ClickEvent<C>> listener) {
+        return configure(clickable -> clickable.addDoubleClickListener(listener));
+    }
+
+    /**
+     * Builder method, configures a {@link ComponentEventListener} for the {@link Component}'s {@link ClickEvent}s.
+     *
+     * @see ClickNotifier#addSingleClickListener(ComponentEventListener)
+     * @param listener The listener to add; might <b>not</b> be null.
+     * @return this
+     */
+    default B addSingleClickListener(ComponentEventListener<ClickEvent<C>> listener) {
+        return configure(clickable -> clickable.addSingleClickListener(listener));
+    }
+
+    /**
      * Builder method, configures a shortcut for a click on the {@link Component}.
      *
      * @see ClickNotifier#addClickShortcut(Key, KeyModifier...)

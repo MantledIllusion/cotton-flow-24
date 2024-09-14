@@ -4,6 +4,8 @@ import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
 
+import java.util.Collection;
+
 /**
  * {@link ConfigurationBuilder} for {@link HasComponents} implementing {@link Component}s.
  *
@@ -16,6 +18,17 @@ public interface HasComponentsBuilder<C extends HasComponents, B extends HasComp
         HasEnabledBuilder<C, B> {
 
     /**
+     * Builder method, configures a child {@link com.vaadin.flow.component.Text} to the {@link Component}.
+     *
+     * @see HasComponents#add(Component...)
+     * @param text The {@link com.vaadin.flow.component.Text} to add; might be null, might <b>not</b> contain nulls.
+     * @return this
+     */
+    default B add(String text) {
+        return configure(hasComponents -> hasComponents.add(text));
+    }
+
+    /**
      * Builder method, configures the {@link Component}'s child {@link Component}s.
      *
      * @see HasComponents#add(Component...)
@@ -24,6 +37,28 @@ public interface HasComponentsBuilder<C extends HasComponents, B extends HasComp
      */
     default B add(Component... components) {
         return configure(hasComponents -> hasComponents.add(components));
+    }
+
+    /**
+     * Builder method, configures the {@link Component}'s child {@link Component}s.
+     *
+     * @see HasComponents#add(Collection)
+     * @param components The {@link Component}s to add; might be null, might <b>not</b> contain nulls.
+     * @return this
+     */
+    default B add(Collection<Component> components) {
+        return configure(hasComponents -> hasComponents.add(components));
+    }
+
+    /**
+     * Builder method, configures the {@link Component}'s first child {@link Component}.
+     *
+     * @see HasComponents#addComponentAsFirst(Component)
+     * @param component The {@link Component} to add as first; might <b>not</b> be null.
+     * @return this
+     */
+    default B addComponentAsFirst(Component component) {
+        return configure(hasComponents -> hasComponents.addComponentAsFirst(component));
     }
 
     /**
