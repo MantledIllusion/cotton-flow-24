@@ -38,7 +38,7 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, F extends ConfigurableF
         HasElementBuilder<C, B>,
         HasEnabledBuilder<C, B>,
         HasLazyDataViewBuilder<C, T, Void, GridLazyDataView<T>, B>,
-        HasListDataViewBuilder<C, T, GridListDataView<T>, B>,
+        HasListDataViewBuilder<C, T, F, GridListDataView<T>, B>,
         HasSizeBuilder<C, B>,
         HasStyleBuilder<C, B>,
         HasThemeBuilder<C, B> {
@@ -278,12 +278,25 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, F extends ConfigurableF
         /**
          * Builder method, configures a CSS class name generator for the {@link Grid.Column}.
          *
+         * @deprecated use {@link #setPartNameGenerator(SerializableFunction)} instead
          * @see Grid.Column#setClassNameGenerator(SerializableFunction)
          * @param classNameGenerator The generator; might <b>not</b> be null.
          * @return this
          */
+        @Deprecated
         public GridColumnBuilder setClassNameGenerator(SerializableFunction<T, String> classNameGenerator) {
             return configure(column -> column.setClassNameGenerator(classNameGenerator));
+        }
+
+        /**
+         * Builder method, configures a CSS part name generator for the {@link Grid.Column}.
+         *
+         * @see Grid.Column#setPartNameGenerator(SerializableFunction)
+         * @param partNameGenerator The generator; might <b>not</b> be null.
+         * @return this
+         */
+        public GridColumnBuilder setPartNameGenerator(SerializableFunction<T, String> partNameGenerator) {
+            return configure(column -> column.setPartNameGenerator(partNameGenerator));
         }
 
         /**

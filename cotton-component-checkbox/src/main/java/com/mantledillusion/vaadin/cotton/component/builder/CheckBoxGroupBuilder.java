@@ -32,7 +32,7 @@ public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends Ab
 		HasElementBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
 		HasEnabledBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
 		HasLabelBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasListDataViewBuilder<CheckboxGroup<T>, T, CheckboxGroupListDataView<T>, CheckBoxGroupBuilder<T, F>>,
+		HasListDataViewBuilder<CheckboxGroup<T>, T, F, CheckboxGroupListDataView<T>, CheckBoxGroupBuilder<T, F>>,
 		HasSizeBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
 		HasStyleBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
 		HasThemeVariantBuilder<CheckboxGroup<T>, CheckboxGroupVariant, CheckBoxGroupBuilder<T, F>>,

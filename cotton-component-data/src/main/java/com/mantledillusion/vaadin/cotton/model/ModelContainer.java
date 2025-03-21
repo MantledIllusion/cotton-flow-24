@@ -10,6 +10,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasEnabled;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.data.binder.HasDataProvider;
+import com.vaadin.flow.data.provider.HasListDataView;
 import com.vaadin.flow.data.provider.InMemoryDataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.provider.hierarchy.HasHierarchicalDataProvider;
@@ -571,6 +572,62 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 			}
 			return child;
 		}
+	}
+
+	/**
+	 * Binds the given {@link HasListDataView} to the given property of this {@link ModelContainer}.
+	 *
+	 * @param <ElementType> The element type of the {@link HasListDataView} to bind.
+	 * @param hasListDataView The {@link HasListDataView} to bind; might <b>not</b> be null.
+	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
+	 * @return The {@link Binding} to further configure the binding with, never null
+	 */
+	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasListDataView(HasListDataView<ElementType, ?> hasListDataView,
+																					  Property<ModelType, ElementType> property) {
+		return bindHasListDataView(hasListDataView, property, null);
+	}
+
+	/**
+	 * Binds the given {@link HasListDataView} to the given property of this {@link ModelContainer}.
+	 *
+	 * @param <ElementType> The element type of the {@link HasListDataView} to bind.
+	 * @param hasListDataView The {@link HasListDataView} to bind; might <b>not</b> be null.
+	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
+	 * @param filter The filter to apply to the elements; might be null.
+	 * @return The {@link Binding} to further configure the binding with, never null
+	 */
+	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasListDataView(HasListDataView<ElementType, ?> hasListDataView,
+																					  Property<ModelType, ElementType> property,
+																					  SerializablePredicate<ElementType> filter) {
+		Consumer<Binding<ElementType>> registration = removeBinding(property);
+		List<ElementType> elements = new ArrayList<>();
+		ListDataProvider<ElementType> dataProvider = new ListDataProvider<>(Collections.unmodifiableList(elements));
+		dataProvider.setFilter(filter);
+		hasListDataView.setItems(dataProvider);
+
+		return addBinding(property, new DataProviderBinding<>(this.baseBindingAuditor, registration,
+				property, dataProvider, new ElementHandle<ElementType>() {
+
+			@Override
+			public boolean contains(ElementType element) {
+				return elements.contains(element);
+			}
+
+			@Override
+			public Iterable<ElementType> get() {
+				return new ArrayList<>(elements);
+			}
+
+			@Override
+			public void add(ElementType parent, ElementType element, ElementType sibling) {
+				elements.add(elements.indexOf(sibling)+1, element);
+			}
+
+			@Override
+			public void remove(ElementType element) {
+				elements.remove(element);
+			}
+		}));
 	}
 
 	/**

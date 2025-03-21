@@ -2,6 +2,7 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.HasThemeVariantBuilder;
+import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.combobox.MultiSelectComboBoxVariant;
 
@@ -14,8 +15,8 @@ import java.util.Set;
  *           The value type of the {@link MultiSelectComboBox}
  */
 @SuppressWarnings("unused")
-public class MultiSelectComboBoxBuilder<T> extends AbstractComboBoxBaseBuilder<MultiSelectComboBox<T>, T, Set<T>, MultiSelectComboBoxBuilder<T>> implements
-        HasThemeVariantBuilder<MultiSelectComboBox<T>, MultiSelectComboBoxVariant, MultiSelectComboBoxBuilder<T>> {
+public class MultiSelectComboBoxBuilder<T, F extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<MultiSelectComboBox<T>, T, Set<T>, F, MultiSelectComboBoxBuilder<T, F>> implements
+        HasThemeVariantBuilder<MultiSelectComboBox<T>, MultiSelectComboBoxVariant, MultiSelectComboBoxBuilder<T, F>> {
 
     private MultiSelectComboBoxBuilder() {}
 
@@ -24,7 +25,7 @@ public class MultiSelectComboBoxBuilder<T> extends AbstractComboBoxBaseBuilder<M
      *
      * @return A new instance, never null.
      */
-    public static MultiSelectComboBoxBuilder<Object> create() {
+    public static MultiSelectComboBoxBuilder<Object, ConfigurableFilter<Object>> create() {
         return new MultiSelectComboBoxBuilder<>();
     }
 
@@ -35,7 +36,21 @@ public class MultiSelectComboBoxBuilder<T> extends AbstractComboBoxBaseBuilder<M
      * @param elementType The class type of the element; might be null.
      * @return A new instance, never null.
      */
-    public static <T> MultiSelectComboBoxBuilder<T> create(Class<T> elementType) {
+    public static <T> MultiSelectComboBoxBuilder<T, ConfigurableFilter<T>> create(Class<T> elementType) {
+        return new MultiSelectComboBoxBuilder<>();
+    }
+
+    /**
+     * Factory method for a new instance.
+     *
+     * @param <T> The value type.
+     * @param <F> The filter type.
+     * @param elementType The class type of the element; might be null.
+     * @param filterType The class type of the filter; might be null.
+     * @return A new instance, never null.
+     */
+    public static <T, F extends ConfigurableFilter<T>> MultiSelectComboBoxBuilder<T, F> create(Class<T> elementType,
+                                                                                               Class<F> filterType) {
         return new MultiSelectComboBoxBuilder<>();
     }
 
