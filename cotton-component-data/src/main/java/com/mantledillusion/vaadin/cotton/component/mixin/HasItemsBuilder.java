@@ -10,12 +10,9 @@ import java.util.stream.Stream;
 /**
  * {@link ConfigurationBuilder} for {@link HasItems} implementing {@link Component}s.
  *
- * @param <C>
- *            The {@link Component} type implementing {@link HasItems}.
- * @param <T>
- *            The value type of the {@link HasItems}.
- * @param <B>
- *            The final implementation type of {@link HasItemsBuilder}.
+ * @param <C> The {@link Component} type implementing {@link HasItems}.
+ * @param <T> The value type of the {@link HasItems}.
+ * @param <B> The final implementation type of {@link HasItemsBuilder}.
  */
 public interface HasItemsBuilder<C extends HasItems<T>, T, B extends HasItemsBuilder<C, T, B>> extends
 		ConfigurationBuilder<C, B> {
@@ -24,8 +21,7 @@ public interface HasItemsBuilder<C extends HasItems<T>, T, B extends HasItemsBui
 	 * Builder method, configures a {@link Collection} of elements to set.
 	 * 
 	 * @see HasItems#setItems(Collection)
-	 * @param elements
-	 *            The element {@link Collection} to set; might <b>not</b> be null.
+	 * @param elements The element {@link Collection} to set; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B setItems(Collection<T> elements) {
@@ -36,8 +32,7 @@ public interface HasItemsBuilder<C extends HasItems<T>, T, B extends HasItemsBui
 	 * Builder method, configures an array of elements to set.
 	 * 
 	 * @see HasItems#setItems(Object...)
-	 * @param elements
-	 *            The element array to set.
+	 * @param elements The element array to set.
 	 * @return this
 	 */
 	@SuppressWarnings("unchecked")
@@ -49,8 +44,7 @@ public interface HasItemsBuilder<C extends HasItems<T>, T, B extends HasItemsBui
 	 * Builder method, configures a S of elements to set.
 	 * 
 	 * @see HasItems#setItems(Stream)
-	 * @param elementStream
-	 *            The element stream to set; might <b>not</b> be null.
+	 * @param elementStream The element stream to set; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B setItems(Stream<T> elementStream) {

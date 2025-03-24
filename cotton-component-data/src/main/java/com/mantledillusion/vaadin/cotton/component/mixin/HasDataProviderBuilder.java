@@ -17,23 +17,18 @@ import java.util.function.Supplier;
 /**
  * {@link ConfigurationBuilder} for {@link HasDataProvider} implementing {@link Component}s.
  *
- * @param <C>
- *           The {@link Component} type implementing {@link HasDataProvider}.
- * @param <T>
- *           The value type of the {@link HasDataProvider}.
- * @param <F>
- *           The type of {@link ConfigurableFilter} that is used to filter the {@link DataProvider}.
- * @param <B>
- *           The final implementation type of {@link HasDataProviderBuilder}.
+ * @param <C> The {@link Component} type implementing {@link HasDataProvider}.
+ * @param <T> The value type of the {@link HasDataProvider}.
+ * @param <CF> The configurable filter type for bound @{@link DataProvider}s.
+ * @param <B> The final implementation type of {@link HasDataProviderBuilder}.
  */
-public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, F extends ConfigurableFilter<T>, B extends HasDataProviderBuilder<C, T, F, B>> extends
+public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, CF extends ConfigurableFilter<T>, B extends HasDataProviderBuilder<C, T, CF, B>> extends
         HasItemsBuilder<C, T, B> {
 
     /**
      * Builder method, configures the given {@link DataProvider}.
      *
-     * @param dataProvider
-     *            The {@link DataProvider} to configure; might <b>not</b> be null.
+     * @param dataProvider The {@link DataProvider} to configure; might <b>not</b> be null.
      * @return this
      */
     default B setDataProvider(DataProvider<T, ?> dataProvider) {
@@ -43,31 +38,27 @@ public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, F exten
     /**
      * Builder method, configures the given {@link DataProvider}.
      *
-     * @param dataProvider
-     *            The {@link DataProvider} to configure; might <b>not</b> be null.
-     * @param filter
-     *            The {@link ConfigurableFilter} to use; might <b>not</b> be null.
+     * @param dataProvider The {@link DataProvider} to configure; might <b>not</b> be null.
+     * @param filter The {@link ConfigurableFilter} to use; might <b>not</b> be null.
      * @return this
      */
-    default B setDataProvider(DataProvider<T, F> dataProvider, F filter) {
+    default B setDataProvider(DataProvider<T, CF> dataProvider, CF filter) {
         return setDataProvider(dataProvider, () -> filter);
     }
 
     /**
      * Builder method, configures the given {@link DataProvider}.
      *
-     * @param dataProvider
-     *            The {@link DataProvider} to configure; might <b>not</b> be null.
-     * @param filterSupplier
-     *            A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
+     * @param dataProvider The {@link DataProvider} to configure; might <b>not</b> be null.
+     * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
      * @return this
      */
-    default B setDataProvider(DataProvider<T, F> dataProvider, Supplier<F> filterSupplier) {
+    default B setDataProvider(DataProvider<T, CF> dataProvider, Supplier<CF> filterSupplier) {
         return configure(hasDataProvider -> {
-            F filter = filterSupplier != null ?  filterSupplier.get() : null;
+            CF filter = filterSupplier != null ?  filterSupplier.get() : null;
             set(ConfigurableFilter.class, filter);
             if (filter != null) {
-                ConfigurableFilterDataProvider<T, Void, F> configurableFilterDataProvider =
+                ConfigurableFilterDataProvider<T, Void, CF> configurableFilterDataProvider =
                         dataProvider.withConfigurableFilter();
                 configurableFilterDataProvider.setFilter(filter);
                 filter.addConfigurationChangedListener(configurableFilterDataProvider::refreshAll);
@@ -81,12 +72,10 @@ public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, F exten
     /**
      * Builder method, configures a new {@link CallbackDataProvider} that uses the given callbacks.
      *
-     * @param countCallback
-     *            The {@link CallbackDataProvider.CountCallback} that is able to determine the count of all elements
-     *            matching the query; might <b>not</b> be null.
-     * @param fetchCallback
-     *            The {@link CallbackDataProvider.FetchCallback} that is able to fetch all elements matching the
-     *            query; might <b>not</b> be null.
+     * @param countCallback The {@link CallbackDataProvider.CountCallback} that is able to determine the count of all
+     *                      elements matching the query; might <b>not</b> be null.
+     * @param fetchCallback The {@link CallbackDataProvider.FetchCallback} that is able to fetch all elements matching
+     *                      the query; might <b>not</b> be null.
      * @return A new {@link HasDataProvider} instance, fully configured and bound, never null
      */
     default B setDataProvider(CallbackDataProvider.CountCallback<T, Void> countCallback,
@@ -98,49 +87,43 @@ public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, F exten
     /**
      * Builder method, configures a new {@link CallbackDataProvider} that uses the given callbacks.
      *
-     * @param countCallback
-     *            The {@link CallbackDataProvider.CountCallback} that is able to determine the count of all elements
-     *            matching the query; might <b>not</b> be null.
-     * @param fetchCallback
-     *            The {@link CallbackDataProvider.FetchCallback} that is able to fetch all elements matching the
-     *            query; might <b>not</b> be null.
-     * @param filter
-     *            The {@link ConfigurableFilter} to use; might be null.
+     * @param countCallback The {@link CallbackDataProvider.CountCallback} that is able to determine the count of all
+     *                      elements matching the query; might <b>not</b> be null.
+     * @param fetchCallback The {@link CallbackDataProvider.FetchCallback} that is able to fetch all elements matching
+     *                      the query; might <b>not</b> be null.
+     * @param filter The {@link ConfigurableFilter} to use; might be null.
      * @return A new {@link HasDataProvider} instance, fully configured and bound, never null
      */
-    default B setDataProvider(CallbackDataProvider.CountCallback<T, F> countCallback,
-                              CallbackDataProvider.FetchCallback<T, F> fetchCallback, F filter) {
+    default B setDataProvider(CallbackDataProvider.CountCallback<T, CF> countCallback,
+                              CallbackDataProvider.FetchCallback<T, CF> fetchCallback, CF filter) {
         return setDataProvider(countCallback, fetchCallback, () -> filter);
     }
 
     /**
      * Builder method, configures a new {@link CallbackDataProvider} that uses the given callbacks.
      *
-     * @param countCallback
-     *            The {@link CallbackDataProvider.CountCallback} that is able to determine the count of all elements
-     *            matching the query; might <b>not</b> be null.
-     * @param fetchCallback
-     *            The {@link CallbackDataProvider.FetchCallback} that is able to fetch all elements matching the
-     *            query; might <b>not</b> be null.
-     * @param filterSupplier
-     *            A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
+     * @param countCallback The {@link CallbackDataProvider.CountCallback} that is able to determine the count of all
+     *                      elements matching the query; might <b>not</b> be null.
+     * @param fetchCallback The {@link CallbackDataProvider.FetchCallback} that is able to fetch all elements matching
+     *                      the query; might <b>not</b> be null.
+     * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
      * @return A new {@link HasDataProvider} instance, fully configured and bound, never null
      */
-    default B setDataProvider(CallbackDataProvider.CountCallback<T, F> countCallback,
-                              CallbackDataProvider.FetchCallback<T, F> fetchCallback, Supplier<F> filterSupplier) {
+    default B setDataProvider(CallbackDataProvider.CountCallback<T, CF> countCallback,
+                              CallbackDataProvider.FetchCallback<T, CF> fetchCallback, Supplier<CF> filterSupplier) {
         if (countCallback == null) {
             throw new IllegalArgumentException("Cannot configure a data provider from a null count callback.");
         } else if (fetchCallback == null) {
             throw new IllegalArgumentException("Cannot configure a data provider from a null fetch callback.");
         }
         return configure(hasDataProvider -> {
-            F filter = filterSupplier != null ? filterSupplier.get() : null;
+            CF filter = filterSupplier != null ? filterSupplier.get() : null;
             set(ConfigurableFilter.class, filter);
-            CallbackDataProvider<T, F> callbackDataProvider = DataProvider.fromFilteringCallbacks(fetchCallback, countCallback);
+            CallbackDataProvider<T, CF> callbackDataProvider = DataProvider.fromFilteringCallbacks(fetchCallback, countCallback);
             if (filter == null) {
                 hasDataProvider.setDataProvider(callbackDataProvider);
             } else {
-                ConfigurableFilterDataProvider<T, Void, F> configurableFilterDataProvider =
+                ConfigurableFilterDataProvider<T, Void, CF> configurableFilterDataProvider =
                         callbackDataProvider.withConfigurableFilter();
                 configurableFilterDataProvider.setFilter(filter);
                 filter.addConfigurationChangedListener(configurableFilterDataProvider::refreshAll);
@@ -170,7 +153,7 @@ public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, F exten
      * @param filter The {@link ConfigurableFilter} to use; might be null.
      * @return this
      */
-    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, F filter) {
+    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, CF filter) {
         return setDataProvider(binder, property, () -> filter);
     }
 
@@ -183,9 +166,9 @@ public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, F exten
      * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
      * @return this
      */
-    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<F> filterSupplier) {
+    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<CF> filterSupplier) {
         return configure(hasDataProvider -> {
-            F filter = filterSupplier != null ? filterSupplier.get() : null;
+            CF filter = filterSupplier != null ? filterSupplier.get() : null;
             set(ConfigurableFilter.class, filter);
             InMemoryDataProviderBinding<T> binding = binder.bindHasDataProvider(hasDataProvider, property, filter);
             if (filter != null) {

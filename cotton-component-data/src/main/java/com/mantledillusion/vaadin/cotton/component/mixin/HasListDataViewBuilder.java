@@ -14,16 +14,13 @@ import java.util.function.Supplier;
 /**
  * {@link ConfigurationBuilder} for {@link HasListDataView} implementing {@link Component}s.
  *
- * @param <C>
- *            The {@link Component} type implementing {@link HasListDataView}.
- * @param <T>
- *            The value type of the {@link HasListDataView}.
- * @param <V>
- *            The view type of the {@link ListDataView}.
- * @param <B>
- *            The final implementation type of {@link HasListDataViewBuilder}.
+ * @param <C> The {@link Component} type implementing {@link HasListDataView}.
+ * @param <T> The value type of the {@link HasListDataView}.
+ * @param <CF> The configurable filter type for bound @{@link DataProvider}s.
+ * @param <V>  The view type of the {@link ListDataView}.
+ * @param <B> The final implementation type of {@link HasListDataViewBuilder}.
  */
-public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, F extends ConfigurableFilter<T>, V extends ListDataView<T, ?>, B extends HasListDataViewBuilder<C, T, F, V, B>> extends
+public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, CF extends ConfigurableFilter<T>, V extends ListDataView<T, ?>, B extends HasListDataViewBuilder<C, T, CF, V, B>> extends
 		ConfigurationBuilder<C, B> {
 
 	/**
@@ -70,7 +67,7 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, F ex
 	 * @param filter The {@link ConfigurableFilter} to use; might be null.
 	 * @return this
 	 */
-	default B setItems(ListDataProvider<T> dataProvider, F filter) {
+	default B setItems(ListDataProvider<T> dataProvider, CF filter) {
 		return setItems(dataProvider, () -> filter);
 	}
 
@@ -82,9 +79,9 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, F ex
 	 * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
 	 * @return this
 	 */
-	default B setItems(ListDataProvider<T> dataProvider, Supplier<F> filterSupplier) {
+	default B setItems(ListDataProvider<T> dataProvider, Supplier<CF> filterSupplier) {
 		return configure(hasListDataView -> {
-			F filter = filterSupplier != null ?  filterSupplier.get() : null;
+			CF filter = filterSupplier != null ?  filterSupplier.get() : null;
 			set(ConfigurableFilter.class, filter);
 			if (filter != null) {
 				dataProvider.setFilter(filter);
@@ -115,7 +112,7 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, F ex
 	 * @param filter The {@link ConfigurableFilter} to use; might be null.
 	 * @return this
 	 */
-	default <ModelType> B setItems(ModelContainer<ModelType> binder, Property<ModelType, T> property, F filter) {
+	default <ModelType> B setItems(ModelContainer<ModelType> binder, Property<ModelType, T> property, CF filter) {
 		return setItems(binder, property, () -> filter);
 	}
 
@@ -128,9 +125,9 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, F ex
 	 * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
 	 * @return this
 	 */
-	default <ModelType> B setItems(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<F> filterSupplier) {
+	default <ModelType> B setItems(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<CF> filterSupplier) {
 		return configure(hasListDataView -> {
-			F filter = filterSupplier != null ? filterSupplier.get() : null;
+			CF filter = filterSupplier != null ? filterSupplier.get() : null;
 			set(ConfigurableFilter.class, filter);
 			InMemoryDataProviderBinding<T> binding = binder.bindHasListDataView(hasListDataView, property, filter);
 			if (filter != null) {

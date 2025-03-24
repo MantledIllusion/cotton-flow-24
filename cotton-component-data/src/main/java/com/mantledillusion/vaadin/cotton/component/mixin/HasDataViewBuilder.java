@@ -2,21 +2,18 @@ package com.mantledillusion.vaadin.cotton.component.mixin;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.DataView;
-import com.vaadin.flow.data.provider.HasDataView;
-import com.vaadin.flow.data.provider.InMemoryDataProvider;
+import com.vaadin.flow.data.provider.*;
 
 /**
  * {@link ConfigurationBuilder} for {@link HasDataView} implementing {@link Component}s.
  *
  * @param <C> The {@link Component} type implementing {@link HasDataView}.
  * @param <T> The value type of the {@link HasDataView}.
- * @param <F> The filter type of the {@link DataView}.
+ * @param <IF> The input filter type of the {@link HasDataView}.
  * @param <V> The view type of the {@link DataView}.
  * @param <B> The final implementation type of {@link HasDataViewBuilder}.
  */
-public interface HasDataViewBuilder<C extends HasDataView<T, F, V>, T, F, V extends DataView<T>, B extends HasDataViewBuilder<C, T, F, V, B>> extends
+public interface HasDataViewBuilder<C extends HasDataView<T, IF, V>, T, IF, V extends DataView<T>, B extends HasDataViewBuilder<C, T, IF, V, B>> extends
 		ConfigurationBuilder<C, B> {
 
 	/**
@@ -26,7 +23,7 @@ public interface HasDataViewBuilder<C extends HasDataView<T, F, V>, T, F, V exte
 	 * @param dataProvider The {@link DataProvider} to set; might <b>not</b> be null.
 	 * @return this
 	 */
-	default B setItems(DataProvider<T, F> dataProvider) {
+	default B setItems(DataProvider<T, IF> dataProvider) {
 		return configure(hasListDataView -> hasListDataView.setItems(dataProvider));
 	}
 

@@ -17,16 +17,12 @@ import java.util.function.Supplier;
 /**
  * {@link ConfigurationBuilder} for {@link HasHierarchicalDataProvider} implementing {@link Component}s.
  *
- * @param <C>
- *           The {@link Component} type implementing {@link HasHierarchicalDataProvider}.
- * @param <T>
- *           The value type of the {@link HasHierarchicalDataProvider}.
- * @param <F>
- *           The type of {@link ConfigurableFilter} that is used to filter the {@link DataProvider}.
- * @param <B>
- *           The final implementation type of {@link HasHierarchicalDataProviderBuilder}.
+ * @param <C> The {@link Component} type implementing {@link HasHierarchicalDataProvider}.
+ * @param <T> The value type of the {@link HasHierarchicalDataProvider}.
+ * @param <CF> The configurable filter type for bound @{@link DataProvider}s.
+ * @param <B> The final implementation type of {@link HasHierarchicalDataProviderBuilder}.
  */
-public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDataProvider<T>, T, F extends ConfigurableFilter<T>, B extends HasHierarchicalDataProviderBuilder<C, T, F, B>>
+public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDataProvider<T>, T, CF extends ConfigurableFilter<T>, B extends HasHierarchicalDataProviderBuilder<C, T, CF, B>>
         extends ConfigurationBuilder<C, B> {
 
 
@@ -50,7 +46,7 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
      *            The {@link ConfigurableFilter} to use; might <b>not</b> be null.
      * @return this
      */
-    default B setDataProvider(HierarchicalDataProvider<T, F> dataProvider, F filter) {
+    default B setDataProvider(HierarchicalDataProvider<T, CF> dataProvider, CF filter) {
         return setDataProvider(dataProvider, () -> filter);
     }
 
@@ -63,12 +59,12 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
      *            A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
      * @return this
      */
-    default B setDataProvider(HierarchicalDataProvider<T, F> dataProvider, Supplier<F> filterSupplier) {
+    default B setDataProvider(HierarchicalDataProvider<T, CF> dataProvider, Supplier<CF> filterSupplier) {
         return configure(hasDataProvider -> {
-            F filter = filterSupplier != null ?  filterSupplier.get() : null;
+            CF filter = filterSupplier != null ?  filterSupplier.get() : null;
             set(ConfigurableFilter.class, filter);
             if (filter != null) {
-                HierarchicalConfigurableFilterDataProvider<T, Void, F> configurableFilterDataProvider =
+                HierarchicalConfigurableFilterDataProvider<T, Void, CF> configurableFilterDataProvider =
                         dataProvider.withConfigurableFilter();
                 configurableFilterDataProvider.setFilter(filter);
                 filter.addConfigurationChangedListener(configurableFilterDataProvider::refreshAll);
@@ -100,7 +96,7 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
      * @param filter The {@link ConfigurableFilter} to use; might be null.
      * @return this
      */
-    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, F filter) {
+    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, CF filter) {
         return setDataProvider(binder, property, () -> filter);
     }
 
@@ -113,9 +109,9 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
      * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
      * @return this
      */
-    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<F> filterSupplier) {
+    default <ModelType> B setDataProvider(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<CF> filterSupplier) {
         return configure(hasDataProvider -> {
-            F filter = filterSupplier != null ? filterSupplier.get() : null;
+            CF filter = filterSupplier != null ? filterSupplier.get() : null;
             set(ConfigurableFilter.class, filter);
             InMemoryDataProviderBinding<T> binding = binder.bindHasHierarchicalDataProvider(hasDataProvider, property, filter);
             if (filter != null) {
