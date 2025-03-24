@@ -9,12 +9,12 @@ import com.vaadin.flow.component.combobox.ComboBoxVariant;
 /**
  * {@link ConfigurationBuilder} for {@link ComboBox}es.
  *
- * @param <T>
- *           The value type of the {@link ComboBox}
+ * @param <T> The value type of the {@link ComboBox}
+ * @param <CF> The configurable filter type of the {@link ComboBox}
  */
 @SuppressWarnings("unused")
-public class ComboBoxBuilder<T, F extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<ComboBox<T>, T, T, F, ComboBoxBuilder<T, F>> implements
-        HasThemeVariantBuilder<ComboBox<T>, ComboBoxVariant, ComboBoxBuilder<T, F>> {
+public class ComboBoxBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<ComboBox<T>, T, T, CF, ComboBoxBuilder<T, CF>> implements
+        HasThemeVariantBuilder<ComboBox<T>, ComboBoxVariant, ComboBoxBuilder<T, CF>> {
 
     private ComboBoxBuilder() {}
 

@@ -1,7 +1,6 @@
 package com.mantledillusion.vaadin.cotton.component.mixin;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
-import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.data.provider.BackEndDataProvider;
 import com.vaadin.flow.data.provider.CallbackDataProvider;

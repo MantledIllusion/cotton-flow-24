@@ -18,21 +18,19 @@ import com.vaadin.flow.function.SerializablePredicate;
 /**
  * {@link ConfigurationBuilder} for {@link RadioButtonGroup}s.
  *
- * @param <T>
- *           The value type of the {@link RadioButtonGroup}
- * @param <F>
- *           The filter type of the {@link RadioButtonGroup}
+ * @param <T> The value type of the {@link RadioButtonGroup}
+ * @param <CF> The configurable filter type of the {@link RadioButtonGroup}
  */
-public class RadioButtonGroupBuilder<T, F extends ConfigurableFilter<T>> extends AbstractComponentBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, F>> implements
-		HasDataViewBuilder<RadioButtonGroup<T>, T, Void, RadioButtonGroupDataView<T>, RadioButtonGroupBuilder<T, F>>,
-		HasElementBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, F>>,
-		HasEnabledBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, F>>,
-		HasLabelBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, F>>,
-		HasListDataViewBuilder<RadioButtonGroup<T>, T, F, RadioButtonGroupListDataView<T>, RadioButtonGroupBuilder<T, F>>,
-		HasStyleBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, F>>,
-		HasThemeVariantBuilder<RadioButtonGroup<T>, RadioGroupVariant, RadioButtonGroupBuilder<T, F>>,
-		HasValidatorBuilder<RadioButtonGroup<T>, T, RadioButtonGroupBuilder<T, F>>,
-		HasValueBuilder<RadioButtonGroup<T>, T, AbstractField.ComponentValueChangeEvent<RadioButtonGroup<T>, T>, RadioButtonGroupBuilder<T, F>> {
+public class RadioButtonGroupBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComponentBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>> implements
+		HasDataViewBuilder<RadioButtonGroup<T>, T, Void, RadioButtonGroupDataView<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasElementBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasEnabledBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasLabelBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasListDataViewBuilder<RadioButtonGroup<T>, T, CF, RadioButtonGroupListDataView<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasStyleBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasThemeVariantBuilder<RadioButtonGroup<T>, RadioGroupVariant, RadioButtonGroupBuilder<T, CF>>,
+		HasValidatorBuilder<RadioButtonGroup<T>, T, RadioButtonGroupBuilder<T, CF>>,
+		HasValueBuilder<RadioButtonGroup<T>, T, AbstractField.ComponentValueChangeEvent<RadioButtonGroup<T>, T>, RadioButtonGroupBuilder<T, CF>> {
 
 	private RadioButtonGroupBuilder() {}
 
@@ -83,7 +81,7 @@ public class RadioButtonGroupBuilder<T, F extends ConfigurableFilter<T>> extends
 	 *            The predicate enabling items; might <b>not</b> be null.
 	 * @return this
 	 */
-	public RadioButtonGroupBuilder<T, F> setItemEnabledProvider(SerializablePredicate<T> itemEnabledProvider) {
+	public RadioButtonGroupBuilder<T, CF> setItemEnabledProvider(SerializablePredicate<T> itemEnabledProvider) {
 		return configure(radioButtonGroup -> radioButtonGroup.setItemEnabledProvider(itemEnabledProvider));
 	}
 
@@ -94,7 +92,7 @@ public class RadioButtonGroupBuilder<T, F extends ConfigurableFilter<T>> extends
 	 * @param itemLabelGenerator The generator for item labels or message IDs to translate; might <b>not</b> be null.
 	 * @return this
 	 */
-	public RadioButtonGroupBuilder<T, F> setItemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
+	public RadioButtonGroupBuilder<T, CF> setItemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
 		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(item ->
 				I18N.getTranslation(itemLabelGenerator.apply(item))));
 	}
@@ -107,7 +105,7 @@ public class RadioButtonGroupBuilder<T, F extends ConfigurableFilter<T>> extends
 	 * @param messageIdPrefix The message ID prefix to append an item's {@link Object#toString()} value to; might be null.
 	 * @return this
 	 */
-	public RadioButtonGroupBuilder<T, F> setItemLabelMessageIdPrefix(String messageIdPrefix) {
+	public RadioButtonGroupBuilder<T, CF> setItemLabelMessageIdPrefix(String messageIdPrefix) {
 		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(item ->
 				I18N.getTranslation(messageIdPrefix == null || messageIdPrefix.isBlank() ? "" : messageIdPrefix)+item));
 	}
@@ -119,7 +117,7 @@ public class RadioButtonGroupBuilder<T, F extends ConfigurableFilter<T>> extends
 	 * @param renderer The {@link Renderer} to set; might <b>not</b> be null.
 	 * @return this
 	 */
-	public <C extends Component> RadioButtonGroupBuilder<T, F> setItemRenderer(ComponentRenderer<C, T> renderer) {
+	public <C extends Component> RadioButtonGroupBuilder<T, CF> setItemRenderer(ComponentRenderer<C, T> renderer) {
 		return configure(comboBox -> comboBox.setRenderer(renderer));
 	}
 }

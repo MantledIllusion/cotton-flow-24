@@ -32,13 +32,13 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
-abstract class AbstractGridBuilder<C extends Grid<T>, T, F extends ConfigurableFilter<T>, B extends AbstractGridBuilder<C, T, F, B>> extends AbstractComponentBuilder<C, B> implements
+abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends ConfigurableFilter<T>, B extends AbstractGridBuilder<C, T, CF, B>> extends AbstractComponentBuilder<C, B> implements
         HasDataGeneratorBuilder<C, T, B>,
         HasDataViewBuilder<C, T, Void, GridDataView<T>, B>,
         HasElementBuilder<C, B>,
         HasEnabledBuilder<C, B>,
         HasLazyDataViewBuilder<C, T, Void, GridLazyDataView<T>, B>,
-        HasListDataViewBuilder<C, T, F, GridListDataView<T>, B>,
+        HasListDataViewBuilder<C, T, CF, GridListDataView<T>, B>,
         HasSizeBuilder<C, B>,
         HasStyleBuilder<C, B>,
         HasThemeBuilder<C, B> {
@@ -96,7 +96,7 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, F extends ConfigurableF
          * @return this
          */
         public <H extends Component & HasValue<?, TC>, TC> GridColumnBuilder setFilter(H hasValue,
-                                                                                       BiConsumer<F, TC> filterChangeConsumer) {
+                                                                                       BiConsumer<CF, TC> filterChangeConsumer) {
             return setFilter((Supplier<H>) () -> hasValue, filterChangeConsumer);
         }
 
@@ -113,13 +113,13 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, F extends ConfigurableF
          */
         @SuppressWarnings("unchecked")
         public <H extends Component & HasValue<?, TC>, TC> GridColumnBuilder setFilter(Supplier<H> hasValueSupplier,
-                                                                                       BiConsumer<F, TC> filterChangeConsumer) {
+                                                                                       BiConsumer<CF, TC> filterChangeConsumer) {
             return configure(column -> {
                 if (!contains(ConfigurableFilter.class)) {
                     throw new IllegalStateException("Cannot configure a filter column without a data provider " +
                             "with filter being configured.");
                 }
-                F filter = (F) get(ConfigurableFilter.class);
+                CF filter = (CF) get(ConfigurableFilter.class);
                 H hasValue = hasValueSupplier.get();
                 hasValue.addValueChangeListener(event -> {
                     filterChangeConsumer.accept(filter, event.getValue());

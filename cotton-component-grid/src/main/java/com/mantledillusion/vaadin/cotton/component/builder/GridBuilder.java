@@ -7,12 +7,10 @@ import com.vaadin.flow.component.grid.Grid;
 /**
  * {@link ConfigurationBuilder} for {@link Grid}s.
  *
- * @param <T>
- *           The value type of the {@link Grid}
- * @param <F>
- *           The filter type of the {@link Grid}
+ * @param <T> The value type of the {@link Grid}
+ * @param <CF> The configurable filter type of the {@link Grid}
  */
-public class GridBuilder<T, F extends ConfigurableFilter<T>> extends AbstractGridBuilder<Grid<T>, T, F, GridBuilder<T, F>> {
+public class GridBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractGridBuilder<Grid<T>, T, CF, GridBuilder<T, CF>> {
 
     private GridBuilder() {}
 

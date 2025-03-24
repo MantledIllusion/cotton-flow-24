@@ -12,13 +12,11 @@ import com.vaadin.flow.function.ValueProvider;
 /**
  * {@link ConfigurationBuilder} for {@link TreeGrid}s.
  *
- * @param <T>
- *           The value type of the {@link TreeGrid}
- * @param <F>
- *           The filter type of the {@link TreeGrid}
+ * @param <T> The value type of the {@link TreeGrid}
+ * @param <CF> The configurable filter type of the {@link TreeGrid}
  */
-public class TreeGridBuilder<T, F extends ConfigurableFilter<T>> extends AbstractGridBuilder<TreeGrid<T>, T, F, TreeGridBuilder<T, F>>
-        implements HasHierarchicalDataProviderBuilder<TreeGrid<T>, T, F, TreeGridBuilder<T, F>> {
+public class TreeGridBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractGridBuilder<TreeGrid<T>, T, CF, TreeGridBuilder<T, CF>>
+        implements HasHierarchicalDataProviderBuilder<TreeGrid<T>, T, CF, TreeGridBuilder<T, CF>> {
 
     private TreeGridBuilder() {}
 
@@ -84,7 +82,7 @@ public class TreeGridBuilder<T, F extends ConfigurableFilter<T>> extends Abstrac
      *          The listener to add; might <b>not</b> be null.
      * @return this
      */
-    public TreeGridBuilder<T, F> addExpandListener(ComponentEventListener<ExpandEvent<T, TreeGrid<T>>> listener) {
+    public TreeGridBuilder<T, CF> addExpandListener(ComponentEventListener<ExpandEvent<T, TreeGrid<T>>> listener) {
         return configure(treeGrid -> treeGrid.addExpandListener(listener));
     }
 
@@ -96,7 +94,7 @@ public class TreeGridBuilder<T, F extends ConfigurableFilter<T>> extends Abstrac
      *          The listener to add; might <b>not</b> be null.
      * @return this
      */
-    public TreeGridBuilder<T, F> addCollapseListener(ComponentEventListener<CollapseEvent<T, TreeGrid<T>>> listener) {
+    public TreeGridBuilder<T, CF> addCollapseListener(ComponentEventListener<CollapseEvent<T, TreeGrid<T>>> listener) {
         return configure(treeGrid -> treeGrid.addCollapseListener(listener));
     }
 }

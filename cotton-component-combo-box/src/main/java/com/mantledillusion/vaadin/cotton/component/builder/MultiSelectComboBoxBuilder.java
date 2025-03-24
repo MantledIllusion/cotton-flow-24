@@ -11,12 +11,12 @@ import java.util.Set;
 /**
  * {@link ConfigurationBuilder} for {@link MultiSelectComboBox}es.
  *
- * @param <T>
- *           The value type of the {@link MultiSelectComboBox}
+ * @param <T> The value type of the {@link MultiSelectComboBox}
+ * @param <CF> The configurable filter type of the {@link MultiSelectComboBox}
  */
 @SuppressWarnings("unused")
-public class MultiSelectComboBoxBuilder<T, F extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<MultiSelectComboBox<T>, T, Set<T>, F, MultiSelectComboBoxBuilder<T, F>> implements
-        HasThemeVariantBuilder<MultiSelectComboBox<T>, MultiSelectComboBoxVariant, MultiSelectComboBoxBuilder<T, F>> {
+public class MultiSelectComboBoxBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<MultiSelectComboBox<T>, T, Set<T>, CF, MultiSelectComboBoxBuilder<T, CF>> implements
+        HasThemeVariantBuilder<MultiSelectComboBox<T>, MultiSelectComboBoxVariant, MultiSelectComboBoxBuilder<T, CF>> {
 
     private MultiSelectComboBoxBuilder() {}
 

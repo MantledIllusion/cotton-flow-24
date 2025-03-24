@@ -21,22 +21,20 @@ import java.util.Set;
 /**
  * {@link ConfigurationBuilder} for {@link CheckboxGroup}s.
  *
- * @param <T>
- *           The value type of the {@link CheckboxGroup}
- * @param <F>
- *           The filter type of the {@link CheckboxGroup}
+ * @param <T> The value type of the {@link CheckboxGroup}
+ * @param <CF> The configurable filter type of the {@link CheckboxGroup}
  */
-public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends AbstractComponentBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>> implements
-		HasDataViewBuilder<CheckboxGroup<T>, T, Void, CheckboxGroupDataView<T>, CheckBoxGroupBuilder<T, F>>,
-		HasComponentsBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasElementBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasEnabledBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasLabelBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasListDataViewBuilder<CheckboxGroup<T>, T, F, CheckboxGroupListDataView<T>, CheckBoxGroupBuilder<T, F>>,
-		HasSizeBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasStyleBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, F>>,
-		HasThemeVariantBuilder<CheckboxGroup<T>, CheckboxGroupVariant, CheckBoxGroupBuilder<T, F>>,
-		HasValueBuilder<CheckboxGroup<T>, Set<T>, AbstractField.ComponentValueChangeEvent<CheckboxGroup<T>, Set<T>>, CheckBoxGroupBuilder<T, F>> {
+public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComponentBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>> implements
+		HasDataViewBuilder<CheckboxGroup<T>, T, Void, CheckboxGroupDataView<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasComponentsBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasElementBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasEnabledBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasLabelBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasListDataViewBuilder<CheckboxGroup<T>, T, CF, CheckboxGroupListDataView<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasSizeBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasStyleBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasThemeVariantBuilder<CheckboxGroup<T>, CheckboxGroupVariant, CheckBoxGroupBuilder<T, CF>>,
+		HasValueBuilder<CheckboxGroup<T>, Set<T>, AbstractField.ComponentValueChangeEvent<CheckboxGroup<T>, Set<T>>, CheckBoxGroupBuilder<T, CF>> {
 
 	private CheckBoxGroupBuilder() {}
 
@@ -87,7 +85,7 @@ public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends Ab
 	 *            The predicate enabling items; might <b>not</b> be null.
 	 * @return this
 	 */
-	public CheckBoxGroupBuilder<T, F> setItemEnabledProvider(SerializablePredicate<T> itemEnabledProvider) {
+	public CheckBoxGroupBuilder<T, CF> setItemEnabledProvider(SerializablePredicate<T> itemEnabledProvider) {
 		return configure(checkBoxGroup -> checkBoxGroup.setItemEnabledProvider(itemEnabledProvider));
 	}
 
@@ -98,7 +96,7 @@ public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends Ab
 	 * @param itemLabelGenerator The generator for item labels or message IDs to translate; might <b>not</b> be null.
 	 * @return this
 	 */
-	public CheckBoxGroupBuilder<T, F> setItemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
+	public CheckBoxGroupBuilder<T, CF> setItemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
 		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(item ->
 				I18N.getTranslation(itemLabelGenerator.apply(item))));
 	}
@@ -111,7 +109,7 @@ public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends Ab
 	 * @param messageIdPrefix The message ID prefix to append an item's {@link Object#toString()} value to; might be null.
 	 * @return this
 	 */
-	public CheckBoxGroupBuilder<T, F> setItemLabelMessageIdPrefix(String messageIdPrefix) {
+	public CheckBoxGroupBuilder<T, CF> setItemLabelMessageIdPrefix(String messageIdPrefix) {
 		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(item ->
 				I18N.getTranslation(messageIdPrefix == null || messageIdPrefix.isBlank() ? "" : messageIdPrefix)+item));
 	}
@@ -123,7 +121,7 @@ public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends Ab
 	 * @param renderer The {@link Renderer} to set; might <b>not</b> be null.
 	 * @return this
 	 */
-	public <C extends Component> CheckBoxGroupBuilder<T, F> setItemRenderer(ComponentRenderer<C, T> renderer) {
+	public <C extends Component> CheckBoxGroupBuilder<T, CF> setItemRenderer(ComponentRenderer<C, T> renderer) {
 		return configure(comboBox -> comboBox.setRenderer(renderer));
 	}
 
@@ -135,7 +133,7 @@ public class CheckBoxGroupBuilder<T, F extends ConfigurableFilter<T>> extends Ab
 	 * 			The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
-	public CheckBoxGroupBuilder<T, F> addSelectionListener(MultiSelectionListener<CheckboxGroup<T>, T> listener) {
+	public CheckBoxGroupBuilder<T, CF> addSelectionListener(MultiSelectionListener<CheckboxGroup<T>, T> listener) {
 		return configure(checkBoxGroup -> checkBoxGroup.addSelectionListener(listener));
 	}
 }
