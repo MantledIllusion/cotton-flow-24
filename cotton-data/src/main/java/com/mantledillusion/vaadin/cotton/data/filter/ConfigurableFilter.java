@@ -4,6 +4,8 @@ import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.shared.Registration;
 
+import java.util.function.Supplier;
+
 /**
  * A configurable filter for elements of a {@link DataProvider}.
  * <p>
@@ -44,5 +46,18 @@ public interface ConfigurableFilter<V> extends SerializablePredicate<V> {
     @Override
     default boolean test(V v) {
         return true;
+    }
+
+    static <CF extends ConfigurableFilter<T>, T> CF supplyFilter(Supplier<CF> filterSupplier) {
+        if (filterSupplier == null) {
+            throw new IllegalArgumentException("Cannot supply a configurable filter from a null supplier.");
+        } else {
+            CF filter = filterSupplier.get();
+            if (filter == null) {
+                throw new IllegalArgumentException("Cannot supply a configurable filter from a supplier that returns null.");
+            } else {
+                return filter;
+            }
+        }
     }
 }

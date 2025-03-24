@@ -64,7 +64,7 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, CF e
 	 *
 	 * @see HasListDataView#setItems(ListDataProvider)
 	 * @param dataProvider The {@link ListDataProvider} to set; might <b>not</b> be null.
-	 * @param filter The {@link ConfigurableFilter} to use; might be null.
+	 * @param filter The {@link ConfigurableFilter} to use; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B setItems(ListDataProvider<T> dataProvider, CF filter) {
@@ -76,17 +76,15 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, CF e
 	 *
 	 * @see HasListDataView#setItems(ListDataProvider)
 	 * @param dataProvider The {@link ListDataProvider} to set; might <b>not</b> be null.
-	 * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
+	 * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B setItems(ListDataProvider<T> dataProvider, Supplier<CF> filterSupplier) {
 		return configure(hasListDataView -> {
-			CF filter = filterSupplier != null ?  filterSupplier.get() : null;
+			CF filter = ConfigurableFilter.supplyFilter(filterSupplier);
 			set(ConfigurableFilter.class, filter);
-			if (filter != null) {
-				dataProvider.setFilter(filter);
-				filter.addConfigurationChangedListener(dataProvider::refreshAll);
-			}
+			dataProvider.setFilter(filter);
+			filter.addConfigurationChangedListener(dataProvider::refreshAll);
 			hasListDataView.setItems(dataProvider);
 		}, true);
 	}
@@ -109,7 +107,7 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, CF e
 	 * @param <ModelType> The type of the model to whose property to bind.
 	 * @param binder The {@link ModelContainer} to bind the {@link HasListDataView}'s items with; might <b>not</b> be null.
 	 * @param property The {@link Property} to bind the {@link HasListDataView}'s items to; might <b>not</b> be null.
-	 * @param filter The {@link ConfigurableFilter} to use; might be null.
+	 * @param filter The {@link ConfigurableFilter} to use; might <b>not</b> be null.
 	 * @return this
 	 */
 	default <ModelType> B setItems(ModelContainer<ModelType> binder, Property<ModelType, T> property, CF filter) {
@@ -122,17 +120,15 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, CF e
 	 * @param <ModelType> The type of the model to whose property to bind.
 	 * @param binder The {@link ModelContainer} to bind the {@link HasListDataView}'s items with; might <b>not</b> be null.
 	 * @param property The {@link Property} to bind the {@link HasListDataView}'s items to; might <b>not</b> be null.
-	 * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
+	 * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might <b>not</b> be null.
 	 * @return this
 	 */
 	default <ModelType> B setItems(ModelContainer<ModelType> binder, Property<ModelType, T> property, Supplier<CF> filterSupplier) {
 		return configure(hasListDataView -> {
-			CF filter = filterSupplier != null ? filterSupplier.get() : null;
+			CF filter = ConfigurableFilter.supplyFilter(filterSupplier);
 			set(ConfigurableFilter.class, filter);
 			InMemoryDataProviderBinding<T> binding = binder.bindHasListDataView(hasListDataView, property, filter);
-			if (filter != null) {
-				filter.addConfigurationChangedListener(() -> binding.getDataProvider().refreshAll());
-			}
+			filter.addConfigurationChangedListener(() -> binding.getDataProvider().refreshAll());
 		}, true);
 	}
 }
