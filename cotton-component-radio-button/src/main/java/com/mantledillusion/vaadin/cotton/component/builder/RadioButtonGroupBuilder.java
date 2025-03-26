@@ -22,7 +22,7 @@ import com.vaadin.flow.function.SerializablePredicate;
  * @param <CF> The configurable filter type of the {@link RadioButtonGroup}
  */
 public class RadioButtonGroupBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComponentBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>> implements
-		HasDataViewBuilder<RadioButtonGroup<T>, T, Void, RadioButtonGroupDataView<T>, RadioButtonGroupBuilder<T, CF>>,
+		HasVoidFilterDataViewBuilder<RadioButtonGroup<T>, T, CF, RadioButtonGroupDataView<T>, RadioButtonGroupBuilder<T, CF>>,
 		HasElementBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
 		HasEnabledBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
 		HasLabelBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,

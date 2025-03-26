@@ -2,6 +2,7 @@ package com.mantledillusion.vaadin.cotton.component.mixin;
 
 import com.mantledillusion.essentials.expression.Expression;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.model.AuditingConfigurer;
 import com.mantledillusion.vaadin.cotton.model.Binding;
@@ -19,19 +20,20 @@ import java.util.function.Function;
  */
 public class BindingBuilder<C, V, B extends ConfigurationBuilder<C, B>> implements Configurer<C>, AuditingConfigurer<BindingBuilder<C, V, B>> {
 
-    private final B builder;
+    private final ConfigurationCustomizer<BindingBuilder<C, V, B>> customizer;
     private final Function<C, Binding<V>> bindingCallback;
 
     private final List<Triple<Binding.AccessMode, Boolean, Expression<String>>> bindingAuditors = new ArrayList<>();
     private V maskedValue;
 
-    BindingBuilder(B builder, Function<C, Binding<V>> bindingCallback) {
-        this.builder = builder;
+    BindingBuilder(ConfigurationCustomizer<BindingBuilder<C, V, B>> customizer, Function<C, Binding<V>> bindingCallback) {
+        this.customizer = customizer;
         this.bindingCallback = bindingCallback;
     }
 
     @Override
     public void configure(C component) {
+        customizer.customize(this);
         Binding<V> binding = this.bindingCallback.apply(component)
                 .withMaskedValue(this.maskedValue);
         this.bindingAuditors.forEach(auditor -> binding.setAudit(auditor.getLeft(), auditor.getMiddle(), auditor.getRight()));
@@ -54,14 +56,5 @@ public class BindingBuilder<C, V, B extends ConfigurationBuilder<C, B>> implemen
     public BindingBuilder<C, V, B> setMaskedValue(V maskedValue) {
         this.maskedValue = maskedValue;
         return this;
-    }
-
-    /**
-     * Finalizes binding the {@link Component} of the parent {@link ConfigurationBuilder}.
-     *
-     * @return The parent {@link ConfigurationBuilder} instance, never null
-     */
-    public B bind() {
-        return this.builder.configure(this);
     }
 }

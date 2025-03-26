@@ -25,7 +25,7 @@ import java.util.Set;
  * @param <CF> The configurable filter type of the {@link CheckboxGroup}
  */
 public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComponentBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>> implements
-		HasDataViewBuilder<CheckboxGroup<T>, T, Void, CheckboxGroupDataView<T>, CheckBoxGroupBuilder<T, CF>>,
+		HasVoidFilterDataViewBuilder<CheckboxGroup<T>, T, CF, CheckboxGroupDataView<T>, CheckBoxGroupBuilder<T, CF>>,
 		HasComponentsBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
 		HasElementBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
 		HasEnabledBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
