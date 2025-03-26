@@ -6,6 +6,7 @@ import com.mantledillusion.data.epiphy.context.TraversingMode;
 import com.mantledillusion.data.epiphy.context.function.*;
 import com.mantledillusion.data.epiphy.context.reference.ReferencedValue;
 import com.mantledillusion.essentials.expression.Expression;
+import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasEnabled;
 import com.vaadin.flow.component.HasValue;
@@ -24,6 +25,7 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -293,6 +295,20 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 		public void valueChanged(Context context, UpdateType type, UpdateDirection direction) {
 			this.valueReader.trigger();
 		}
+	}
+
+	/**
+	 * Binds the given {@link BiConsumer} to the given property of this {@link ModelContainer}.
+	 *
+	 * @param <FieldValueType> The value type of the {@link Consumer} to bind.
+	 * @param <ComponentType> The component type of the {@link Configurer}.
+	 * @param setter The {@link BiConsumer} to bind; might <b>not</b> be null.
+	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
+	 * @return A {@link Configurer} to use in any component builder, never null
+	 */
+	public <FieldValueType, ComponentType> Configurer<ComponentType> bindConfigurer(BiConsumer<ComponentType, FieldValueType> setter,
+																					Property<ModelType, FieldValueType> property) {
+		return component -> bindConsumer(value -> setter.accept(component, value), property);
 	}
 
 	/**
