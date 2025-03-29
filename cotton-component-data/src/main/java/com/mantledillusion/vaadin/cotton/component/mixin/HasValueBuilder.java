@@ -2,6 +2,7 @@ package com.mantledillusion.vaadin.cotton.component.mixin;
 
 import com.mantledillusion.data.epiphy.Property;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.model.Converter;
 import com.mantledillusion.vaadin.cotton.model.ModelContainer;
 import com.mantledillusion.vaadin.cotton.auth.Authorization;
@@ -18,7 +19,6 @@ import com.vaadin.flow.component.HasValue;
  * @param <B>
  *            The final implementation type of {@link HasValueBuilder}.
  */
-@SuppressWarnings("unchecked")
 public interface HasValueBuilder<C extends HasValue<E, V>, V, E extends HasValue.ValueChangeEvent<V>, B extends HasValueBuilder<C, V, E, B>>
         extends ConfigurationBuilder<C, B> {
 
@@ -67,22 +67,55 @@ public interface HasValueBuilder<C extends HasValue<E, V>, V, E extends HasValue
     }
 
     /**
-     * Uses the given {@link ModelContainer} to bind the {@link HasValue} to the given {@link Property} and starts a
-     * new {@link BindingBuilder} to configure the binding.
+     * Uses the given {@link ModelContainer} to bind the {@link HasValue} to the given {@link Property}.
      *
      * @param <ModelType> The type of the model to whose property to bind.
      * @param container The {@link ModelContainer} to bind the {@link HasValue} with; might <b>not</b> be null.
      * @param property The {@link Property} to bind the {@link HasValue} to; might <b>not</b> be null.
-     * @return A new {@link BindingBuilder} instance, never null
+     * @return this
      */
-    default <ModelType> BindingBuilder<C, V, B> bindValue(ModelContainer<ModelType> container,
-                                                       Property<ModelType, V> property) {
+    default <ModelType> B setValue(ModelContainer<ModelType> container,
+                                   Property<ModelType, V> property) {
+        return setValue(container, property, builder -> {});
+    }
+
+    /**
+     * Uses the given {@link ModelContainer} to bind the {@link HasValue} to the given {@link Property}.
+     *
+     * @param <ModelType> The type of the model to whose property to bind.
+     * @param container The {@link ModelContainer} to bind the {@link HasValue} with; might <b>not</b> be null.
+     * @param property The {@link Property} to bind the {@link HasValue} to; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link BindingBuilder}; might <b>not</b> be null.
+     * @return this
+     */
+    default <ModelType> B setValue(ModelContainer<ModelType> container,
+                                   Property<ModelType, V> property,
+                                   ConfigurationCustomizer<BindingBuilder<C, V, B>> customizer) {
         if (container == null) {
             throw new IllegalArgumentException("Cannot bind using a null container.");
         } else if (property == null) {
             throw new IllegalArgumentException("Cannot bind using a null property.");
+        } else if (customizer == null) {
+            throw new IllegalArgumentException("Cannot bind using a null customizer.");
         }
-        return new BindingBuilder<>((B) this, c -> container.bindHasValue(c, property));
+        return configure(new BindingBuilder<>(customizer, c -> container.bindHasValue(c, property)));
+    }
+
+    /**
+     * Uses the given {@link ModelContainer} to bind the {@link HasValue} to the given {@link Property}.
+     *
+     * @param <ModelType> The type of the model to whose property to bind.
+     * @param <PropertyValueType> The type of the properties' value to convert from/to.
+     * @param container The {@link ModelContainer} to bind the {@link HasValue} with; might <b>not</b> be null.
+     * @param converter The {@link Converter} to use to convert between the value type of the {@link HasValue} and
+     *                  the {@link Property}; might <b>not</b> be null.
+     * @param property The {@link Property} to bind the {@link HasValue} to; might <b>not</b> be null.
+     * @return this
+     */
+    default <ModelType, PropertyValueType> B setValue(ModelContainer<ModelType> container,
+                                                      Converter<V, PropertyValueType> converter,
+                                                      Property<ModelType, PropertyValueType> property) {
+        return setValue(container, converter, property, builder -> {});
     }
 
     /**
@@ -95,19 +128,23 @@ public interface HasValueBuilder<C extends HasValue<E, V>, V, E extends HasValue
      * @param converter The {@link Converter} to use to convert between the value type of the {@link HasValue} and
      *                  the {@link Property}; might <b>not</b> be null.
      * @param property The {@link Property} to bind the {@link HasValue} to; might <b>not</b> be null.
-     * @return A new {@link BindingBuilder} instance, never null
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link BindingBuilder}; might <b>not</b> be null.
+     * @return this
      */
-    default <ModelType, PropertyValueType> BindingBuilder<C, V, B> bindValue(ModelContainer<ModelType> container,
-                                                                          Converter<V, PropertyValueType> converter,
-                                                                          Property<ModelType, PropertyValueType> property) {
+    default <ModelType, PropertyValueType> B setValue(ModelContainer<ModelType> container,
+                                                      Converter<V, PropertyValueType> converter,
+                                                      Property<ModelType, PropertyValueType> property,
+                                                      ConfigurationCustomizer<BindingBuilder<C, V, B>> customizer) {
         if (container == null) {
             throw new IllegalArgumentException("Cannot bind using a null container.");
         } else if (converter == null) {
             throw new IllegalArgumentException("Cannot bind using a null converter.");
         } else if (property == null) {
             throw new IllegalArgumentException("Cannot bind using a null property.");
+        } else if (customizer == null) {
+            throw new IllegalArgumentException("Cannot bind using a null customizer.");
         }
-        return new BindingBuilder<>((B) this, c -> container.bindHasValue(c, converter, property));
+        return configure(new BindingBuilder<>(customizer, c -> container.bindHasValue(c, converter, property)));
     }
 
     /**

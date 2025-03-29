@@ -22,7 +22,6 @@ public interface HasThemeVariantBuilder<C extends HasThemeVariant<T>, T extends 
      * @param variants The variants whose theme name to add; might <b>not</b> be null.
      * @return this
      */
-
     default B addThemeVariants(T... variants) {
         return configure(hasTheme -> hasTheme.addThemeVariants(variants));
     }

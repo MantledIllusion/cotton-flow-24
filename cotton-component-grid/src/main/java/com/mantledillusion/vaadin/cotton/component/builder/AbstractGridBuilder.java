@@ -1,6 +1,7 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
@@ -387,16 +388,6 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Configurable
         public GridColumnBuilder setEditorComponent(SerializableFunction<T, ? extends Component> componentCallback) {
             return configure(column -> column.setEditorComponent(componentCallback));
         }
-
-        /**
-         * Adds the currently configured column to the {@link Grid} being build by the returned {@link AbstractGridBuilder}.
-         *
-         * @return The {@link AbstractGridBuilder} that started this {@link GridColumnBuilder}, never null
-         */
-        @SuppressWarnings("unchecked")
-        public B add() {
-            return (B) AbstractGridBuilder.this;
-        }
     }
 
     AbstractGridBuilder() {}
@@ -428,59 +419,116 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Configurable
      * Builder method, configures a new column.
      *
      * @see Grid#addColumn(String)
-     * @param propertyName
-     *            The name of the property; might <b>not</b> be null.
-     * @return A new {@link GridColumnBuilder}, never null
+     * @param propertyName The name of the property; might <b>not</b> be null.
+     * @return this
      */
-    public GridColumnBuilder configureColumn(String propertyName) {
+    public B addColumn(String propertyName) {
+        return addColumn(propertyName, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addColumn(String)
+     * @param propertyName The name of the property; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @return this
+     */
+    public B addColumn(String propertyName, ConfigurationCustomizer<GridColumnBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(propertyName));
-        configure(columnBuilder);
-        return columnBuilder;
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
     }
 
     /**
      * Builder method, configures a new column.
      *
      * @see Grid#addColumn(Renderer)
-     * @param renderer
-     *            The renderer; might <b>not</b> be null.
+     * @param renderer The renderer; might <b>not</b> be null.
      * @return A new {@link GridColumnBuilder}, never null
      */
-    public GridColumnBuilder configureColumn(Renderer<T> renderer) {
+    public B addColumn(Renderer<T> renderer) {
+        return addColumn(renderer, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addColumn(Renderer)
+     * @param renderer The renderer; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public B addColumn(Renderer<T> renderer, ConfigurationCustomizer<GridColumnBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(renderer));
-        configure(columnBuilder);
-        return columnBuilder;
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
     }
 
     /**
      * Builder method, configures a new column.
      *
      * @see Grid#addColumn(ValueProvider)
-     * @param valueProvider
-     *            The value provider; might <b>not</b> be null.
+     * @param valueProvider The value provider; might <b>not</b> be null.
      * @return A new {@link GridColumnBuilder}, never null
      */
-    public GridColumnBuilder configureColumn(ValueProvider<T, ?> valueProvider) {
+    public B addColumn(ValueProvider<T, ?> valueProvider) {
+        return addColumn(valueProvider, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addColumn(ValueProvider)
+     * @param valueProvider The value provider; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public B addColumn(ValueProvider<T, ?> valueProvider, ConfigurationCustomizer<GridColumnBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(valueProvider));
-        configure(columnBuilder);
-        return columnBuilder;
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
     }
 
     /**
      * Builder method, configures a new column.
      *
-     * @see Grid#addColumn(ValueProvider)
+     * @see Grid#addColumn(ValueProvider, String...)
      * @param <TC> The value type of the column.
-     * @param valueProvider
-     *            The value provider; might <b>not</b> be null.
-     * @param sortingProperties
-     *            The properties to sort by, might be null.
+     * @param valueProvider The value provider; might <b>not</b> be null.
+     * @param sortingProperties The properties to sort by, might be null.
      * @return A new {@link GridColumnBuilder}, never null
      */
-    public <TC extends Comparable<? super TC>> GridColumnBuilder configureColumn(ValueProvider<T, TC> valueProvider, String... sortingProperties) {
+    public <TC extends Comparable<? super TC>> B addColumn(ValueProvider<T, TC> valueProvider, String... sortingProperties) {
+        return addColumn(valueProvider, builder -> {}, sortingProperties);
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addColumn(ValueProvider, String...)
+     * @param <TC> The value type of the column.
+     * @param valueProvider The value provider; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @param sortingProperties The properties to sort by, might be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public <TC extends Comparable<? super TC>> B addColumn(ValueProvider<T, TC> valueProvider, ConfigurationCustomizer<GridColumnBuilder> customizer, String... sortingProperties) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(valueProvider, sortingProperties));
-        configure(columnBuilder);
-        return columnBuilder;
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
     }
 
     /**
@@ -488,14 +536,29 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Configurable
      *
      * @see Grid#addComponentColumn(ValueProvider)
      * @param <TC> The value type of the column.
-     * @param componentProvider
-     *            The component provider; might <b>not</b> be null.
+     * @param componentProvider The component provider; might <b>not</b> be null.
      * @return A new {@link GridColumnBuilder}, never null
      */
-    public <TC extends Component> GridColumnBuilder configureComponentColumn(ValueProvider<T, TC> componentProvider) {
+    public <TC extends Component> B addComponentColumn(ValueProvider<T, TC> componentProvider) {
+        return addComponentColumn(componentProvider, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addComponentColumn(ValueProvider)
+     * @param <TC> The value type of the column.
+     * @param componentProvider The component provider; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public <TC extends Component> B addComponentColumn(ValueProvider<T, TC> componentProvider, ConfigurationCustomizer<GridColumnBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addComponentColumn(componentProvider));
-        configure(columnBuilder);
-        return columnBuilder;
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
     }
 
     /**
@@ -504,16 +567,32 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Configurable
      * @see Grid#addComponentColumn(ValueProvider)
      * @param <TC> The value type of the column.
      * @param <H> The component type of the column.
-     * @param componentSupplier
-     *            The component supplier; might <b>not</b> be null.
-     * @param getter
-     *            The getter to retrieve the column's values with; might <b>not</b> be null.
-     * @param setter
-     *            The setter to write the column's values back with; might <b>not</b> be null.
+     * @param componentSupplier The component supplier; might <b>not</b> be null.
+     * @param getter The getter to retrieve the column's values with; might <b>not</b> be null.
+     * @param setter The setter to write the column's values back with; might <b>not</b> be null.
      * @return A new {@link GridColumnBuilder}, never null
      */
-    public <TC, H extends Component & HasValue<?, TC>> GridColumnBuilder configureComponentColumn(ValueProvider<T, H> componentSupplier, ValueProvider<T, TC> getter, Setter<T, TC> setter) {
-        GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(new ComponentRenderer<H, T>(element -> {
+    public <TC, H extends Component & HasValue<?, TC>> B addComponentColumn(ValueProvider<T, H> componentSupplier, ValueProvider<T, TC> getter, Setter<T, TC> setter) {
+        return addComponentColumn(componentSupplier, getter, setter, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addComponentColumn(ValueProvider)
+     * @param <TC> The value type of the column.
+     * @param <H> The component type of the column.
+     * @param componentSupplier The component supplier; might <b>not</b> be null.
+     * @param getter The getter to retrieve the column's values with; might <b>not</b> be null.
+     * @param setter The setter to write the column's values back with; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public <TC, H extends Component & HasValue<?, TC>> B addComponentColumn(ValueProvider<T, H> componentSupplier, ValueProvider<T, TC> getter, Setter<T, TC> setter, ConfigurationCustomizer<GridColumnBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
+        GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(new ComponentRenderer<>(element -> {
             H component = componentSupplier.apply(element);
             Binder<T> binder = new Binder<>();
             binder.bind(component, getter, setter);
@@ -521,8 +600,8 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Configurable
             component.addValueChangeListener(e -> binder.readBean(element));
             return component;
         })));
-        configure(columnBuilder);
-        return columnBuilder;
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
     }
 
     /**

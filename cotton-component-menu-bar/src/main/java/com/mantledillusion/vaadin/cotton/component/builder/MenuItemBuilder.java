@@ -1,6 +1,7 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.ClickNotifierBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.HasComponentsBuilder;
@@ -16,17 +17,15 @@ import java.util.function.Function;
 /**
  * {@link ConfigurationBuilder} for {@link MenuItem}s.
  */
-public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuItem, MenuItemBuilder<PC, PB>> implements
+public class MenuItemBuilder<PC> extends AbstractConfigurationBuilder<MenuItem, MenuItemBuilder<PC>> implements
         Configurer<PC>,
-        ClickNotifierBuilder<MenuItem, MenuItemBuilder<PC, PB>>,
-        HasEnabledBuilder<MenuItem, MenuItemBuilder<PC, PB>>,
-        HasComponentsBuilder<MenuItem, MenuItemBuilder<PC, PB>> {
+        ClickNotifierBuilder<MenuItem, MenuItemBuilder<PC>>,
+        HasEnabledBuilder<MenuItem, MenuItemBuilder<PC>>,
+        HasComponentsBuilder<MenuItem, MenuItemBuilder<PC>> {
 
-    private final PB parentBuilder;
     private final Function<PC, MenuItem> itemSupplier;
 
-    private MenuItemBuilder(PB parentBuilder, Function<PC, MenuItem> itemSupplier) {
-        this.parentBuilder = parentBuilder;
+    private MenuItemBuilder(Function<PC, MenuItem> itemSupplier) {
         this.itemSupplier = itemSupplier;
     }
 
@@ -35,8 +34,8 @@ public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuIt
      *
      * @return A new instance, never null.
      */
-    public static <PC extends HasMenuItems, PB extends HasMenuItemBuilder<PC, PB>> MenuItemBuilder<PC, PB> create(PB parentBuilder, Function<PC, MenuItem> itemSupplier) {
-        return new MenuItemBuilder<>(parentBuilder, itemSupplier);
+    public static <PC extends HasMenuItems, PB extends HasMenuItemBuilder<PC, PB>> MenuItemBuilder<PC> create(Function<PC, MenuItem> itemSupplier) {
+        return new MenuItemBuilder<>(itemSupplier);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuIt
      * @return this
      * @see MenuItem#setCheckable(boolean)
      */
-    public MenuItemBuilder<PC, PB> setCheckable(boolean checkable) {
+    public MenuItemBuilder<PC> setCheckable(boolean checkable) {
         return configure(menuItem -> menuItem.setCheckable(checkable));
     }
 
@@ -64,7 +63,7 @@ public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuIt
      * @return this
      * @see MenuItem#setChecked(boolean)
      */
-    public MenuItemBuilder<PC, PB> setChecked(boolean checked) {
+    public MenuItemBuilder<PC> setChecked(boolean checked) {
         return configure(menuItem -> menuItem.setChecked(checked));
     }
 
@@ -75,7 +74,7 @@ public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuIt
      * @return this
      * @see MenuItem#addClickListener(ComponentEventListener)
      */
-    public MenuItemBuilder<PC, PB> addClickListener(ComponentEventListener<ClickEvent<MenuItem>> listener) {
+    public MenuItemBuilder<PC> addClickListener(ComponentEventListener<ClickEvent<MenuItem>> listener) {
         return configure(menuItem -> menuItem.addClickListener(listener));
     }
 
@@ -87,7 +86,7 @@ public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuIt
      * @return this
      * @see MenuItem#addClickShortcut(Key, KeyModifier...)
      */
-    public MenuItemBuilder<PC, PB> addClickShortcut(Key key, KeyModifier... keyModifiers) {
+    public MenuItemBuilder<PC> addClickShortcut(Key key, KeyModifier... keyModifiers) {
         return configure(menuItem -> menuItem.addClickShortcut(key, keyModifiers));
     }
 
@@ -99,28 +98,55 @@ public class MenuItemBuilder<PC, PB> extends AbstractConfigurationBuilder<MenuIt
      * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return A new {@link MenuItemBuilder}, never null
      */
-    public MenuItemBuilder<MenuItem, MenuItemBuilder<PC, PB>> configureItem(Object msgId, Object... indexedMessageParameters) {
-        MenuItemBuilder<MenuItem, MenuItemBuilder<PC, PB>> itemBuilder = new MenuItemBuilder<>(this, menuItem ->
-                menuItem.getSubMenu().addItem(I18N.getTranslation(msgId, indexedMessageParameters)));
-        configure(itemBuilder);
-        return itemBuilder;
+    public MenuItemBuilder<PC> addItem(Object msgId, Object... indexedMessageParameters) {
+        return addItem(msgId, builder -> {}, indexedMessageParameters);
     }
 
     /**
      * Builder method, configures a new {@link MenuItem}.
      *
-     * @param component The MenuItemBuilder to use as the item; might <b>not</b> be null.
+     * @see com.vaadin.flow.component.contextmenu.SubMenu#addItem(String)
+     * @param msgId A text to use on the item or message ID to localize; might be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link MenuItemBuilder}; might <b>not</b> be null.
+     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return A new {@link MenuItemBuilder}, never null
-     * @see com.vaadin.flow.component.contextmenu.SubMenu#addItem(Component)
      */
-    public MenuItemBuilder<MenuItem, MenuItemBuilder<PC, PB>> configureItem(Component component) {
-        MenuItemBuilder<MenuItem, MenuItemBuilder<PC, PB>> itemBuilder = new MenuItemBuilder<>(this, menuItem ->
-                menuItem.getSubMenu().addItem(component));
-        configure(itemBuilder);
-        return itemBuilder;
+    public MenuItemBuilder<PC> addItem(Object msgId, ConfigurationCustomizer<MenuItemBuilder<MenuItem>> customizer, Object... indexedMessageParameters) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add an item using a null customizer.");
+        }
+        MenuItemBuilder<MenuItem> itemBuilder = new MenuItemBuilder<>( menuItem ->
+                menuItem.getSubMenu().addItem(I18N.getTranslation(msgId, indexedMessageParameters)));
+        customizer.customize(itemBuilder);
+        return configure(itemBuilder);
     }
 
-    public PB add() {
-        return this.parentBuilder;
+    /**
+     * Builder method, configures a new {@link MenuItem}.
+     *
+     * @see com.vaadin.flow.component.contextmenu.SubMenu#addItem(Component)
+     * @param component The MenuItemBuilder to use as the item; might <b>not</b> be null.
+     * @return this
+     */
+    public MenuItemBuilder<PC> addItem(Component component) {
+        return addItem(component, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new {@link MenuItem}.
+     *
+     * @see com.vaadin.flow.component.contextmenu.SubMenu#addItem(Component)
+     * @param component The MenuItemBuilder to use as the item; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link MenuItemBuilder}; might <b>not</b> be null.
+     * @return this
+     */
+    public MenuItemBuilder<PC> addItem(Component component, ConfigurationCustomizer<MenuItemBuilder<MenuItem>> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add an item using a null customizer.");
+        }
+        MenuItemBuilder<MenuItem> itemBuilder = new MenuItemBuilder<>(menuItem ->
+                menuItem.getSubMenu().addItem(component));
+        customizer.customize(itemBuilder);
+        return configure(itemBuilder);
     }
 }

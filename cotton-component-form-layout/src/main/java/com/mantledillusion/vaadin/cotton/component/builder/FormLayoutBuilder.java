@@ -1,6 +1,7 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.mantledillusion.vaadin.cotton.i18n.I18N;
@@ -38,7 +39,7 @@ public class FormLayoutBuilder extends AbstractComponentBuilder<FormLayout, Form
     /**
      * {@link ConfigurationBuilder} for {@link FormLayout.FormItem}s.
      */
-    public class FormItemBuilder extends AbstractConfigurationBuilder<FormLayout.FormItem, FormItemBuilder> implements
+    public static class FormItemBuilder extends AbstractConfigurationBuilder<FormLayout.FormItem, FormItemBuilder> implements
             HasElementBuilder<FormLayout.FormItem, FormItemBuilder>,
             HasStyleBuilder<FormLayout.FormItem, FormItemBuilder>,
             HasComponentsBuilder<FormLayout.FormItem, FormItemBuilder>,
@@ -54,15 +55,6 @@ public class FormLayoutBuilder extends AbstractComponentBuilder<FormLayout, Form
         @Override
         public void configure(FormLayout component) {
             apply(this.formItemSupplier.apply(component));
-        }
-
-        /**
-         * Adds the currently configured item to the {@link FormLayout} being build by the returned {@link FormLayoutBuilder}.
-         *
-         * @return The {@link FormLayoutBuilder} that started this {@link FormItemBuilder}, never null
-         */
-        public FormLayoutBuilder add() {
-            return FormLayoutBuilder.this;
         }
     }
 
@@ -82,53 +74,61 @@ public class FormLayoutBuilder extends AbstractComponentBuilder<FormLayout, Form
      * Builder method, adds a new item.
      *
      * @see FormLayout#addFormItem(Component, String)
-     * @param component The component; might <b>not</b> be null.
      * @param msgId A label text or message ID to translate; might <b>not</b> be null.
+     * @param component The component; might <b>not</b> be null.
      * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return this
      */
-    public FormLayoutBuilder addFormItem(Component component, Object msgId, Object... indexedMessageParameters) {
-        return configureFormItem(component, msgId, indexedMessageParameters).add();
+    public FormLayoutBuilder addFormItem(Object msgId, Component component, Object... indexedMessageParameters) {
+        return addFormItem(msgId, component, builder -> {}, indexedMessageParameters);
     }
 
     /**
      * Builder method, configures a new item.
      *
      * @see FormLayout#addFormItem(Component, String)
-     * @param component The component; might <b>not</b> be null.
      * @param msgId A label text or message ID to translate; might <b>not</b> be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
-     * @return A new {@link FormItemBuilder}, never null
-     */
-    public FormItemBuilder configureFormItem(Component component, Object msgId, Object... indexedMessageParameters) {
-        FormItemBuilder formItemBuilder = new FormItemBuilder(form -> form.addFormItem(component, I18N.getTranslation(msgId, indexedMessageParameters)));
-        configure(formItemBuilder);
-        return formItemBuilder;
-    }
-
-    /**
-     * Builder method, configures a new item.
-     *
-     * @see FormLayout#addFormItem(Component, Component)
      * @param component The component; might <b>not</b> be null.
-     * @param label The label; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link FormItemBuilder}; might <b>not</b> be null.
+     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return this
      */
-    public FormLayoutBuilder addFormItem(Component component, Component label) {
-        return configureFormItem(component, label).add();
+    public FormLayoutBuilder addFormItem(Object msgId, Component component, ConfigurationCustomizer<FormItemBuilder> customizer, Object... indexedMessageParameters) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
+        FormItemBuilder formItemBuilder = new FormItemBuilder(form -> form.addFormItem(component, I18N.getTranslation(msgId, indexedMessageParameters)));
+        customizer.customize(formItemBuilder);
+        return configure(formItemBuilder);
     }
 
     /**
      * Builder method, configures a new item.
      *
      * @see FormLayout#addFormItem(Component, Component)
-     * @param component The component; might <b>not</b> be null.
      * @param label The label; might <b>not</b> be null.
-     * @return A new {@link FormItemBuilder}, never null
+     * @param component The component; might <b>not</b> be null.
+     * @return this
      */
-    public FormItemBuilder configureFormItem(Component component, Component label) {
+    public FormLayoutBuilder addFormItem(Component label, Component component) {
+        return addFormItem(label, component, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new item.
+     *
+     * @see FormLayout#addFormItem(Component, Component)
+     * @param label The label; might <b>not</b> be null.
+     * @param component The component; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link FormItemBuilder}; might <b>not</b> be null.
+     * @return this
+     */
+    public FormLayoutBuilder addFormItem(Component label, Component component, ConfigurationCustomizer<FormItemBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         FormItemBuilder formItemBuilder = new FormItemBuilder(form -> form.addFormItem(component, label));
-        configure(formItemBuilder);
-        return formItemBuilder;
+        customizer.customize(formItemBuilder);
+        return configure(formItemBuilder);
     }
 }

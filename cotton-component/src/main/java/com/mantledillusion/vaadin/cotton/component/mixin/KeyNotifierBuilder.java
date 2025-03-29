@@ -6,10 +6,8 @@ import com.vaadin.flow.component.*;
 /**
  * {@link ConfigurationBuilder} for {@link KeyNotifier} implementing {@link Component}s.
  *
- * @param <C>
- *            The {@link Component} type implementing {@link KeyNotifier}.
- * @param <B>
- *            The final implementation type of {@link KeyNotifierBuilder}.
+ * @param <C> The {@link Component} type implementing {@link KeyNotifier}.
+ * @param <B> The final implementation type of {@link KeyNotifierBuilder}.
  */
 public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends KeyNotifierBuilder<C, B>>
 		extends ConfigurationBuilder<C, B> {
@@ -18,8 +16,7 @@ public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends
      * Builder method, configures a listener for {@link KeyDownEvent}s.
 	 *
 	 * @see KeyNotifier#addKeyDownListener(ComponentEventListener)
-	 * @param listener
-	 * 				The listener to add; might <b>not</b> be null.
+	 * @param listener The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B addKeyDownListener(ComponentEventListener<KeyDownEvent> listener) {
@@ -30,12 +27,9 @@ public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends
 	 * Builder method, configures a listener for {@link KeyDownEvent}s.
 	 *
 	 * @see KeyNotifier#addKeyDownListener(Key, ComponentEventListener, KeyModifier...)
-	 * @param listener
-	 * 			The listener to add; might <b>not</b> be null.
-	 * @param key
-	 * 			The key to press; might <b>not</b> be null.
-	 * @param modifiers
-	 * 			The modifiers to press along with the key; might <b>not</b> be null, might be empty.
+	 * @param listener The listener to add; might <b>not</b> be null.
+	 * @param key The key to press; might <b>not</b> be null.
+	 * @param modifiers The modifiers to press along with the key; might <b>not</b> be null, might be empty.
 	 * @return this
 	 */
 	default B addKeyDownListener(ComponentEventListener<KeyDownEvent> listener, Key key, KeyModifier... modifiers) {
@@ -46,8 +40,7 @@ public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends
 	 * Builder method, configures a listener for {@link KeyPressEvent}s.
 	 *
 	 * @see KeyNotifier#addKeyPressListener(ComponentEventListener)
-	 * @param listener
-	 * 				The listener to add; might <b>not</b> be null.
+	 * @param listener The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B addKeyPressListener(ComponentEventListener<KeyPressEvent> listener) {
@@ -58,12 +51,9 @@ public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends
 	 * Builder method, configures a listener for {@link KeyPressEvent}s.
 	 *
 	 * @see KeyNotifier#addKeyPressListener(Key, ComponentEventListener, KeyModifier...)
-	 * @param listener
-	 * 			The listener to add; might <b>not</b> be null.
-	 * @param key
-	 * 			The key to press; might <b>not</b> be null.
-	 * @param modifiers
-	 * 			The modifiers to press along with the key; might <b>not</b> be null, might be empty.
+	 * @param listener The listener to add; might <b>not</b> be null.
+	 * @param key The key to press; might <b>not</b> be null.
+	 * @param modifiers The modifiers to press along with the key; might <b>not</b> be null, might be empty.
 	 * @return this
 	 */
 	default B addKeyPressListener(ComponentEventListener<KeyPressEvent> listener, Key key, KeyModifier... modifiers) {
@@ -74,8 +64,7 @@ public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends
 	 * Builder method, configures a listener for {@link KeyUpEvent}s.
 	 *
 	 * @see KeyNotifier#addKeyUpListener(ComponentEventListener)
-	 * @param listener
-	 * 			The listener to add; might <b>not</b> be null.
+	 * @param listener The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
 	default B addKeyUpListener(ComponentEventListener<KeyUpEvent> listener) {
@@ -86,12 +75,9 @@ public interface KeyNotifierBuilder<C extends Component & KeyNotifier, B extends
 	 * Builder method, configures a listener for {@link KeyUpEvent}s.
 	 *
 	 * @see KeyNotifier#addKeyUpListener(Key, ComponentEventListener, KeyModifier...)
-	 * @param listener
-	 * 			The listener to add; might <b>not</b> be null.
-	 * @param key
-	 * 			The key to press; might <b>not</b> be null.
-	 * @param modifiers
-	 * 			The modifiers to press along with the key; might <b>not</b> be null, might be empty.
+	 * @param listener The listener to add; might <b>not</b> be null.
+	 * @param key The key to press; might <b>not</b> be null.
+	 * @param modifiers The modifiers to press along with the key; might <b>not</b> be null, might be empty.
 	 * @return this
 	 */
 	default B addKeyUpListener(ComponentEventListener<KeyUpEvent> listener, Key key, KeyModifier... modifiers) {

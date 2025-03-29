@@ -1,10 +1,21 @@
 package com.mantledillusion.vaadin.cotton.component.mixin;
 
+import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.data.provider.*;
 
 import java.util.function.Supplier;
 
+/**
+ * {@link ConfigurationBuilder} for {@link HasDataView} implementing {@link Component}s using a {@link Void} filter.
+ *
+ * @param <C> The {@link Component} type implementing {@link HasDataView}.
+ * @param <T> The value type of the {@link HasDataView}.
+ * @param <CF> The configurable filter type for bound @{@link DataProvider}s.
+ * @param <V> The view type of the {@link DataView}.
+ * @param <B> The final implementation type of {@link HasDataViewBuilder}.
+ */
 public interface HasVoidFilterDataViewBuilder<C extends HasDataView<T, Void, V>, T, CF extends ConfigurableFilter<T>, V extends DataView<T>, B extends HasVoidFilterDataViewBuilder<C, T, CF, V, B>> extends
         HasDataViewBuilder<C, T, Void, V, B> {
 

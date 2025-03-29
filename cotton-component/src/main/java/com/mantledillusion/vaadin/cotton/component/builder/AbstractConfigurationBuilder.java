@@ -8,11 +8,9 @@ import java.util.*;
 /**
  * Base implementation of {@link ConfigurationBuilder} that provides all base functionality.
  *
- * @param <C>
- *            The type this builder builds configurations on.
- * @param <B>
- *            The final implementation type of this {@link AbstractConfigurationBuilder}. Necessary to allow builder
- *            methods of non-final implementations to return the builder instance in the correct type.
+ * @param <C> The type this builder builds configurations on.
+ * @param <B> The final implementation type of this {@link AbstractConfigurationBuilder}. Necessary to allow builder
+ *           methods of non-final implementations to return the builder instance in the correct type.
  */
 abstract class AbstractConfigurationBuilder<C, B extends AbstractConfigurationBuilder<C, B>> implements ConfigurationBuilder<C, B> {
 
@@ -36,7 +34,7 @@ abstract class AbstractConfigurationBuilder<C, B extends AbstractConfigurationBu
 	@Override
 	public <V> V get(Class<V> valueType) {
 		return this.parent != null && this.parent.contains(valueType)
-				? this.parent.get (valueType)
+				? this.parent.get(valueType)
 				: (V) this.context.get(valueType);
 	}
 

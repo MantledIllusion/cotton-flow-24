@@ -29,8 +29,7 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
     /**
      * Builder method, configures the given {@link HierarchicalDataProvider}.
      *
-     * @param dataProvider
-     *            The {@link HierarchicalDataProvider} to configure; might <b>not</b> be null.
+     * @param dataProvider The {@link HierarchicalDataProvider} to configure; might <b>not</b> be null.
      * @return this
      */
     default B setDataProvider(HierarchicalDataProvider<T, ?> dataProvider) {
@@ -40,10 +39,8 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
     /**
      * Builder method, configures the given {@link HierarchicalDataProvider}.
      *
-     * @param dataProvider
-     *            The {@link HierarchicalDataProvider} to configure; might <b>not</b> be null.
-     * @param filter
-     *            The {@link ConfigurableFilter} to use; might <b>not</b> be null.
+     * @param dataProvider The {@link HierarchicalDataProvider} to configure; might <b>not</b> be null.
+     * @param filter The {@link ConfigurableFilter} to use; might <b>not</b> be null.
      * @return this
      */
     default B setDataProvider(HierarchicalDataProvider<T, CF> dataProvider, CF filter) {
@@ -53,10 +50,8 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
     /**
      * Builder method, configures the given {@link HierarchicalDataProvider}.
      *
-     * @param dataProvider
-     *            The {@link HierarchicalDataProvider} to configure; might <b>not</b> be null.
-     * @param filterSupplier
-     *            A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
+     * @param dataProvider The {@link HierarchicalDataProvider} to configure; might <b>not</b> be null.
+     * @param filterSupplier A {@link Supplier} of {@link ConfigurableFilter}s to use; might be null.
      * @return this
      */
     default B setDataProvider(HierarchicalDataProvider<T, CF> dataProvider, Supplier<CF> filterSupplier) {

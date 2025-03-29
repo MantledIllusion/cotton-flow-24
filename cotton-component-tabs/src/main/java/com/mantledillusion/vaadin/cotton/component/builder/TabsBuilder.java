@@ -1,6 +1,7 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.vaadin.flow.component.Component;
@@ -111,15 +112,6 @@ public class TabsBuilder extends AbstractComponentBuilder<Tabs, TabsBuilder> imp
         public TabBuilder setVisible(boolean visible) {
             return configure(tab -> tab.setVisible(visible));
         }
-
-        /**
-         * Adds the currently configured tab to the {@link Tabs} being build by the returned {@link TabsBuilder}.
-         *
-         * @return The {@link TabsBuilder} that started this {@link TabBuilder}, never null
-         */
-        public TabsBuilder add() {
-            return TabsBuilder.this;
-        }
     }
 
     private TabsBuilder() {}
@@ -145,7 +137,7 @@ public class TabsBuilder extends AbstractComponentBuilder<Tabs, TabsBuilder> imp
      * @param tabs The tabs to enclose; might be null, might <b>not</b> contain nulls.
      * @return this
      */
-    public TabsBuilder add(Tab... tabs) {
+    public TabsBuilder addTabs(Tab... tabs) {
         return configure(tabsComponent -> tabsComponent.add(tabs));
     }
 
@@ -153,12 +145,16 @@ public class TabsBuilder extends AbstractComponentBuilder<Tabs, TabsBuilder> imp
      * Builder method, configures a new {@link Tab}.
      *
      * @see Tabs#add(Tab...)
-     * @return A new {@link TabBuilder}, never null
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link TabBuilder}; might <b>not</b> be null.
+     * @return this
      */
-    public TabBuilder configureTab() {
+    public TabsBuilder addTab(ConfigurationCustomizer<TabBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         TabBuilder tabBuilder = new TabBuilder();
-        configure(tabBuilder);
-        return tabBuilder;
+        customizer.customize(tabBuilder);
+        return configure(tabBuilder);
     }
 
     /**
@@ -167,13 +163,18 @@ public class TabsBuilder extends AbstractComponentBuilder<Tabs, TabsBuilder> imp
      * @see Tabs#add(Tab...)
      * @param content The {@link Component} the new {@link Tab} is being configured for; will automatically call
      *                {@link Component#setVisible(boolean)} depending on whether the {@link Tab} is being (de)selected.
-     * @return A new {@link TabBuilder}, never null
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link TabBuilder}; might <b>not</b> be null.
+     * @return this
      */
-    public TabBuilder configureTab(Component content) {
+    public TabsBuilder addTab(Component content, ConfigurationCustomizer<TabBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
         TabBuilder tabBuilder = new TabBuilder();
+        customizer.customize(tabBuilder);
         configure(tabBuilder);
         tabBuilder.configure(tab -> get(Tabs.class).addSelectedChangeListener(event -> content.setVisible(event.getSelectedTab() == tab)));
-        return tabBuilder;
+        return this;
     }
 
     /**
