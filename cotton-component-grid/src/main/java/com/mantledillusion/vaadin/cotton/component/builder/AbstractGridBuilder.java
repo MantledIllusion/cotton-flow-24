@@ -1,5 +1,6 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
+import com.mantledillusion.data.epiphy.ModelProperty;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
@@ -527,6 +528,34 @@ abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Configurable
             throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
         }
         GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(valueProvider, sortingProperties));
+        customizer.customize(columnBuilder);
+        return configure(columnBuilder);
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addColumn(ValueProvider)
+     * @param modelProperty The {@link ModelProperty}; might <b>not</b> be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public B addColumn(ModelProperty<T, ?> modelProperty) {
+        return addColumn(modelProperty, builder -> {});
+    }
+
+    /**
+     * Builder method, configures a new column.
+     *
+     * @see Grid#addColumn(ValueProvider)
+     * @param modelProperty The {@link ModelProperty}; might <b>not</b> be null.
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link GridColumnBuilder}; might <b>not</b> be null.
+     * @return A new {@link GridColumnBuilder}, never null
+     */
+    public B addColumn(ModelProperty<T, ?> modelProperty, ConfigurationCustomizer<GridColumnBuilder> customizer) {
+        if (customizer == null) {
+            throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
+        }
+        GridColumnBuilder columnBuilder = new GridColumnBuilder(grid -> grid.addColumn(modelProperty::get));
         customizer.customize(columnBuilder);
         return configure(columnBuilder);
     }
