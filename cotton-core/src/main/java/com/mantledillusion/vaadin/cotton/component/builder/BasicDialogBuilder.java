@@ -46,8 +46,8 @@ public class BasicDialogBuilder extends AbstractDialogBuilder<BasicDialogBuilder
      *
      * @return A new instance, never null.
      */
-    public static BasicDialogBuilder createBasic(Object msgId, Object... indexedMessageParameters) {
-        return createBasic(LabelBuilder.create()
+    public static BasicDialogBuilder create(Object msgId, Object... indexedMessageParameters) {
+        return create(LabelBuilder.create()
                 .setWidthFull()
                 .setHeightUndefined()
                 .setText(I18N.getTranslation(msgId, indexedMessageParameters))
@@ -61,7 +61,7 @@ public class BasicDialogBuilder extends AbstractDialogBuilder<BasicDialogBuilder
      *
      * @return A new instance, never null.
      */
-    public static BasicDialogBuilder createBasic(Component content) {
+    public static BasicDialogBuilder create(Component content) {
         return new BasicDialogBuilder(() -> content);
     }
 
