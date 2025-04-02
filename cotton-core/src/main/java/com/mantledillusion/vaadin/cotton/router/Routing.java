@@ -114,6 +114,20 @@ public class Routing {
         }
 
         /**
+         * Builder method, overrides the path params of the given @{@link RouteParam}'s name with their value.
+         *
+         * @param pathParams The path parameters to set
+         * @return this
+         */
+        public RoutingPathBuilder withPathParams(RouteParam... pathParams) {
+            if (pathParams == null) {
+                throw new IllegalArgumentException("Unable to set null path parameters");
+            }
+            Arrays.stream(pathParams).forEach(pathParam -> this.routeParameters.put(pathParam.getName(), pathParam.getValue()));
+            return this;
+        }
+
+        /**
          * Builder method, removes the path param of the given name.
          *
          * @param name The name of the parameter to remove; might <b>not</b> be null
