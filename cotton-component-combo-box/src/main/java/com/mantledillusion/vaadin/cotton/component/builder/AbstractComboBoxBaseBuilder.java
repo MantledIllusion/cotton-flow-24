@@ -15,6 +15,8 @@ import com.vaadin.flow.data.renderer.Renderer;
 @SuppressWarnings("unused")
 abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TValue>, TItem, TValue, CF extends ConfigurableFilter<TItem>, B extends AbstractComboBoxBaseBuilder<C, TItem, TValue, CF, B>> extends AbstractComponentBuilder<C, B> implements
         FocusableBuilder<C, B>,
+        HasAllowedCharPatternBuilder<C, B>,
+        HasAutoOpenBuilder<C, B>,
         HasDataViewBuilder<C, TItem, String, ComboBoxDataView<TItem>, B>,
         HasElementBuilder<C, B>,
         HasEnabledBuilder<C, B>,
@@ -23,6 +25,7 @@ abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TVal
         HasListDataViewBuilder<C, TItem, CF, ComboBoxListDataView<TItem>, B>,
         HasSizeBuilder<C, B>,
         HasStyleBuilder<C, B>,
+        HasTooltipBuilder<C, B>,
         HasValidatorBuilder<C, TValue, B>,
         HasValueBuilder<C, TValue, AbstractField.ComponentValueChangeEvent<C, TValue>, B> {
 

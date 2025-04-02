@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  * {@link ConfigurationBuilder} for {@link TextField}s.
  */
 public class TextFieldBuilder extends AbstractTextFieldBaseBuilder<TextField, String, TextFieldBuilder> implements
+		HasAllowedCharPatternBuilder<TextField, TextFieldBuilder>,
 		HasThemeVariantBuilder<TextField, TextFieldVariant, TextFieldBuilder> {
 
 	private TextFieldBuilder() {}

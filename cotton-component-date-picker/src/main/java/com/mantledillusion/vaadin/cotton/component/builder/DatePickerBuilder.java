@@ -16,11 +16,15 @@ import java.util.Locale;
  */
 public class DatePickerBuilder extends AbstractComponentBuilder<DatePicker, DatePickerBuilder> implements
 		FocusableBuilder<DatePicker, DatePickerBuilder>,
+		HasAutoOpenBuilder<DatePicker, DatePickerBuilder>,
+		HasAllowedCharPatternBuilder<DatePicker, DatePickerBuilder>,
 		HasElementBuilder<DatePicker, DatePickerBuilder>,
 		HasEnabledBuilder<DatePicker, DatePickerBuilder>,
 		HasLabelBuilder<DatePicker, DatePickerBuilder>,
+		HasPrefixBuilder<DatePicker, DatePickerBuilder>,
 		HasSizeBuilder<DatePicker, DatePickerBuilder>,
 		HasStyleBuilder<DatePicker, DatePickerBuilder>,
+		HasTooltipBuilder<DatePicker, DatePickerBuilder>,
 		HasValidatorBuilder<DatePicker, LocalDate, DatePickerBuilder>,
 		HasValueBuilder<DatePicker, LocalDate, AbstractField.ComponentValueChangeEvent<DatePicker, LocalDate>, DatePickerBuilder> {
 

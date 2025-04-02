@@ -15,10 +15,13 @@ public class ButtonBuilder extends AbstractComponentBuilder<Button, ButtonBuilde
 		HasAriaLabelBuilder<Button, ButtonBuilder>,
 		HasElementBuilder<Button, ButtonBuilder>,
 		HasEnabledBuilder<Button, ButtonBuilder>,
+		HasPrefixBuilder<Button, ButtonBuilder>,
 		HasSizeBuilder<Button, ButtonBuilder>,
 		HasStyleBuilder<Button, ButtonBuilder>,
+		HasSuffixBuilder<Button, ButtonBuilder>,
 		HasTextBuilder<Button, ButtonBuilder>,
-		HasThemeVariantBuilder<Button, ButtonVariant, ButtonBuilder> {
+		HasThemeVariantBuilder<Button, ButtonVariant, ButtonBuilder>,
+		HasTooltipBuilder<Button, ButtonBuilder> {
 
 	private ButtonBuilder() {}
 

@@ -5,6 +5,7 @@ import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.shared.HasAllowedCharPattern;
 import com.vaadin.flow.component.timepicker.TimePicker;
 
 import java.time.Duration;
@@ -16,11 +17,15 @@ import java.util.Locale;
  */
 public class TimePickerBuilder extends AbstractComponentBuilder<TimePicker, TimePickerBuilder> implements
 		FocusableBuilder<TimePicker, TimePickerBuilder>,
+		HasAllowedCharPatternBuilder<TimePicker, TimePickerBuilder>,
+		HasAutoOpenBuilder<TimePicker, TimePickerBuilder>,
 		HasElementBuilder<TimePicker, TimePickerBuilder>,
 		HasEnabledBuilder<TimePicker, TimePickerBuilder>,
 		HasLabelBuilder<TimePicker, TimePickerBuilder>,
+		HasPrefixBuilder<TimePicker, TimePickerBuilder>,
 		HasSizeBuilder<TimePicker, TimePickerBuilder>,
 		HasStyleBuilder<TimePicker, TimePickerBuilder>,
+		HasTooltipBuilder<TimePicker, TimePickerBuilder>,
 		HasValidatorBuilder<TimePicker, LocalTime, TimePickerBuilder>,
 		HasValueBuilder<TimePicker, LocalTime, AbstractField.ComponentValueChangeEvent<TimePicker, LocalTime>, TimePickerBuilder> {
 

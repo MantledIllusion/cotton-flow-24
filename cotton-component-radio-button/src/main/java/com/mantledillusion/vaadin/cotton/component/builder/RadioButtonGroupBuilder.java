@@ -29,6 +29,7 @@ public class RadioButtonGroupBuilder<T, CF extends ConfigurableFilter<T>> extend
 		HasListDataViewBuilder<RadioButtonGroup<T>, T, CF, RadioButtonGroupListDataView<T>, RadioButtonGroupBuilder<T, CF>>,
 		HasStyleBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
 		HasThemeVariantBuilder<RadioButtonGroup<T>, RadioGroupVariant, RadioButtonGroupBuilder<T, CF>>,
+		HasTooltipBuilder<RadioButtonGroup<T>, RadioButtonGroupBuilder<T, CF>>,
 		HasValidatorBuilder<RadioButtonGroup<T>, T, RadioButtonGroupBuilder<T, CF>>,
 		HasValueBuilder<RadioButtonGroup<T>, T, AbstractField.ComponentValueChangeEvent<RadioButtonGroup<T>, T>, RadioButtonGroupBuilder<T, CF>> {
 

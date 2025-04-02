@@ -4,6 +4,7 @@ import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.ClickNotifierBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.HasElementBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.HasStyleBuilder;
+import com.mantledillusion.vaadin.cotton.component.mixin.HasTooltipBuilder;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
@@ -16,7 +17,8 @@ import java.util.Locale;
 public class IconBuilder extends AbstractComponentBuilder<Icon, IconBuilder> implements
         ClickNotifierBuilder<Icon, IconBuilder>,
         HasElementBuilder<Icon, IconBuilder>,
-        HasStyleBuilder<Icon, IconBuilder> {
+        HasStyleBuilder<Icon, IconBuilder>,
+        HasTooltipBuilder<Icon, IconBuilder> {
 
     private String collection;
     private String icon;

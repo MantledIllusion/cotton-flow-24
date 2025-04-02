@@ -20,7 +20,7 @@
 		<!-- COTTON -->
 		<dependency>
 			<groupId>com.mantledillusion.vaadin</groupId>
-			<artifactId>cotton-component</artifactId>
+			<artifactId>cotton-component-base</artifactId>
 		</dependency>
 
 		<!-- VAADIN -->

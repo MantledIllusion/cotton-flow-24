@@ -34,6 +34,7 @@ public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends A
 		HasSizeBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
 		HasStyleBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
 		HasThemeVariantBuilder<CheckboxGroup<T>, CheckboxGroupVariant, CheckBoxGroupBuilder<T, CF>>,
+		HasTooltipBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
 		HasValueBuilder<CheckboxGroup<T>, Set<T>, AbstractField.ComponentValueChangeEvent<CheckboxGroup<T>, Set<T>>, CheckBoxGroupBuilder<T, CF>> {
 
 	private CheckBoxGroupBuilder() {}

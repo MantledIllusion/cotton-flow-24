@@ -9,6 +9,7 @@ import com.vaadin.flow.component.textfield.TextFieldVariant;
  * {@link ConfigurationBuilder} for {@link NumberField}s.
  */
 public class NumberFieldBuilder extends AbstractTextFieldBaseBuilder<NumberField, Double, NumberFieldBuilder> implements
+        HasAllowedCharPatternBuilder<NumberField, NumberFieldBuilder>,
         HasThemeVariantBuilder<NumberField, TextFieldVariant, NumberFieldBuilder> {
 
     private NumberFieldBuilder() {}

@@ -1,6 +1,7 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.mixin.HasAllowedCharPatternBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.HasThemeVariantBuilder;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
  * {@link ConfigurationBuilder} for {@link PasswordField}s.
  */
 public class PasswordFieldBuilder extends AbstractTextFieldBaseBuilder<PasswordField, String, PasswordFieldBuilder> implements
+        HasAllowedCharPatternBuilder<PasswordField, PasswordFieldBuilder>,
         HasThemeVariantBuilder<PasswordField, TextFieldVariant, PasswordFieldBuilder> {
 
     private PasswordFieldBuilder() {}

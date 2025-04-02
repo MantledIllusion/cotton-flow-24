@@ -14,6 +14,7 @@ import com.vaadin.flow.component.combobox.ComboBoxVariant;
  */
 @SuppressWarnings("unused")
 public class ComboBoxBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<ComboBox<T>, T, T, CF, ComboBoxBuilder<T, CF>> implements
+        HasPrefixBuilder<ComboBox<T>, ComboBoxBuilder<T, CF>>,
         HasThemeVariantBuilder<ComboBox<T>, ComboBoxVariant, ComboBoxBuilder<T, CF>> {
 
     private ComboBoxBuilder() {}

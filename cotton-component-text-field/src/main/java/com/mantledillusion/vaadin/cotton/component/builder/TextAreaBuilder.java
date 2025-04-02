@@ -9,6 +9,7 @@ import com.vaadin.flow.component.textfield.TextAreaVariant;
  * {@link ConfigurationBuilder} for {@link TextArea}s.
  */
 public class TextAreaBuilder extends AbstractTextFieldBaseBuilder<TextArea, String, TextAreaBuilder> implements
+		HasAllowedCharPatternBuilder<TextArea, TextAreaBuilder>,
 		HasThemeVariantBuilder<TextArea, TextAreaVariant, TextAreaBuilder> {
 
 	private TextAreaBuilder() {}

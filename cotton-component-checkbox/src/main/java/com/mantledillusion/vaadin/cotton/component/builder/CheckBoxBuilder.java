@@ -17,6 +17,7 @@ public class CheckBoxBuilder extends AbstractComponentBuilder<Checkbox, CheckBox
 		HasLabelBuilder<Checkbox, CheckBoxBuilder>,
 		HasSizeBuilder<Checkbox, CheckBoxBuilder>,
 		HasStyleBuilder<Checkbox, CheckBoxBuilder>,
+		HasTooltipBuilder<Checkbox, CheckBoxBuilder>,
 		HasValueBuilder<Checkbox, Boolean, AbstractField.ComponentValueChangeEvent<Checkbox, Boolean>, CheckBoxBuilder> {
 
 	private CheckBoxBuilder() {}

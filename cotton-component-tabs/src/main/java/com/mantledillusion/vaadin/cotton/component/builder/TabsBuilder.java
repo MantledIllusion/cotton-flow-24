@@ -31,7 +31,8 @@ public class TabsBuilder extends AbstractComponentBuilder<Tabs, TabsBuilder> imp
             HasElementBuilder<Tab, TabBuilder>,
             HasLabelBuilder<Tab, TabBuilder>,
             HasStyleBuilder<Tab, TabBuilder>,
-            HasThemeVariantBuilder<Tab, TabVariant, TabBuilder> {
+            HasThemeVariantBuilder<Tab, TabVariant, TabBuilder>,
+            HasTooltipBuilder<Tab, TabBuilder> {
 
         private TabBuilder() {
             super(TabsBuilder.this);

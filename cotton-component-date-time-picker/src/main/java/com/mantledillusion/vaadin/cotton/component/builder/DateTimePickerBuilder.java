@@ -6,6 +6,7 @@ import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.datepicker.DatePicker.DatePickerI18n;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
+import com.vaadin.flow.component.shared.HasAutoOpen;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -15,11 +16,13 @@ import java.util.Locale;
  */
 public class DateTimePickerBuilder extends AbstractComponentBuilder<DateTimePicker, DateTimePickerBuilder> implements
 		FocusableBuilder<DateTimePicker, DateTimePickerBuilder>,
+		HasAutoOpenBuilder<DateTimePicker, DateTimePickerBuilder>,
 		HasElementBuilder<DateTimePicker, DateTimePickerBuilder>,
 		HasEnabledBuilder<DateTimePicker, DateTimePickerBuilder>,
 		HasLabelBuilder<DateTimePicker, DateTimePickerBuilder>,
 		HasSizeBuilder<DateTimePicker, DateTimePickerBuilder>,
 		HasStyleBuilder<DateTimePicker, DateTimePickerBuilder>,
+		HasTooltipBuilder<DateTimePicker, DateTimePickerBuilder>,
 		HasValidatorBuilder<DateTimePicker, LocalDateTime, DateTimePickerBuilder>,
 		HasValueBuilder<DateTimePicker, LocalDateTime, AbstractField.ComponentValueChangeEvent<DateTimePicker, LocalDateTime>, DateTimePickerBuilder> {
 
