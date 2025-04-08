@@ -108,6 +108,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mantledillusion.vaadin</groupId>
+			<artifactId>cotton-eventbus</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-i18n</artifactId>
 		</dependency>
 		<dependency>

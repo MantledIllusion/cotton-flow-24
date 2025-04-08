@@ -1,9 +1,12 @@
 package com.mantledillusion.vaadin.cotton.di;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+
+import java.util.Optional;
 
 public class CottonPostProcessor implements InstantiationAwareBeanPostProcessor {
 
@@ -28,6 +31,10 @@ public class CottonPostProcessor implements InstantiationAwareBeanPostProcessor 
         if (bean instanceof Component) {
             PresentableInjector.present((Component) bean, context.getAutowireCapableBeanFactory()::createBean);
         }
+
+        Optional.ofNullable(UI.getCurrent())
+                .ifPresent(ui -> BusInjector.subscribe(ui, bean));
+
         return bean;
     }
 }

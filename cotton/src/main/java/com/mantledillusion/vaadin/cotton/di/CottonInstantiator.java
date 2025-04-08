@@ -1,8 +1,11 @@
 package com.mantledillusion.vaadin.cotton.di;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.di.DefaultInstantiator;
 import com.vaadin.flow.server.VaadinService;
+
+import java.util.Optional;
 
 public class CottonInstantiator extends DefaultInstantiator {
 
@@ -16,7 +19,13 @@ public class CottonInstantiator extends DefaultInstantiator {
                 .map(super::createComponent)
                 .orElseGet(() -> super.createComponent(componentClass));
 
-        PresentableInjector.present(component, this::getOrCreate);
+        Optional<Object> presentable = PresentableInjector.present(component, this::getOrCreate);
+
+        Optional.ofNullable(UI.getCurrent())
+                .ifPresent(ui -> {
+                    BusInjector.subscribe(ui, component);
+                    presentable.ifPresent(p -> BusInjector.subscribe(ui, presentable));
+                });
 
         return component;
     }

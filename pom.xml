@@ -213,6 +213,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mantledillusion.vaadin</groupId>
+				<artifactId>cotton-eventbus</artifactId>
+				<version>${cotton.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mantledillusion.vaadin</groupId>
 				<artifactId>cotton-i18n</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
@@ -275,6 +280,7 @@
 		<module>cotton-component-time-picker</module>
 		<module>cotton-core</module>
 		<module>cotton-data</module>
+		<module>cotton-eventbus</module>
 		<module>cotton-i18n</module>
 		<module>cotton-responsive</module>
 		<module>cotton-responsive-yauaa</module>
