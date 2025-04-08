@@ -34,7 +34,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
-abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends ConfigurableFilter<T>, B extends AbstractGridBuilder<C, T, CF, B>> extends AbstractComponentBuilder<C, B> implements
+public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends ConfigurableFilter<T>, B extends AbstractGridBuilder<C, T, CF, B>> extends AbstractComponentBuilder<C, B> implements
         HasDataGeneratorBuilder<C, T, B>,
         HasVoidFilterDataViewBuilder<C, T, CF, GridDataView<T>, B>,
         HasElementBuilder<C, B>,
