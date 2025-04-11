@@ -308,7 +308,33 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 */
 	public <FieldValueType, ComponentType> Configurer<ComponentType> bindConfigurer(BiConsumer<ComponentType, FieldValueType> setter,
 																					Property<ModelType, FieldValueType> property) {
-		return component -> bindConsumer(value -> setter.accept(component, value), property);
+		return bindConfigurer(setter, value -> value, property);
+	}
+
+	/**
+	 * Binds the given {@link BiConsumer} to the given property of this {@link ModelContainer}.
+	 *
+	 * @param <FieldValueType> The value type of the {@link Consumer} to bind.
+	 * @param <PropertyValueType> The value type of the property to bind with.
+	 * @param <ComponentType> The component type of the {@link Configurer}.
+	 * @param setter The {@link BiConsumer} to bind; might <b>not</b> be null.
+	 * @param converter The {@link Converter} to use for conversion between the field's and the properties' value
+	 *                  types; might <b>not</b> be null.
+	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
+	 * @return A {@link Configurer} to use in any component builder, never null
+	 */
+	public <FieldValueType, PropertyValueType, ComponentType> Configurer<ComponentType> bindConfigurer(BiConsumer<ComponentType, FieldValueType> setter,
+																									   Converter<FieldValueType, PropertyValueType> converter,
+																									   Property<ModelType, PropertyValueType> property) {
+		if (setter == null) {
+			throw new IllegalArgumentException("Cannot bind a null " + BiConsumer.class.getSimpleName());
+		} else if (converter == null) {
+			throw new IllegalArgumentException("Cannot bind using a null converter");
+		} else if (property == null) {
+			throw new IllegalArgumentException("Cannot bind using a null property");
+		}
+
+		return component -> bindConsumer(value -> setter.accept(component, converter.toField(value)), property);
 	}
 
 	/**
@@ -321,17 +347,7 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 */
 	public <FieldValueType> Binding<FieldValueType> bindConsumer(Consumer<FieldValueType> consumer,
 																 Property<ModelType, FieldValueType> property) {
-		if (consumer == null) {
-			throw new IllegalArgumentException("Cannot bind a null " + Consumer.class.getSimpleName());
-		} else if (property == null) {
-			throw new IllegalArgumentException("Cannot bind using a null property");
-		}
-
-		Consumer<Binding<FieldValueType>> registration = removeBinding(property);
-		Procedure valueReader = () -> consumer.accept(this.get(property));
-		Consumer<FieldValueType> valueResetter = consumer::accept;
-
-		return addBinding(property, new ConsumerBinding<>(this.baseBindingAuditor, registration, valueReader, valueResetter));
+		return bindConsumer(consumer, value -> value, property);
 	}
 
 	/**
