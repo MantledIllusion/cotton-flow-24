@@ -72,6 +72,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mantledillusion.vaadin</groupId>
+			<artifactId>cotton-component-login</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-component-menu-bar</artifactId>
 		</dependency>
 		<dependency>

@@ -163,6 +163,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mantledillusion.vaadin</groupId>
+				<artifactId>cotton-component-login</artifactId>
+				<version>${cotton.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mantledillusion.vaadin</groupId>
 				<artifactId>cotton-component-menu-bar</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
@@ -270,6 +275,7 @@
 		<module>cotton-component-grid</module>
 		<module>cotton-component-html</module>
 		<module>cotton-component-icon</module>
+		<module>cotton-component-login</module>
 		<module>cotton-component-menu-bar</module>
 		<module>cotton-component-notification</module>
 		<module>cotton-component-ordered-layout</module>
