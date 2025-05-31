@@ -1,7 +1,6 @@
 package com.mantledillusion.vaadin.cotton.component.mixin;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasLabel;
 
@@ -20,11 +19,10 @@ public interface HasLabelBuilder<C extends HasLabel, B extends HasLabelBuilder<C
      * Builder method, sets the {@link HasLabel}s label.
      *
      * @see HasLabel#setLabel(String)
-     * @param msgId The label text, or a message id to localize; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+     * @param label The label to set; might be null.
      * @return this
      */
-    default B setLabel(Object msgId, Object... indexedMessageParameters) {
-        return configure(hasLabel -> hasLabel.setLabel(I18N.getTranslation(msgId, indexedMessageParameters)));
+    default B setLabel(String label) {
+        return configure(hasLabel -> hasLabel.setLabel(label));
     }
 }

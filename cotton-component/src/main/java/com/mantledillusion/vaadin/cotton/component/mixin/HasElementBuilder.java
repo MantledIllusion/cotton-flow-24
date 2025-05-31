@@ -2,7 +2,6 @@ package com.mantledillusion.vaadin.cotton.component.mixin;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.css.CssStyle;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.mantledillusion.vaadin.cotton.auth.Authorization;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
@@ -22,13 +21,11 @@ public interface HasElementBuilder<C extends HasElement, B extends HasElementBui
      * Builder method, configures one or more style class names to be added.
      *
      * @see com.vaadin.flow.dom.Element#setAttribute(String, String)
-     * @param msgId The tooltip text, or a message ID to localize; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
+     * @param title the title attribute value; might <b>not</b> be null.
      * @return this
      */
-    default B setNativeTooltip(Object msgId, Object... indexedMessageParameters) {
-        return configure(hasElement -> hasElement.getElement().setAttribute("title",
-                I18N.getTranslation(msgId, indexedMessageParameters)));
+    default B setNativeTooltip(String title) {
+        return configure(hasElement -> hasElement.getElement().setAttribute("title", title));
     }
 
     /**

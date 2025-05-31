@@ -3,7 +3,6 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ItemLabelGenerator;
@@ -94,25 +93,11 @@ public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends A
 	 * Builder method, configures a generator to use for item label generation.
 	 *
 	 * @see CheckboxGroup#setItemLabelGenerator(ItemLabelGenerator)
-	 * @param itemLabelGenerator The generator for item labels or message IDs to translate; might <b>not</b> be null.
+	 * @param itemLabelGenerator The generator for item labels; might <b>not</b> be null.
 	 * @return this
 	 */
 	public CheckBoxGroupBuilder<T, CF> setItemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
-		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(item ->
-				I18N.getTranslation(itemLabelGenerator.apply(item))));
-	}
-
-	/**
-	 * Builder method, configures a generator for item labels using a prefix and {@link Object#toString()} for building
-	 * a translatable message ID.
-	 *
-	 * @see CheckboxGroup#setItemLabelGenerator(ItemLabelGenerator)
-	 * @param messageIdPrefix The message ID prefix to append an item's {@link Object#toString()} value to; might be null.
-	 * @return this
-	 */
-	public CheckBoxGroupBuilder<T, CF> setItemLabelMessageIdPrefix(String messageIdPrefix) {
-		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(item ->
-				I18N.getTranslation(messageIdPrefix == null || messageIdPrefix.isBlank() ? "" : messageIdPrefix)+item));
+		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(itemLabelGenerator));
 	}
 
 	/**

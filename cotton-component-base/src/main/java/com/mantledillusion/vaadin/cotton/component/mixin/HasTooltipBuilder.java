@@ -18,11 +18,10 @@ public interface HasTooltipBuilder<C extends HasTooltip, B extends HasTooltipBui
      * Builder method, sets the {@link HasTooltip}'s text.
      *
      * @see HasTooltip#setTooltipText(String) (Component)
-     * @param msgId The initial text, or a message id to localize; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+     * @param text The text to set; might be null.
      * @return this
      */
-    default B setTooltip(String msgId, Object... indexedMessageParameters) {
-        return configure(hasValue -> hasValue.setTooltipText(I18N.getTranslation(msgId, indexedMessageParameters)));
+    default B setTooltip(String text) {
+        return configure(hasValue -> hasValue.setTooltipText(text));
     }
 }

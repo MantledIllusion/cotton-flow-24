@@ -37,12 +37,11 @@ public class NotificationBuilder extends AbstractComponentBuilder<Notification, 
 	 * Builder method, configures the initial text of the {@link Notification} after building.
 	 *
 	 * @see Notification#setText(String)
-	 * @param msgId The initial text, or a message id to localize; might be null.
-	 * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+	 * @param text The text to set; might be null.
 	 * @return this
 	 */
-	public NotificationBuilder setText(String msgId, Object... indexedMessageParameters) {
-		return configure(notification -> notification.setText(I18N.getTranslation(msgId, indexedMessageParameters)));
+	public NotificationBuilder setText(String text) {
+		return configure(notification -> notification.setText(text));
 	}
 
 	/**

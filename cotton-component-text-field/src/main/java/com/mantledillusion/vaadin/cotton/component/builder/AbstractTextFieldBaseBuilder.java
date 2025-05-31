@@ -1,7 +1,6 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.textfield.TextFieldBase;
 
@@ -14,6 +13,7 @@ abstract class AbstractTextFieldBaseBuilder<C extends TextFieldBase<C, T>, T, B 
         HasAutocorrectBuilder<C, B>,
         HasClearButtonBuilder<C, B>,
         HasLabelBuilder<C, B>,
+        HasPlaceholderBuilder<C, B>,
         HasPrefixBuilder<C, B>,
         HasSizeBuilder<C, B>,
         HasStyleBuilder<C, B>,
@@ -35,18 +35,6 @@ abstract class AbstractTextFieldBaseBuilder<C extends TextFieldBase<C, T>, T, B 
      */
     public B setAutofocus(boolean autofocus) {
         return configure(textField -> textField.setAutofocus(autofocus));
-    }
-
-    /**
-     * Builder method, configures the placeholder text to show as long as the {@link TextFieldBase} is empty.
-     *
-     * @see TextFieldBase#setPlaceholder(String)
-     * @param msgId A placeholder text or message ID to translate; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
-     * @return this
-     */
-    public B setPlaceholder(Object msgId, Object... indexedMessageParameters) {
-        return configure(textField -> textField.setPlaceholder(I18N.getTranslation(msgId, indexedMessageParameters)));
     }
 
     /**
