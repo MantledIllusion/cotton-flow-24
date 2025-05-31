@@ -74,30 +74,28 @@ public class FormLayoutBuilder extends AbstractComponentBuilder<FormLayout, Form
      * Builder method, adds a new item.
      *
      * @see FormLayout#addFormItem(Component, String)
-     * @param msgId A label text or message ID to translate; might <b>not</b> be null.
+     * @param label The label to set; might be null.
      * @param component The component; might <b>not</b> be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return this
      */
-    public FormLayoutBuilder addFormItem(Object msgId, Component component, Object... indexedMessageParameters) {
-        return addFormItem(msgId, component, builder -> {}, indexedMessageParameters);
+    public FormLayoutBuilder addFormItem(String label, Component component) {
+        return addFormItem(label, component, builder -> {});
     }
 
     /**
      * Builder method, configures a new item.
      *
      * @see FormLayout#addFormItem(Component, String)
-     * @param msgId A label text or message ID to translate; might <b>not</b> be null.
+     * @param label The label to use; might be null.
      * @param component The component; might <b>not</b> be null.
      * @param customizer A {@link ConfigurationCustomizer} for the {@link FormItemBuilder}; might <b>not</b> be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return this
      */
-    public FormLayoutBuilder addFormItem(Object msgId, Component component, ConfigurationCustomizer<FormItemBuilder> customizer, Object... indexedMessageParameters) {
+    public FormLayoutBuilder addFormItem(String label, Component component, ConfigurationCustomizer<FormItemBuilder> customizer) {
         if (customizer == null) {
             throw new IllegalArgumentException("Cannot add a tab using a null customizer.");
         }
-        FormItemBuilder formItemBuilder = new FormItemBuilder(form -> form.addFormItem(component, I18N.getTranslation(msgId, indexedMessageParameters)));
+        FormItemBuilder formItemBuilder = new FormItemBuilder(form -> form.addFormItem(component, label));
         customizer.customize(formItemBuilder);
         return configure(formItemBuilder);
     }

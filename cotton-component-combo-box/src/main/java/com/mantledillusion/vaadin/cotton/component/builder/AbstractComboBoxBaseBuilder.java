@@ -2,7 +2,6 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ItemLabelGenerator;
@@ -23,6 +22,7 @@ abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TVal
         HasLabelBuilder<C, B>,
         HasLazyDataViewBuilder<C, TItem, String, ComboBoxLazyDataView<TItem>, B>,
         HasListDataViewBuilder<C, TItem, CF, ComboBoxListDataView<TItem>, B>,
+        HasPlaceholderBuilder<C, B>,
         HasSizeBuilder<C, B>,
         HasStyleBuilder<C, B>,
         HasTooltipBuilder<C, B>,
@@ -53,18 +53,6 @@ abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TVal
      */
     public B setAutofocus(boolean autofocus) {
         return configure(comboBox -> comboBox.setAutofocus(autofocus));
-    }
-
-    /**
-     * Builder method, configures the placeholder text that might be displayed when nothing is selected.
-     *
-     * @see ComboBoxBase#setPlaceholder(String)
-     * @param msgId A placeholder text or message ID to translate via; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
-     * @return this
-     */
-    public B setPlaceholder(Object msgId, Object... indexedMessageParameters) {
-        return configure(comboBox -> comboBox.setPlaceholder(I18N.getTranslation(msgId, indexedMessageParameters)));
     }
 
     /**

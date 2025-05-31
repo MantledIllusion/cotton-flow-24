@@ -1,7 +1,6 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -41,16 +40,15 @@ public class BasicDialogBuilder extends AbstractDialogBuilder<BasicDialogBuilder
     /**
      * Factory method for a very basic dialog that just contains a text and has 0-&gt;n options to close it with.
      *
-     * @param msgId The basic {@link Dialog}'s text content, or a message ID to localize; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+     * @param text The basic {@link Dialog}'s text content; might be null.
      *
      * @return A new instance, never null.
      */
-    public static BasicDialogBuilder create(Object msgId, Object... indexedMessageParameters) {
+    public static BasicDialogBuilder create(String text) {
         return create(LabelBuilder.create()
                 .setWidthFull()
                 .setHeightUndefined()
-                .setText(I18N.getTranslation(msgId, indexedMessageParameters))
+                .setText(text)
                 .build());
     }
 

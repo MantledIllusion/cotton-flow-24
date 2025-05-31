@@ -2,11 +2,9 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.datepicker.DatePicker.DatePickerI18n;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
-import com.vaadin.flow.component.shared.HasAutoOpen;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -95,12 +93,11 @@ public class DateTimePickerBuilder extends AbstractComponentBuilder<DateTimePick
 	 * nothing is selected.
 	 * 
 	 * @see DateTimePicker#setDatePlaceholder(String)
-	 * @param msgId A placeholder text or message ID to translate; might be null.
-	 * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
+	 * @param placeholder The placeholder to set; might be null.
 	 * @return this
 	 */
-	public DateTimePickerBuilder setDatePlaceholder(Object msgId, Object... indexedMessageParameters) {
-		return configure(datePicker -> datePicker.setDatePlaceholder(I18N.getTranslation(msgId, indexedMessageParameters)));
+	public DateTimePickerBuilder setDatePlaceholder(String placeholder) {
+		return configure(datePicker -> datePicker.setDatePlaceholder(placeholder));
 	}
 
 	/**
@@ -108,12 +105,11 @@ public class DateTimePickerBuilder extends AbstractComponentBuilder<DateTimePick
 	 * nothing is selected.
 	 *
 	 * @see DateTimePicker#setTimePlaceholder(String)
-	 * @param msgId A placeholder text or message ID to translate; might be null.
-	 * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
+	 * @param placeholder The placeholder to set; might be null.
 	 * @return this
 	 */
-	public DateTimePickerBuilder setTimePlaceholder(Object msgId, Object... indexedMessageParameters) {
-		return configure(datePicker -> datePicker.setTimePlaceholder(I18N.getTranslation(msgId, indexedMessageParameters)));
+	public DateTimePickerBuilder setTimePlaceholder(String placeholder) {
+		return configure(datePicker -> datePicker.setTimePlaceholder(placeholder));
 	}
 
 	/**

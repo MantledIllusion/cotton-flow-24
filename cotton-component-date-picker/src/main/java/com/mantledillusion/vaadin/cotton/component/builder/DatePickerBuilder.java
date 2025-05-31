@@ -2,7 +2,6 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -21,6 +20,7 @@ public class DatePickerBuilder extends AbstractComponentBuilder<DatePicker, Date
 		HasElementBuilder<DatePicker, DatePickerBuilder>,
 		HasEnabledBuilder<DatePicker, DatePickerBuilder>,
 		HasLabelBuilder<DatePicker, DatePickerBuilder>,
+		HasPlaceholderBuilder<DatePicker, DatePickerBuilder>,
 		HasPrefixBuilder<DatePicker, DatePickerBuilder>,
 		HasSizeBuilder<DatePicker, DatePickerBuilder>,
 		HasStyleBuilder<DatePicker, DatePickerBuilder>,
@@ -102,19 +102,6 @@ public class DatePickerBuilder extends AbstractComponentBuilder<DatePicker, Date
 	 */
 	public DatePickerBuilder setMaxDate(LocalDate date) {
 		return configure(datePicker -> datePicker.setMax(date));
-	}
-
-	/**
-	 * Builder method, configures the placeholder text that might be displayed when
-	 * nothing is selected.
-	 * 
-	 * @see DatePicker#setPlaceholder(String)
-	 * @param msgId A placeholder text or message ID to translate; might be null.
-	 * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
-	 * @return this
-	 */
-	public DatePickerBuilder setPlaceholder(Object msgId, Object... indexedMessageParameters) {
-		return configure(datePicker -> datePicker.setPlaceholder(I18N.getTranslation(msgId, indexedMessageParameters)));
 	}
 
 	/**

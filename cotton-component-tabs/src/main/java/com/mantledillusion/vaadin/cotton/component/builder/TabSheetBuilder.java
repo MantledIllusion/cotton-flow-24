@@ -3,7 +3,6 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.tabs.Tab;
@@ -69,27 +68,25 @@ public class TabSheetBuilder extends AbstractComponentBuilder<TabSheet, TabSheet
      * Builder method, configures a new {@link Tab}.
      *
      * @see TabSheet#add(String, Component)
-     * @param msgId The label text, or a message id to localize; might be null.
+     * @param label The label to set; might be null.
      * @param sheetContent The {@link Component} to link to the added {@link Tab}; might <b>not</b> be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
      * @return this
      */
-    public TabSheetBuilder addTab(Object msgId, Component sheetContent, Object... indexedMessageParameters) {
-        return addTab(msgId, sheetContent, -1, indexedMessageParameters);
+    public TabSheetBuilder addTab(String label, Component sheetContent) {
+        return addTab(label, sheetContent, -1);
     }
 
     /**
      * Builder method, configures a new {@link Tab}.
      *
      * @see TabSheet#add(Tab, Component, int)
-     * @param msgId The label text, or a message id to localize; might be null.
+     * @param label The label to set; might be null.
      * @param sheetContent The {@link Component} to link to the added {@link Tab}; might <b>not</b> be null.
      * @param position The index at which to add the {@link Tab}, at the end if negative
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
      * @return this
      */
-    public TabSheetBuilder addTab(Object msgId, Component sheetContent, int position, Object... indexedMessageParameters) {
-        return configure(tabSheet -> tabSheet.add(new Tab(I18N.getTranslation(msgId, indexedMessageParameters)), sheetContent, position));
+    public TabSheetBuilder addTab(String label, Component sheetContent, int position) {
+        return configure(tabSheet -> tabSheet.add(new Tab(label), sheetContent, position));
     }
 
     /**

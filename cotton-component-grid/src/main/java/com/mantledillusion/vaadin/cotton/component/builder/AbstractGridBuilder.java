@@ -6,7 +6,6 @@ import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.HasValue;
@@ -134,12 +133,11 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
          * Builder method, configures the {@link Grid.Column}'s header.
          *
          * @see Grid.Column#setHeader(String)
-         * @param msgId A header text or message ID to translate; might be null.
-         * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
+         * @param label The label to set; might be null.
          * @return this
          */
-        public GridColumnBuilder setHeader(Object msgId, Object... indexedMessageParameters) {
-            return configure(column -> column.setHeader(I18N.getTranslation(msgId, indexedMessageParameters)));
+        public GridColumnBuilder setHeader(String label) {
+            return configure(column -> column.setHeader(label));
         }
 
         /**
@@ -157,12 +155,11 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
          * Builder method, configures the {@link Grid.Column}'s footer.
          *
          * @see Grid.Column#setFooter(String)
-         * @param msgId A header text or message ID to translate; might be null.
-         * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
+         * @param label The label to set; might be null.
          * @return this
          */
-        public GridColumnBuilder setFooter(Object msgId, Object... indexedMessageParameters) {
-            return configure(column -> column.setFooter(I18N.getTranslation(msgId, indexedMessageParameters)));
+        public GridColumnBuilder setFooter(String label) {
+            return configure(column -> column.setFooter(label));
         }
 
         /**

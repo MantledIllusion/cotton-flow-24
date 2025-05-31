@@ -3,7 +3,6 @@ package com.mantledillusion.vaadin.cotton.component.mixin;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.builder.MenuItemBuilder;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.contextmenu.HasMenuItems;
 import com.vaadin.flow.component.contextmenu.MenuItem;
@@ -23,29 +22,27 @@ public interface HasMenuItemBuilder<C extends HasMenuItems, B extends HasMenuIte
      * Builder method, configures a new {@link MenuItem}.
      *
      * @see MenuBar#addItem(String)
-     * @param msgId A text to use on the item or message ID to localize; might be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
+     * @param text The text to set; might be null.
      * @return this
      */
-    default B addItem(Object msgId, Object... indexedMessageParameters) {
-        return addItem(msgId, builder -> {}, indexedMessageParameters);
+    default B addItem(String text) {
+        return addItem(text, builder -> {});
     }
 
     /**
      * Builder method, configures a new {@link MenuItem}.
      *
      * @see MenuBar#addItem(String)
-     * @param msgId A text to use on the item or message ID to localize; might be null.
+     * @param text The text to set; might be null.
      * @param customizer A {@link ConfigurationCustomizer} for the {@link MenuItemBuilder}; might <b>not</b> be null.
-     * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
      * @return this
      */
-    default B addItem(Object msgId, ConfigurationCustomizer<MenuItemBuilder<C>> customizer, Object... indexedMessageParameters) {
+    default B addItem(String text, ConfigurationCustomizer<MenuItemBuilder<C>> customizer) {
         if (customizer == null) {
             throw new IllegalArgumentException("Cannot add an item using a null customizer.");
         }
         MenuItemBuilder<C> itemBuilder = MenuItemBuilder.create(hasMenuItems ->
-                hasMenuItems.addItem(I18N.getTranslation(msgId, indexedMessageParameters), null));
+                hasMenuItems.addItem(text, null));
         customizer.customize(itemBuilder);
         return configure(itemBuilder);
     }

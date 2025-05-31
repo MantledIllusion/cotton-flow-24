@@ -2,10 +2,8 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.shared.HasAllowedCharPattern;
 import com.vaadin.flow.component.timepicker.TimePicker;
 
 import java.time.Duration;
@@ -22,6 +20,7 @@ public class TimePickerBuilder extends AbstractComponentBuilder<TimePicker, Time
 		HasElementBuilder<TimePicker, TimePickerBuilder>,
 		HasEnabledBuilder<TimePicker, TimePickerBuilder>,
 		HasLabelBuilder<TimePicker, TimePickerBuilder>,
+		HasPlaceholderBuilder<TimePicker, TimePickerBuilder>,
 		HasPrefixBuilder<TimePicker, TimePickerBuilder>,
 		HasSizeBuilder<TimePicker, TimePickerBuilder>,
 		HasStyleBuilder<TimePicker, TimePickerBuilder>,
@@ -79,19 +78,6 @@ public class TimePickerBuilder extends AbstractComponentBuilder<TimePicker, Time
 	 */
 	public TimePickerBuilder setMaxDate(LocalTime time) {
 		return configure(timePicker -> timePicker.setMax(time));
-	}
-
-	/**
-	 * Builder method, configures the placeholder text that might be displayed when
-	 * nothing is selected.
-	 * 
-	 * @see TimePicker#setPlaceholder(String)
-	 * @param msgId A placeholder text or message ID to translate; might be null.
-	 * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null.
-	 * @return this
-	 */
-	public TimePickerBuilder setPlaceholder(Object msgId, Object... indexedMessageParameters) {
-		return configure(timePicker -> timePicker.setPlaceholder(I18N.getTranslation(msgId, indexedMessageParameters)));
 	}
 
 	/**

@@ -3,7 +3,6 @@ package com.mantledillusion.vaadin.cotton.component.builder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
-import com.mantledillusion.vaadin.cotton.i18n.I18N;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.login.AbstractLogin;
 import com.vaadin.flow.component.login.LoginI18n;
@@ -35,24 +34,22 @@ public abstract class AbstractLoginBuilder<C extends AbstractLogin, B extends Ab
              * Builder method, sets the title.
              *
              * @see LoginI18n.Header#setTitle(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param title The title to set; might be null.
              * @return this
              */
-            public LoginI18NHeaderBuilder setTitle(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setTitle(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NHeaderBuilder setTitle(String title) {
+                return configure(i18n -> i18n.setTitle(title));
             }
 
             /**
              * Builder method, sets the description.
              *
              * @see LoginI18n.Header#setDescription(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param description The description to set; might be null.
              * @return this
              */
-            public LoginI18NHeaderBuilder setDescription(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setDescription(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NHeaderBuilder setDescription(String description) {
+                return configure(i18n -> i18n.setDescription(description));
             }
         }
 
@@ -74,60 +71,55 @@ public abstract class AbstractLoginBuilder<C extends AbstractLogin, B extends Ab
              * Builder method, sets the title.
              *
              * @see LoginI18n.Form#setTitle(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param title The title to set; might be null.
              * @return this
              */
-            public LoginI18NFormBuilder setTitle(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setTitle(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NFormBuilder setTitle(String title) {
+                return configure(i18n -> i18n.setTitle(title));
             }
 
             /**
              * Builder method, sets the username label.
              *
              * @see LoginI18n.Form#setUsername(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param username The username to set; might be null.
              * @return this
              */
-            public LoginI18NFormBuilder setUsername(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setUsername(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NFormBuilder setUsername(String username) {
+                return configure(i18n -> i18n.setUsername(username));
             }
 
             /**
              * Builder method, sets the password label.
              *
              * @see LoginI18n.Form#setPassword(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param password The password to set; might be null.
              * @return this
              */
-            public LoginI18NFormBuilder setPassword(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setPassword(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NFormBuilder setPassword(String password) {
+                return configure(i18n -> i18n.setPassword(password));
             }
 
             /**
              * Builder method, sets the forgot password label.
              *
              * @see LoginI18n.Form#setForgotPassword(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param forgotPassword The forgot password to set; might be null.
              * @return this
              */
-            public LoginI18NFormBuilder setForgotPassword(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setForgotPassword(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NFormBuilder setForgotPassword(String forgotPassword) {
+                return configure(i18n -> i18n.setForgotPassword(forgotPassword));
             }
 
             /**
              * Builder method, sets the submit label.
              *
              * @see LoginI18n.Form#setSubmit(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param submit The submit to set; might be null.
              * @return this
              */
-            public LoginI18NFormBuilder setSubmit(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setSubmit(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NFormBuilder setSubmit(String submit) {
+                return configure(i18n -> i18n.setSubmit(submit));
             }
         }
 
@@ -149,48 +141,55 @@ public abstract class AbstractLoginBuilder<C extends AbstractLogin, B extends Ab
              * Builder method, sets the title.
              *
              * @see LoginI18n.ErrorMessage#setTitle(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param title The title to set; might be null.
              * @return this
              */
-            public LoginI18NErrorMessageBuilder setTitle(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setTitle(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NErrorMessageBuilder setTitle(String title) {
+                return configure(i18n -> i18n.setTitle(title));
             }
 
             /**
              * Builder method, sets the title.
              *
              * @see LoginI18n.ErrorMessage#setMessage(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param message The message to set; might be null.
              * @return this
              */
-            public LoginI18NErrorMessageBuilder setMessage(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setMessage(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NErrorMessageBuilder setMessage(String message) {
+                return configure(i18n -> i18n.setMessage(message));
             }
 
             /**
              * Builder method, sets the username label.
              *
              * @see LoginI18n.ErrorMessage#setUsername(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param username The username to set; might be null.
              * @return this
              */
-            public LoginI18NErrorMessageBuilder setUsername(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setUsername(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NErrorMessageBuilder setUsername(String username) {
+                return configure(i18n -> i18n.setUsername(username));
             }
 
             /**
              * Builder method, sets the password label.
              *
              * @see LoginI18n.ErrorMessage#setPassword(String)
-             * @param msgId The initial text, or a message id to localize; might be null.
-             * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+             * @param password The password to set; might be null.
              * @return this
              */
-            public LoginI18NErrorMessageBuilder setPassword(String msgId, Object... indexedMessageParameters) {
-                return configure(i18n -> i18n.setPassword(I18N.getTranslation(msgId, indexedMessageParameters)));
+            public LoginI18NErrorMessageBuilder setPassword(String password) {
+                return configure(i18n -> i18n.setPassword(password));
+            }
+
+            /**
+             * Builder method, sets the password label.
+             *
+             * @see LoginI18n.ErrorMessage#setPassword(String)
+             * @param translatedPassword The translated password to set; might be null.
+             * @return this
+             */
+            public LoginI18NErrorMessageBuilder setTranslatedPassword(String translatedPassword) {
+                return configure(i18n -> i18n.setPassword(translatedPassword));
             }
         }
 
@@ -281,12 +280,11 @@ public abstract class AbstractLoginBuilder<C extends AbstractLogin, B extends Ab
          * Builder method, sets the additional information.
          *
          * @see LoginI18n#setAdditionalInformation(String)
-         * @param msgId The initial text, or a message id to localize; might be null.
-         * @param indexedMessageParameters Optional parameters to replace at their index in the message; might be null
+         * @param additionalInformation The additional information to set; might be null.
          * @return this
          */
-        public LoginI18NBuilder setAdditionalInformation(String msgId, Object... indexedMessageParameters) {
-            return configure(i18n -> i18n.setAdditionalInformation(I18N.getTranslation(msgId, indexedMessageParameters)));
+        public LoginI18NBuilder setAdditionalInformation(String additionalInformation) {
+            return configure(i18n -> i18n.setAdditionalInformation(additionalInformation));
         }
     }
 
