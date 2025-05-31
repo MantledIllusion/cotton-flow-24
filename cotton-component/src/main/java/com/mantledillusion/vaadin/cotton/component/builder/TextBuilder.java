@@ -12,6 +12,17 @@ public class TextBuilder extends AbstractComponentBuilder<Text, TextBuilder> imp
         HasElementBuilder<Text, TextBuilder>,
         HasTextBuilder<Text, TextBuilder> {
 
+    private TextBuilder() {}
+
+    /**
+     * Factory method for a new instance.
+     *
+     * @return A new instance, never null.
+     */
+    public static TextBuilder create() {
+        return new TextBuilder();
+    }
+
     @Override
     protected Text instantiate() {
         return new Text(null);
