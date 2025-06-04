@@ -36,8 +36,7 @@ public class RouterLinkBuilder extends AbstractComponentBuilder<RouterLink, Rout
      * Builder method, configures the location to navigate to when the link is clicked.
      *
      * @see RouterLink#setRoute(Class)
-     * @param navigationTarget
-     *            The view to whose location to navigate to; might <b>not</b> be null.
+     * @param navigationTarget The view to whose location to navigate to; might <b>not</b> be null.
      * @return this
      */
     public RouterLinkBuilder setRoute(Class<? extends Component> navigationTarget) {
@@ -50,14 +49,24 @@ public class RouterLinkBuilder extends AbstractComponentBuilder<RouterLink, Rout
      * @see RouterLink#setRoute(Class, Object)
      * @param <T> The type of the URL parameter of the {@link Component} to navigate to.
      * @param <C> The type of the {@link Component} to navigate to.
-     * @param navigationTarget
-     *            The view to whose location to navigate to; might <b>not</b> be null.
-     * @param parameter
-     *            The view to whose location to navigate to; might be null.
+     * @param navigationTarget The view to whose location to navigate to; might <b>not</b> be null.
+     * @param routeParameter The parameter of the view to navigate to; might be null.
      * @return this
      */
-    public <T, C extends Component & HasUrlParameter<T>> RouterLinkBuilder setRoute(Class<? extends C> navigationTarget, T parameter) {
-        return configure(routerLink -> routerLink.setRoute(navigationTarget, parameter));
+    public <T, C extends Component & HasUrlParameter<T>> RouterLinkBuilder setRoute(Class<? extends C> navigationTarget, T routeParameter) {
+        return configure(routerLink -> routerLink.setRoute(navigationTarget, routeParameter));
+    }
+
+    /**
+     * Builder method, configures the location to navigate to when the link is clicked.
+     *
+     * @see RouterLink#setRoute(Class, Object)
+     * @param navigationTarget The view to whose location to navigate to; might <b>not</b> be null.
+     * @param routeParameters The route parameters of the view to navigate to; might be null.
+     * @return this
+     */
+    public RouterLinkBuilder setRoute(Class<? extends Component> navigationTarget, RouteParameters routeParameters) {
+        return configure(routerLink -> routerLink.setRoute(navigationTarget, routeParameters));
     }
 
     /**
