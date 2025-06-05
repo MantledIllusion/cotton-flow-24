@@ -275,6 +275,36 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
         }
 
         /**
+         * Builder method, configures the {@link Grid.Column}'s width to shrink while maintaining a minimum of the
+         * content's width from the moment the {@link Grid} is loaded the first time.
+         *
+         * @see Grid.Column#setFlexGrow(int)
+         * @see Grid.Column#setAutoWidth(boolean)
+         * @return this
+         */
+        public GridColumnBuilder setAutoShrink() {
+            return configure(hasSize -> {
+                hasSize.setFlexGrow(0);
+                hasSize.setAutoWidth(true);
+            });
+        }
+
+        /**
+         * Builder method, configures the {@link Grid.Column}'s width to grow while maintaining a minimum of the
+         * content's width from the moment the {@link Grid} is loaded the first time.
+         *
+         * @see Grid.Column#setFlexGrow(int)
+         * @see Grid.Column#setAutoWidth(boolean)
+         * @return this
+         */
+        public GridColumnBuilder setAutoGrow() {
+            return configure(hasSize -> {
+                hasSize.setFlexGrow(1);
+                hasSize.setAutoWidth(true);
+            });
+        }
+
+        /**
          * Builder method, configures a CSS class name generator for the {@link Grid.Column}.
          *
          * @deprecated use {@link #setPartNameGenerator(SerializableFunction)} instead
