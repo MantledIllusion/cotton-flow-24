@@ -14,9 +14,6 @@ import com.vaadin.flow.component.HasSize;
  */
 public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B>> extends
 		HasElementBuilder<C, B> {
-	
-	String CSS_PX = "px";
-	String CSS_PCT = "%";
 
 	/**
 	 * Builder method, configures the {@link Component}'s width to be set undefined.
@@ -25,7 +22,7 @@ public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B
 	 * @return this
 	 */
 	default B setWidthUndefined() {
-		return configure(hasSize -> hasSize.setWidth(null));
+		return setWidth(null);
 	}
 
 	/**
@@ -35,7 +32,7 @@ public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B
 	 * @return this
 	 */
 	default B setHeightUndefined() {
-		return configure(hasSize -> hasSize.setHeight(null));
+		return setHeight(null);
 	}
 
 	/**
@@ -45,55 +42,29 @@ public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B
 	 * @return this
 	 */
 	default B setSizeUndefined() {
-		return configure(hasSize -> hasSize.setSizeUndefined());
+		return configure(HasSize::setSizeUndefined);
 	}
 
 	/**
-	 * Builder method, configures the {@link Component}'s width to be set to an exact pixel value.
+	 * Builder method, configures the {@link Component}'s width to be set.
 	 * 
 	 * @see HasSize#setWidth(String)
-	 * @param px
-	 *            The pixel width to set
+	 * @param width The width to set; might be null
 	 * @return this
 	 */
-	default B setExactWidth(int px) {
-		return configure(hasSize -> hasSize.setWidth(px + CSS_PX));
+	default B setWidth(String width) {
+		return configure(hasSize -> hasSize.setWidth(width));
 	}
 
 	/**
-	 * Builder method, configures the {@link Component}'s height to be set to an exact pixel value.
+	 * Builder method, configures the {@link Component}'s height to be set.
 	 * 
 	 * @see HasSize#setHeight(String)
-	 * @param px
-	 *            The pixel height to set
+	 * @param height The width to set; might be null
 	 * @return this
 	 */
-	default B setExactHeight(int px) {
-		return configure(hasSize -> hasSize.setHeight(px + CSS_PX));
-	}
-
-	/**
-	 * Builder method, configures the {@link Component}'s width to be set to a percental share of its parent's width.
-	 * 
-	 * @see HasSize#setWidth(String)
-	 * @param pct
-	 *            The percental width to set
-	 * @return this
-	 */
-	default B setPercentalWidth(int pct) {
-		return configure(hasSize -> hasSize.setWidth(pct + CSS_PCT));
-	}
-
-	/**
-	 * Builder method, configures the {@link Component}'s height to be set to a percental share of its parent's height.
-	 * 
-	 * @see HasSize#setHeight(String)
-	 * @param pct
-	 *            The percental height to set
-	 * @return this
-	 */
-	default B setPercentalHeight(int pct) {
-		return configure(hasSize -> hasSize.setHeight(pct + CSS_PCT));
+	default B setHeight(String height) {
+		return configure(hasSize -> hasSize.setHeight(height));
 	}
 
 	/**
@@ -103,7 +74,7 @@ public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B
 	 * @return this
 	 */
 	default B setWidthFull() {
-		return configure(hasSize -> hasSize.setWidthFull());
+		return configure(HasSize::setWidthFull);
 	}
 
 	/**
@@ -113,7 +84,7 @@ public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B
 	 * @return this
 	 */
 	default B setHeightFull() {
-		return configure(hasSize -> hasSize.setHeightFull());
+		return configure(HasSize::setHeightFull);
 	}
 
 	/**
@@ -123,6 +94,6 @@ public interface HasSizeBuilder<C extends HasSize, B extends HasSizeBuilder<C, B
 	 * @return this
 	 */
 	default B setSizeFull() {
-		return configure(hasSize -> hasSize.setSizeFull());
+		return configure(HasSize::setSizeFull);
 	}
 }

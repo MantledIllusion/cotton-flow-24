@@ -26,7 +26,7 @@ public interface HasStyleBuilder<C extends HasStyle, B extends HasStyleBuilder<C
 	 *            contain nulls.
 	 * @return this
 	 */
-	default B addStyle(String className, String... classNames) {
+	default B addClassName(String className, String... classNames) {
 		return configure(hasStyle -> {
 			hasStyle.addClassName(className);
 			hasStyle.addClassNames(classNames);

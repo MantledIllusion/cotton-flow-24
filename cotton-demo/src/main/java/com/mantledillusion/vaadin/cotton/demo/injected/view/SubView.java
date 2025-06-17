@@ -1,7 +1,8 @@
 package com.mantledillusion.vaadin.cotton.demo.injected.view;
 
 import com.helger.css.ECSSUnit;
-import com.mantledillusion.vaadin.cotton.component.css.CssStyle;
+import com.helger.css.property.ECSSProperty;
+import com.helger.css.utils.ECSSColor;
 import com.mantledillusion.vaadin.cotton.demo.injected.Injectable;
 import com.mantledillusion.vaadin.cotton.demo.injected.InjectionConfiguration;
 import com.mantledillusion.vaadin.cotton.spring.annotation.AttachedComponent;
@@ -20,9 +21,9 @@ public class SubView extends FormLayout {
                    @Qualifier(InjectionConfiguration.ATTACH) Injectable attachInjectable) {
         setWidth(null);
         setHeight(null);
-        setResponsiveSteps(new FormLayout.ResponsiveStep("0px", 1));
-        CssStyle.of(CssStyle.BACKGROUND_COLOR.getStylePropertyName(), "lightgrey").apply(this);
-        CssStyle.PADDING.of(10, ECSSUnit.PX).apply(this);
+        setResponsiveSteps(new FormLayout.ResponsiveStep(ECSSUnit.px(0), 1));
+        getStyle().set(ECSSProperty.BACKGROUND_COLOR.getName(), ECSSColor.LIGHTGRAY.getName());
+        getStyle().set(ECSSProperty.PADDING.getName(), ECSSUnit.px(10));
 
         addFormItem(new NativeLabel(String.valueOf(System.identityHashCode(sessionInjectable))), "Session hash:");
         addFormItem(new NativeLabel(String.valueOf(System.identityHashCode(uiInjectable))), "UI hash:");

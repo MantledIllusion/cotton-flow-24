@@ -1,5 +1,6 @@
 package com.mantledillusion.vaadin.cotton.demo.model.view;
 
+import com.helger.css.ECSSUnit;
 import com.mantledillusion.essentials.expression.Expression;
 import com.mantledillusion.vaadin.cotton.component.builder.*;
 import com.mantledillusion.vaadin.cotton.demo.IndexView;
@@ -34,7 +35,7 @@ public class ModelView extends AbstractView {
                         .setHeightFull()
                         .setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER)
                         .add(VerticalLayoutBuilder.create()
-                                .setExactWidth(500)
+                                .setWidth(ECSSUnit.px(500))
                                 .add(HorizontalLayoutBuilder.create()
                                         .add(ButtonBuilder.create()
                                                 .setText("Set Model")

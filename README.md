@@ -50,5 +50,4 @@ If you are creating libraries yourself and only require Cotton for a specific pa
 | Custom Data Vaadin Component        |       cotton-component-data       |          flow-data           |
 | Data Binding Library                |            cotton-data            |          flow-data           |
 | Localization Extension              |            cotton-i18n            |         flow-server          |
-| CSS Styling Extension               |           cotton-style            |         flow-server          |
 | Other Low-Level Extension           |           cotton-server           |         flow-server          |

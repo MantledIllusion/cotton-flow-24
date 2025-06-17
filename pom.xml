@@ -257,11 +257,6 @@
 				<artifactId>cotton-spring-boot-starter</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.mantledillusion.vaadin</groupId>
-				<artifactId>cotton-style</artifactId>
-				<version>${cotton.version}</version>
-			</dependency>
 		</dependencies>
     </dependencyManagement>
 
@@ -299,7 +294,6 @@
 		<module>cotton-server</module>
 		<module>cotton-spring</module>
 		<module>cotton-spring-boot-starter</module>
-		<module>cotton-style</module>
 	</modules>
 
 	<build>

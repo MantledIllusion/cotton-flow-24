@@ -1,10 +1,13 @@
 package com.mantledillusion.vaadin.cotton.component.mixin;
 
+import com.helger.css.ICSSWriteable;
+import com.helger.css.property.ECSSProperty;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
-import com.mantledillusion.vaadin.cotton.component.css.CssStyle;
 import com.mantledillusion.vaadin.cotton.auth.Authorization;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
+
+import java.util.Optional;
 
 /**
  * {@link ConfigurationBuilder} for {@link HasElement} implementing {@link Component}s.
@@ -54,11 +57,11 @@ public interface HasElementBuilder<C extends HasElement, B extends HasElementBui
      * Builder method, configures a specific value for a CSS style.
      *
      * @see com.vaadin.flow.dom.Style#set(String, String)
-     * @param name The first style property name to add; might <b>not</b> be null.
-     * @param value The first style value to set; might be null.
+     * @param name The style property name to set; might <b>not</b> be null.
+     * @param value The style value to set; might be null.
      * @return this
      */
-    default B setCssStyle(String name, String value) {
+    default B setStyle(String name, String value) {
         return configure(hasElement -> hasElement.getElement().getStyle().set(name, value));
     }
 
@@ -66,11 +69,44 @@ public interface HasElementBuilder<C extends HasElement, B extends HasElementBui
      * Builder method, configures a specific value for a CSS style.
      *
      * @see com.vaadin.flow.dom.Style#set(String, String)
-     * @param style
-     *            The style to add; might <b>not</b> be null.
+     * @param name The style property name to set; might <b>not</b> be null.
+     * @param value The style value to set; might be null.
      * @return this
      */
-    default B setCssStyle(CssStyle style) {
-        return configure(style::apply);
+    default B setStyle(String name, ICSSWriteable value) {
+        return setStyle(
+                name,
+                Optional.ofNullable(value).map(ICSSWriteable::getAsCSSString).orElse(null)
+        );
+    }
+
+    /**
+     * Builder method, configures a specific value for a CSS style.
+     *
+     * @see com.vaadin.flow.dom.Style#set(String, String)
+     * @param property The style property to set; might <b>not</b> be null.
+     * @param value The style value to set; might be null.
+     * @return this
+     */
+    default B setStyle(ECSSProperty property, String value) {
+        return setStyle(
+                Optional.ofNullable(property).map(ECSSProperty::getName).orElse(null),
+                value
+        );
+    }
+
+    /**
+     * Builder method, configures a specific value for a CSS style.
+     *
+     * @see com.vaadin.flow.dom.Style#set(String, String)
+     * @param property The style property to set; might <b>not</b> be null.
+     * @param value The style value to set; might be null.
+     * @return this
+     */
+    default B setStyle(ECSSProperty property, ICSSWriteable value) {
+        return setStyle(
+                Optional.ofNullable(property).map(ECSSProperty::getName).orElse(null),
+                Optional.ofNullable(value).map(ICSSWriteable::getAsCSSString).orElse(null)
+        );
     }
 }

@@ -1,5 +1,6 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
+import com.helger.css.ECSSUnit;
 import com.mantledillusion.data.epiphy.ModelProperty;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
 import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
@@ -224,31 +225,18 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
          * @return this
          */
         public GridColumnBuilder setWidthUndefined() {
-            return configure(hasSize -> hasSize.setWidth(null));
+            return setWidth(null);
         }
 
         /**
-         * Builder method, configures the {@link Grid.Column}'s width to be set to an exact pixel value.
+         * Builder method, configures the {@link Grid.Column}'s width to be set.
          *
          * @see Grid.Column#setWidth(String)
-         * @param px
-         *            The pixel width to set
+         * @param width The width to set; might be null
          * @return this
          */
-        public GridColumnBuilder setExactWidth(int px) {
-            return configure(hasSize -> hasSize.setWidth(px + CSS_PX));
-        }
-
-        /**
-         * Builder method, configures the {@link Grid.Column}'s width to be set to a percental share of its parent's width.
-         *
-         * @see Grid.Column#setWidth(String)
-         * @param pct
-         *            The percental width to set
-         * @return this
-         */
-        public GridColumnBuilder setPercentalWidth(int pct) {
-            return configure(hasSize -> hasSize.setWidth(pct + CSS_PCT));
+        public GridColumnBuilder setWidth(String width) {
+            return configure(hasSize -> hasSize.setWidth(width));
         }
 
         /**
@@ -258,7 +246,7 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
          * @return this
          */
         public GridColumnBuilder setWidthFull() {
-            return configure(hasSize -> hasSize.setWidth(100 + CSS_PCT));
+            return configure(hasSize -> hasSize.setWidth(ECSSUnit.perc(100)));
         }
 
         /**

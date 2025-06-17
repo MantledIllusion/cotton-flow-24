@@ -26,10 +26,6 @@
 			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-server</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.mantledillusion.vaadin</groupId>
-			<artifactId>cotton-style</artifactId>
-		</dependency>
 
 		<!-- VAADIN -->
 		<dependency>
