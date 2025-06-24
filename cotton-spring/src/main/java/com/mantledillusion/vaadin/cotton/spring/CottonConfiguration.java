@@ -16,12 +16,12 @@ import org.springframework.context.annotation.Configuration;
 public class CottonConfiguration {
 
     @Bean
-    public BeanFactoryPostProcessor cottonAttachScope() {
+    public static BeanFactoryPostProcessor cottonAttachScope() {
         return new CottonAttachScope();
     }
 
     @Bean
-    public BeanPostProcessor presentablePostProcessor(ApplicationContext context) {
+    public static BeanPostProcessor presentablePostProcessor(ApplicationContext context) {
         return new CottonPostProcessor(context);
     }
 
