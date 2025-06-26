@@ -22,6 +22,13 @@ public class HtmlContainerBuilder {
      *
      * @return A new instance, never null.
      */
+    public static DivBuilder createDiv() {return DivBuilder.create(); }
+
+    /**
+     * Factory method for a new instance.
+     *
+     * @return A new instance, never null.
+     */
     public static H1Builder createH1() {
         return H1Builder.create();
     }
