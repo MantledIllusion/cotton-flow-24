@@ -13,6 +13,7 @@ import jakarta.servlet.ServletException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Utility class providing static functionality on the current {@link VaadinRequest}'s principal.
@@ -137,5 +138,15 @@ public class Authorization {
                             // ... OF WHICH THE PRINCIPAL HAS TO HAVE AT LEAST ONE
                             && Arrays.stream(type.getAnnotation(RolesAllowed.class).value())
                                 .anyMatch(Authorization::isPermitted)));
+    }
+
+    /**
+     * Returns the roles defined to the given type by @{@link RolesAllowed}.
+     *
+     * @param type The type to fetch roles from; might <b>not</b> be null.
+     * @return A set of roles a {@link Principal} has to apply to, never null, might be empty
+     */
+    public static Set<String> getPermissions(Class<?> type) {
+        return Set.of(type.getAnnotation(RolesAllowed.class).value());
     }
 }
