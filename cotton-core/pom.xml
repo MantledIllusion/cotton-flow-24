@@ -52,6 +52,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mantledillusion.vaadin</groupId>
+			<artifactId>cotton-component-details</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-component-dialog</artifactId>
 		</dependency>
 		<dependency>

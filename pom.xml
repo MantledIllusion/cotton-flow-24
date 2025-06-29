@@ -144,6 +144,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mantledillusion.vaadin</groupId>
+				<artifactId>cotton-component-details</artifactId>
+				<version>${cotton.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mantledillusion.vaadin</groupId>
 				<artifactId>cotton-component-dialog</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
@@ -271,6 +276,7 @@
 		<module>cotton-component-data</module>
 		<module>cotton-component-date-picker</module>
 		<module>cotton-component-date-time-picker</module>
+		<module>cotton-component-details</module>
 		<module>cotton-component-dialog</module>
 		<module>cotton-component-form-layout</module>
 		<module>cotton-component-grid</module>
