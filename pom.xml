@@ -109,6 +109,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mantledillusion.vaadin</groupId>
+				<artifactId>cotton-component-avatar</artifactId>
+				<version>${cotton.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mantledillusion.vaadin</groupId>
 				<artifactId>cotton-component-base</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
@@ -269,6 +274,7 @@
 		<module>cotton</module>
 		<module>cotton-demo</module>
 		<module>cotton-component</module>
+		<module>cotton-component-avatar</module>
 		<module>cotton-component-base</module>
 		<module>cotton-component-button</module>
 		<module>cotton-component-checkbox</module>
