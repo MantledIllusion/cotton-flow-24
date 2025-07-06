@@ -1,10 +1,8 @@
 package com.mantledillusion.vaadin.cotton.component;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.internal.LocaleUtil;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Interface for {@link Component} builders.
