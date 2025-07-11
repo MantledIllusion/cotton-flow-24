@@ -47,17 +47,6 @@
 		<developerConnection>scm:git:ssh://github.com:MantledIllusion/cotton-flow-24.git</developerConnection>
 		<url>https://github.com/MantledIllusion/cotton-flow-24</url>
 	</scm>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 	
     <dependencyManagement>
 		<dependencies>
@@ -340,6 +329,19 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.8.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+					<deploymentName>Cotton Flow 24</deploymentName>
+					<excludeArtifacts>
+						<excludeArtifact>cotton-demo</excludeArtifact>
+					</excludeArtifacts>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
