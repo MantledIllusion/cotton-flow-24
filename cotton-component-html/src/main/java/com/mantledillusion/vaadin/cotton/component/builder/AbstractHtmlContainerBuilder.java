@@ -5,7 +5,7 @@ import com.vaadin.flow.component.HtmlContainer;
 
 import java.util.function.Supplier;
 
-abstract class AbstractHtmlContainerBuilder<C extends HtmlContainer, B extends AbstractHtmlContainerBuilder<C, B>> extends AbstractComponentBuilder<C, B> implements
+public abstract class AbstractHtmlContainerBuilder<C extends HtmlContainer, B extends AbstractHtmlContainerBuilder<C, B>> extends AbstractComponentBuilder<C, B> implements
         HasComponentsBuilder<C, B>,
         HasElementBuilder<C, B>,
         HasSizeBuilder<C, B>,
@@ -13,7 +13,7 @@ abstract class AbstractHtmlContainerBuilder<C extends HtmlContainer, B extends A
 
     private final Supplier<C> componentSupplier;
 
-    AbstractHtmlContainerBuilder(Supplier<C> componentSupplier) {
+    public AbstractHtmlContainerBuilder(Supplier<C> componentSupplier) {
         this.componentSupplier = componentSupplier;
     }
 

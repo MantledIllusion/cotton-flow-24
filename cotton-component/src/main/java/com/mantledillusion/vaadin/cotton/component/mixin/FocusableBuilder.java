@@ -6,12 +6,11 @@ import com.vaadin.flow.component.*;
 /**
  * {@link ConfigurationBuilder} for {@link Focusable} implementing {@link Component}s.
  *
- * @param <C>
- *            The {@link Component} type implementing {@link Focusable}.
- * @param <B>
- *            The final implementation type of {@link FocusableBuilder}.
+ * @param <C> The type extending the {@link Focusable} type.
+ * @param <F> The {@link Component} type implementing {@link Focusable}.
+ * @param <B> The final implementation type of {@link FocusableBuilder}.
  */
-public interface FocusableBuilder<C extends Component & Focusable<C>, B extends FocusableBuilder<C, B>> extends
+public interface FocusableBuilder<C extends F, F extends Component & Focusable<F>, B extends FocusableBuilder<C, F, B>> extends
 		HasEnabledBuilder<C, B> {
 
 	/**
@@ -43,7 +42,7 @@ public interface FocusableBuilder<C extends Component & Focusable<C>, B extends 
 	 * 			The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
-	default B addFocusListener(ComponentEventListener<FocusNotifier.FocusEvent<C>> listener) {
+	default B addFocusListener(ComponentEventListener<FocusNotifier.FocusEvent<F>> listener) {
 		return configure(focusable -> focusable.addFocusListener(listener));
 	}
 
@@ -63,7 +62,7 @@ public interface FocusableBuilder<C extends Component & Focusable<C>, B extends 
 	 * 			The listener to add; might <b>not</b> be null.
 	 * @return this
 	 */
-	default B addBlurListener(ComponentEventListener<BlurNotifier.BlurEvent<C>> listener) {
+	default B addBlurListener(ComponentEventListener<BlurNotifier.BlurEvent<F>> listener) {
 		return configure(focusable -> focusable.addBlurListener(listener));
 	}
 }

@@ -406,8 +406,6 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
         }
     }
 
-    AbstractGridBuilder() {}
-
     /**
      * Builder method, causes the items to be identified by the result of their equals/hashCode method.
      * <p>

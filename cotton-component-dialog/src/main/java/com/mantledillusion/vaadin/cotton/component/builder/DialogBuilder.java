@@ -6,9 +6,14 @@ import com.vaadin.flow.component.dialog.Dialog;
 /**
  * {@link ConfigurationBuilder} for {@link Dialog}s.
  */
-public class DialogBuilder extends AbstractDialogBuilder<DialogBuilder> {
+public class DialogBuilder extends AbstractDialogBuilder<Dialog, DialogBuilder> {
 
     private DialogBuilder() {}
+
+    @Override
+    protected Dialog instantiate() {
+        return new Dialog();
+    }
 
     /**
      * Factory method for a dialog.

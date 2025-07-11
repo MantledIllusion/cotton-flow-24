@@ -1,25 +1,76 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
+import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
+import com.mantledillusion.vaadin.cotton.component.ConfigurationCustomizer;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.component.mixin.*;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.dialog.DialogVariant;
 
-@SuppressWarnings("unused")
-abstract class AbstractDialogBuilder<B extends AbstractDialogBuilder<B>> extends AbstractComponentBuilder<Dialog, B> implements
-        HasComponentsBuilder<Dialog, B>,
-        HasElementBuilder<Dialog, B>,
-        HasEnabledBuilder<Dialog, B>,
-        HasSizeBuilder<Dialog, B>,
-        HasStyleBuilder<Dialog, B>,
-        HasThemeVariantBuilder<Dialog, DialogVariant, B> {
+/**
+ * {@link ConfigurationBuilder} for subtypes of {@link Dialog}.
+ */
+public abstract class AbstractDialogBuilder<C extends Dialog, B extends AbstractDialogBuilder<C, B>> extends AbstractComponentBuilder<C, B> implements
+        HasComponentsBuilder<C, B>,
+        HasElementBuilder<C, B>,
+        HasEnabledBuilder<C, B>,
+        HasSizeBuilder<C, B>,
+        HasStyleBuilder<C, B>,
+        HasThemeVariantBuilder<C, DialogVariant, B> {
 
-    AbstractDialogBuilder() {}
+    public class DialogHeaderBuilder extends AbstractConfigurationBuilder<Dialog.DialogHeader, DialogHeaderBuilder> implements
+            HasComponentsBuilder<Dialog.DialogHeader, DialogHeaderBuilder> {
 
-    @Override
-    protected final Dialog instantiate() {
-        return new Dialog();
+        private DialogHeaderBuilder() {
+            super(AbstractDialogBuilder.this);
+        }
+
+        /**
+         * Builder method, sets the {@link Dialog}'s title.
+         *
+         * @see Dialog#setHeaderTitle(String)
+         * @param title The title to set; might be null.
+         * @return this
+         */
+        public DialogHeaderBuilder setTitle(String title) {
+            AbstractDialogBuilder.this.configure(dialog -> dialog.setHeaderTitle(title));
+            return this;
+        }
+    }
+
+    public class DialogFooterBuilder extends AbstractConfigurationBuilder<Dialog.DialogFooter, DialogFooterBuilder> implements
+            HasComponentsBuilder<Dialog.DialogFooter, DialogFooterBuilder> {
+
+        private DialogFooterBuilder() {
+            super(AbstractDialogBuilder.this);
+        }
+    }
+
+    public AbstractDialogBuilder() {}
+
+    /**
+     * Builder method, configures the {@link Dialog.DialogHeader}.
+     *
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link DialogHeaderBuilder}; might <b>not</b> be null.
+     * @return this
+     */
+    public B setHeader(ConfigurationCustomizer<DialogHeaderBuilder> customizer) {
+        var builder  = new DialogHeaderBuilder();
+        customizer.customize(builder);
+        return configure(dialog -> builder.apply(dialog.getHeader()));
+    }
+
+    /**
+     * Builder method, configures the {@link Dialog.DialogFooter}.
+     *
+     * @param customizer A {@link ConfigurationCustomizer} for the {@link DialogFooterBuilder}; might <b>not</b> be null.
+     * @return this
+     */
+    public B setFooter(ConfigurationCustomizer<DialogFooterBuilder> customizer) {
+        var builder  = new DialogFooterBuilder();
+        customizer.customize(builder);
+        return configure(dialog -> builder.apply(dialog.getFooter()));
     }
 
     /**
@@ -87,8 +138,8 @@ abstract class AbstractDialogBuilder<B extends AbstractDialogBuilder<B>> extends
      *
      * @return A new {@link Dialog} instance, fully configured, never null
      */
-    public Dialog buildAndOpen() {
-        Dialog dialog = build();
+    public C buildAndOpen() {
+        C dialog = build();
         dialog.open();
         return dialog;
     }

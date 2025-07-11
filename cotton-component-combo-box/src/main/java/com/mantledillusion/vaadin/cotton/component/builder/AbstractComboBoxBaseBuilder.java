@@ -12,8 +12,8 @@ import com.vaadin.flow.component.combobox.dataview.ComboBoxListDataView;
 import com.vaadin.flow.data.renderer.Renderer;
 
 @SuppressWarnings("unused")
-abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TValue>, TItem, TValue, CF extends ConfigurableFilter<TItem>, B extends AbstractComboBoxBaseBuilder<C, TItem, TValue, CF, B>> extends AbstractComponentBuilder<C, B> implements
-        FocusableBuilder<C, B>,
+abstract class AbstractComboBoxBaseBuilder<C extends CBB, CBB extends ComboBoxBase<CBB, TItem, TValue>, TItem, TValue, CF extends ConfigurableFilter<TItem>, B extends AbstractComboBoxBaseBuilder<C, CBB, TItem, TValue, CF, B>> extends AbstractComponentBuilder<C, B> implements
+        FocusableBuilder<C, CBB, B>,
         HasAllowedCharPatternBuilder<C, B>,
         HasAutoOpenBuilder<C, B>,
         HasDataViewBuilder<C, TItem, String, ComboBoxDataView<TItem>, B>,
@@ -27,7 +27,7 @@ abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TVal
         HasStyleBuilder<C, B>,
         HasTooltipBuilder<C, B>,
         HasValidatorBuilder<C, TValue, B>,
-        HasValueBuilder<C, TValue, AbstractField.ComponentValueChangeEvent<C, TValue>, B> {
+        HasValueBuilder<C, C, TValue, AbstractField.ComponentValueChangeEvent<CBB, TValue>, B> {
 
     AbstractComboBoxBaseBuilder() {}
 
@@ -104,7 +104,7 @@ abstract class AbstractComboBoxBaseBuilder<C extends ComboBoxBase<C, TItem, TVal
      * @param listener The listener to configure; might <b>not</b> be null.
      * @return this
      */
-    public B addCustomValueSetListener(ComponentEventListener<ComboBoxBase.CustomValueSetEvent<C>> listener) {
+    public B addCustomValueSetListener(ComponentEventListener<ComboBoxBase.CustomValueSetEvent<CBB>> listener) {
         return configure(comboBox -> comboBox.addCustomValueSetListener(listener));
     }
 }

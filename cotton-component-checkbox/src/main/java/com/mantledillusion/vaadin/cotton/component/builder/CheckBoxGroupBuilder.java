@@ -23,18 +23,7 @@ import java.util.Set;
  * @param <T> The value type of the {@link CheckboxGroup}
  * @param <CF> The configurable filter type of the {@link CheckboxGroup}
  */
-public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComponentBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>> implements
-		HasVoidFilterDataViewBuilder<CheckboxGroup<T>, T, CF, CheckboxGroupDataView<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasComponentsBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasElementBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasEnabledBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasLabelBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasListDataViewBuilder<CheckboxGroup<T>, T, CF, CheckboxGroupListDataView<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasSizeBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasStyleBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasThemeVariantBuilder<CheckboxGroup<T>, CheckboxGroupVariant, CheckBoxGroupBuilder<T, CF>>,
-		HasTooltipBuilder<CheckboxGroup<T>, CheckBoxGroupBuilder<T, CF>>,
-		HasValueBuilder<CheckboxGroup<T>, Set<T>, AbstractField.ComponentValueChangeEvent<CheckboxGroup<T>, Set<T>>, CheckBoxGroupBuilder<T, CF>> {
+public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractCheckBoxGroupBuilder<CheckboxGroup<T>, T, CF, CheckBoxGroupBuilder<T, CF>> {
 
 	private CheckBoxGroupBuilder() {}
 
@@ -77,49 +66,4 @@ public class CheckBoxGroupBuilder<T, CF extends ConfigurableFilter<T>> extends A
 		return new CheckboxGroup<>();
 	}
 
-	/**
-	 * Builder method, configures the predicate to use for item enablement.
-	 *
-	 * @see CheckboxGroup#setItemEnabledProvider(SerializablePredicate)
-	 * @param itemEnabledProvider
-	 *            The predicate enabling items; might <b>not</b> be null.
-	 * @return this
-	 */
-	public CheckBoxGroupBuilder<T, CF> setItemEnabledProvider(SerializablePredicate<T> itemEnabledProvider) {
-		return configure(checkBoxGroup -> checkBoxGroup.setItemEnabledProvider(itemEnabledProvider));
-	}
-
-	/**
-	 * Builder method, configures a generator to use for item label generation.
-	 *
-	 * @see CheckboxGroup#setItemLabelGenerator(ItemLabelGenerator)
-	 * @param itemLabelGenerator The generator for item labels; might <b>not</b> be null.
-	 * @return this
-	 */
-	public CheckBoxGroupBuilder<T, CF> setItemLabelGenerator(ItemLabelGenerator<T> itemLabelGenerator) {
-		return configure(checkBoxGroup -> checkBoxGroup.setItemLabelGenerator(itemLabelGenerator));
-	}
-
-	/**
-	 * Builder method, configures the {@link Renderer} that is used to render the items of the {@link CheckboxGroup}.
-	 *
-	 * @see CheckboxGroup#setRenderer(ComponentRenderer)
-	 * @param renderer The {@link Renderer} to set; might <b>not</b> be null.
-	 * @return this
-	 */
-	public <C extends Component> CheckBoxGroupBuilder<T, CF> setItemRenderer(ComponentRenderer<C, T> renderer) {
-		return configure(comboBox -> comboBox.setRenderer(renderer));
-	}
-
-	/**
-	 * Builder method, configures a listener for {@link com.vaadin.flow.data.selection.MultiSelectionEvent}s.
-	 * 
-	 * @see CheckboxGroup#addSelectionListener(MultiSelectionListener)
-	 * @param listener 
-	 * 			The listener to add; might <b>not</b> be null.
-	 * @return this
-	 */
-	public CheckBoxGroupBuilder<T, CF> addSelectionListener(MultiSelectionListener<CheckboxGroup<T>, T> listener) {
-		return configure(checkBoxGroup -> checkBoxGroup.addSelectionListener(listener));
-	}
 }

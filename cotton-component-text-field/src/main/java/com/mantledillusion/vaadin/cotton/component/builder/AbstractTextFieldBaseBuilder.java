@@ -5,9 +5,9 @@ import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.textfield.TextFieldBase;
 
 @SuppressWarnings("unused")
-abstract class AbstractTextFieldBaseBuilder<C extends TextFieldBase<C, T>, T, B extends AbstractTextFieldBaseBuilder<C, T, B>> extends AbstractComponentBuilder<C, B> implements
+abstract class AbstractTextFieldBaseBuilder<C extends CB, CB extends TextFieldBase<CB, T>, T, B extends AbstractTextFieldBaseBuilder<C, CB, T, B>> extends AbstractComponentBuilder<C, B> implements
         CompositionNotifierBuilder<C, B>,
-        FocusableBuilder<C, B>,
+        FocusableBuilder<C, CB, B>,
         HasAutocapitalizeBuilder<C, B>,
         HasAutocompleteBuilder<C, B>,
         HasAutocorrectBuilder<C, B>,
@@ -20,7 +20,7 @@ abstract class AbstractTextFieldBaseBuilder<C extends TextFieldBase<C, T>, T, B 
         HasSuffixBuilder<C, B>,
         HasTooltipBuilder<C, B>,
         HasValidatorBuilder<C, T, B>,
-        HasValueBuilder<C, T, AbstractField.ComponentValueChangeEvent<C, T>, B>,
+        HasValueBuilder<C, CB, T, AbstractField.ComponentValueChangeEvent<CB, T>, B>,
         HasValueChangeModeBuilder<C, B>,
         InputNotifierBuilder<C, B>,
         KeyNotifierBuilder<C, B> {

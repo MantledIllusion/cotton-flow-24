@@ -12,14 +12,12 @@ import com.vaadin.flow.component.HasValue;
 /**
  * {@link ConfigurationBuilder} for {@link HasValue} implementing {@link Component}s.
  *
- * @param <C>
- *            The {@link Component} type implementing {@link HasValue}.
- * @param <V>
- *            The value type of the {@link HasValue}.
- * @param <B>
- *            The final implementation type of {@link HasValueBuilder}.
+ * @param <C> The type extending {@link HasValue} type.
+ * @param <H> The {@link Component} type implementing {@link HasValue}.
+ * @param <V> The value type of the {@link HasValue}.
+ * @param <B> The final implementation type of {@link HasValueBuilder}.
  */
-public interface HasValueBuilder<C extends HasValue<E, V>, V, E extends HasValue.ValueChangeEvent<V>, B extends HasValueBuilder<C, V, E, B>>
+public interface HasValueBuilder<C extends H, H extends HasValue<E, V>, V, E extends HasValue.ValueChangeEvent<V>, B extends HasValueBuilder<C, H, V, E, B>>
         extends ConfigurationBuilder<C, B> {
 
     /**

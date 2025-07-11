@@ -6,12 +6,10 @@ import com.vaadin.flow.component.*;
 /**
  * {@link ConfigurationBuilder} for {@link ClickNotifier} implementing {@link Component}s.
  *
- * @param <C>
- *            The {@link Component} type implementing {@link ClickNotifier}.
- * @param <B>
- *            The final implementation type of {@link ClickNotifierBuilder}.
+ * @param <C> The {@link Component} type implementing {@link ClickNotifier}.
+ * @param <B> The final implementation type of {@link ClickNotifierBuilder}.
  */
-public interface ClickNotifierBuilder<C extends Component & ClickNotifier<C>, B extends ClickNotifierBuilder<C, B>> extends
+public interface ClickNotifierBuilder<C extends CN, CN extends Component & ClickNotifier<CN>, B extends ClickNotifierBuilder<C, CN, B>> extends
         ConfigurationBuilder<C, B> {
 
     /**
@@ -21,7 +19,7 @@ public interface ClickNotifierBuilder<C extends Component & ClickNotifier<C>, B 
      * @param listener The listener to add; might <b>not</b> be null.
      * @return this
      */
-    default B addClickListener(ComponentEventListener<ClickEvent<C>> listener) {
+    default B addClickListener(ComponentEventListener<ClickEvent<CN>> listener) {
         return configure(clickable -> clickable.addClickListener(listener));
     }
 
@@ -32,7 +30,7 @@ public interface ClickNotifierBuilder<C extends Component & ClickNotifier<C>, B 
      * @param listener The listener to add; might <b>not</b> be null.
      * @return this
      */
-    default B addDoubleClickListener(ComponentEventListener<ClickEvent<C>> listener) {
+    default B addDoubleClickListener(ComponentEventListener<ClickEvent<CN>> listener) {
         return configure(clickable -> clickable.addDoubleClickListener(listener));
     }
 
@@ -43,7 +41,7 @@ public interface ClickNotifierBuilder<C extends Component & ClickNotifier<C>, B 
      * @param listener The listener to add; might <b>not</b> be null.
      * @return this
      */
-    default B addSingleClickListener(ComponentEventListener<ClickEvent<C>> listener) {
+    default B addSingleClickListener(ComponentEventListener<ClickEvent<CN>> listener) {
         return configure(clickable -> clickable.addSingleClickListener(listener));
     }
 

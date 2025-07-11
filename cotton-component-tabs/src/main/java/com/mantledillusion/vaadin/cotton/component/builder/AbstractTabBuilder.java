@@ -7,7 +7,7 @@ import com.vaadin.flow.component.tabs.TabVariant;
 
 import java.util.function.BiConsumer;
 
-public class AbstractTabBuilder <PC, B extends AbstractTabBuilder<PC, B>> extends AbstractConfigurationBuilder<Tab, B> implements
+public class AbstractTabBuilder<PC, B extends AbstractTabBuilder<PC, B>> extends AbstractConfigurationBuilder<Tab, B> implements
         Configurer<PC>,
         HasComponentsBuilder<Tab, B>,
         HasEnabledBuilder<Tab, B>,
@@ -17,12 +17,12 @@ public class AbstractTabBuilder <PC, B extends AbstractTabBuilder<PC, B>> extend
         HasThemeVariantBuilder<Tab, TabVariant, B>,
         HasTooltipBuilder<Tab, B> {
 
-    private final Class<PC> parentComponentType;
+    private final Class<? super PC> parentComponentType;
     private final BiConsumer<PC, Tab> tabAdder;
     private final BiConsumer<PC, Tab> tabSelector;
 
     <PB extends AbstractConfigurationBuilder<PC, PB>> AbstractTabBuilder(PB parentBuilder,
-                                                                         Class<PC> parentComponentType,
+                                                                         Class<? super PC> parentComponentType,
                                                                          BiConsumer<PC, Tab> tabAdder,
                                                                          BiConsumer<PC, Tab> tabSelector) {
         super(parentBuilder);
@@ -58,11 +58,12 @@ public class AbstractTabBuilder <PC, B extends AbstractTabBuilder<PC, B>> extend
      *            the boolean value to set
      * @return this
      */
+    @SuppressWarnings("unchecked")
     public B setSelected(boolean selected) {
         return configure(tab -> {
             tab.setSelected(selected);
             if (selected) {
-                this.tabSelector.accept(AbstractTabBuilder.this.get(this.parentComponentType), tab);
+                this.tabSelector.accept((PC) AbstractTabBuilder.this.get(this.parentComponentType), tab);
             }
         });
     }

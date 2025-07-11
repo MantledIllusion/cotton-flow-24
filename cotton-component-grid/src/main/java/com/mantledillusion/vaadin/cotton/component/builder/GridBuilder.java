@@ -14,6 +14,11 @@ public class GridBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractGr
 
     private GridBuilder() {}
 
+    @Override
+    protected Grid<T> instantiate() {
+        return new Grid<>();
+    }
+
     /**
      * Factory method for a new instance.
      *
@@ -45,10 +50,5 @@ public class GridBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractGr
      */
     public static <T, F extends ConfigurableFilter<T>> GridBuilder<T, F> create(Class<T> elementType, Class<F> filterType) {
         return new GridBuilder<>();
-    }
-
-    @Override
-    protected Grid<T> instantiate() {
-        return new Grid<>();
     }
 }

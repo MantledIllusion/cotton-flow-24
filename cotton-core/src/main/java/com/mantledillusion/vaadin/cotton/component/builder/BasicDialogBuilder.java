@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 /**
  * {@link ConfigurationBuilder} for {@link Dialog}s with content and 0-&gt;n button options for the user to choose from.
  */
-public class BasicDialogBuilder extends AbstractDialogBuilder<BasicDialogBuilder> {
+public class BasicDialogBuilder extends AbstractDialogBuilder<Dialog, BasicDialogBuilder> {
 
     private BasicDialogBuilder(Supplier<Component> contentSupplier) {
         configure(dialog -> {
@@ -35,6 +35,11 @@ public class BasicDialogBuilder extends AbstractDialogBuilder<BasicDialogBuilder
                     add(btnLayout).
                     build());
         }, true);
+    }
+
+    @Override
+    protected Dialog instantiate() {
+        return new Dialog();
     }
 
     /**

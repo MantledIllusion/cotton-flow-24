@@ -10,11 +10,14 @@ import java.util.regex.Pattern;
 /**
  * {@link ConfigurationBuilder} for {@link TextField}s.
  */
-public class TextFieldBuilder extends AbstractTextFieldBaseBuilder<TextField, String, TextFieldBuilder> implements
-		HasAllowedCharPatternBuilder<TextField, TextFieldBuilder>,
-		HasThemeVariantBuilder<TextField, TextFieldVariant, TextFieldBuilder> {
+public class TextFieldBuilder extends AbstractTextFieldBuilder<TextField, TextFieldBuilder> {
 
 	private TextFieldBuilder() {}
+
+	@Override
+	protected TextField instantiate() {
+		return new TextField();
+	}
 
 	/**
 	 * Factory method for a new instance.
@@ -25,47 +28,4 @@ public class TextFieldBuilder extends AbstractTextFieldBaseBuilder<TextField, St
 		return new TextFieldBuilder();
 	}
 
-	@Override
-	protected TextField instantiate() {
-		return new TextField();
-	}
-
-	/**
-	 * Builder method, configures the maximum length the {@link TextField}s value
-	 * might grow up to.
-	 * 
-	 * @see TextField#setMaxLength(int)
-	 * @param maxLength
-	 *            The max length.
-	 * @return this
-	 */
-	public TextFieldBuilder setMaxLength(int maxLength) {
-		return configure(textField -> textField.setMaxLength(maxLength));
-	}
-
-	/**
-	 * Builder method, configures the minimum length the {@link TextField}s value
-	 * might shrink down to.
-	 * 
-	 * @see TextField#setMinLength(int)
-	 * @param minLength
-	 *            The min length.
-	 * @return this
-	 */
-	public TextFieldBuilder setMinLength(int minLength) {
-		return configure(textField -> textField.setMinLength(minLength));
-	}
-
-	/**
-	 * Builder method, configures {@link Pattern} the {@link TextField}'s content
-	 * has to match.
-	 * 
-	 * @see TextField#setPattern(String)
-	 * @param pattern
-	 *            The pattern the value has to match; might be null.
-	 * @return this
-	 */
-	public TextFieldBuilder setPattern(String pattern) {
-		return configure(textField -> textField.setPattern(pattern));
-	}
 }

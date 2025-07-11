@@ -1,12 +1,9 @@
 package com.mantledillusion.vaadin.cotton.component.builder;
 
 import com.mantledillusion.vaadin.cotton.component.ConfigurationBuilder;
-import com.mantledillusion.vaadin.cotton.component.mixin.HasThemeVariantBuilder;
 import com.mantledillusion.vaadin.cotton.data.filter.ConfigurableFilter;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
-import com.vaadin.flow.component.combobox.MultiSelectComboBoxVariant;
 
-import java.util.Set;
 
 /**
  * {@link ConfigurationBuilder} for {@link MultiSelectComboBox}es.
@@ -15,8 +12,7 @@ import java.util.Set;
  * @param <CF> The configurable filter type of the {@link MultiSelectComboBox}
  */
 @SuppressWarnings("unused")
-public class MultiSelectComboBoxBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractComboBoxBaseBuilder<MultiSelectComboBox<T>, T, Set<T>, CF, MultiSelectComboBoxBuilder<T, CF>> implements
-        HasThemeVariantBuilder<MultiSelectComboBox<T>, MultiSelectComboBoxVariant, MultiSelectComboBoxBuilder<T, CF>> {
+public class MultiSelectComboBoxBuilder<T, CF extends ConfigurableFilter<T>> extends AbstractMultiSelectComboBoxBuilder<MultiSelectComboBox<T>, T, CF, MultiSelectComboBoxBuilder<T, CF>> {
 
     private MultiSelectComboBoxBuilder() {}
 

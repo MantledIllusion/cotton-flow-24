@@ -15,10 +15,12 @@ import java.util.function.Function;
 
 /**
  * {@link ConfigurationBuilder} for {@link MenuItem}s.
+ *
+ * @param <PC> The parent menu component type of the builder's {@link MenuItem}.
  */
 public class MenuItemBuilder<PC> extends AbstractConfigurationBuilder<MenuItem, MenuItemBuilder<PC>> implements
         Configurer<PC>,
-        ClickNotifierBuilder<MenuItem, MenuItemBuilder<PC>>,
+        ClickNotifierBuilder<MenuItem, MenuItem, MenuItemBuilder<PC>>,
         HasEnabledBuilder<MenuItem, MenuItemBuilder<PC>>,
         HasComponentsBuilder<MenuItem, MenuItemBuilder<PC>> {
 
