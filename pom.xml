@@ -113,6 +113,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mantledillusion.vaadin</groupId>
+				<artifactId>cotton-component-card</artifactId>
+				<version>${cotton.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mantledillusion.vaadin</groupId>
 				<artifactId>cotton-component-checkbox</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
@@ -266,6 +271,7 @@
 		<module>cotton-component-avatar</module>
 		<module>cotton-component-base</module>
 		<module>cotton-component-button</module>
+		<module>cotton-component-card</module>
 		<module>cotton-component-checkbox</module>
 		<module>cotton-component-combo-box</module>
 		<module>cotton-component-data</module>
