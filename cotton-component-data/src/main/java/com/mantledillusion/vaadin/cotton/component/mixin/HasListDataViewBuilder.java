@@ -127,7 +127,7 @@ public interface HasListDataViewBuilder<C extends HasListDataView<T, V>, T, CF e
 		return configure(hasListDataView -> {
 			CF filter = ConfigurableFilter.supplyFilter(filterSupplier);
 			set(ConfigurableFilter.class, filter);
-			InMemoryDataProviderBinding<T> binding = binder.bindHasListDataView(hasListDataView, property, filter);
+			InMemoryDataProviderBinding<ModelType, T> binding = binder.bindHasListDataView(hasListDataView, property, filter);
 			filter.addConfigurationChangedListener(() -> binding.getDataProvider().refreshAll());
 		}, true);
 	}

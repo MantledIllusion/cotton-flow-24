@@ -1,5 +1,6 @@
 package com.mantledillusion.vaadin.cotton.model;
 
+import com.mantledillusion.data.epiphy.Property;
 import com.vaadin.flow.data.provider.InMemoryDataProvider;
 
 import java.util.function.Consumer;
@@ -9,12 +10,17 @@ import java.util.function.Consumer;
  *
  * @param <ElementType> The element type of the {@link InMemoryDataProvider}.
  */
-public abstract class InMemoryDataProviderBinding<ElementType> extends Binding<ElementType> {
+public class InMemoryDataProviderBinding<ModelType, ElementType> extends ElementBinding<ModelType, ElementType> {
 
     private final InMemoryDataProvider<ElementType> dataProvider;
 
-    InMemoryDataProviderBinding(Auditor baseAuditor, Consumer<Binding<ElementType>> registration, InMemoryDataProvider<ElementType> dataProvider) {
-        super(baseAuditor, registration);
+    InMemoryDataProviderBinding(ModelContainer<ModelType> modelContainer,
+                                Auditor baseAuditor,
+                                Consumer<Binding<ElementType>> registration,
+                                Property<ModelType, ElementType> property,
+                                InMemoryDataProvider<ElementType> dataProvider,
+                                ElementContainer<ElementType> elementContainer) {
+        super(modelContainer, baseAuditor, registration, property, elementContainer);
         this.dataProvider = dataProvider;
     }
 
@@ -25,5 +31,10 @@ public abstract class InMemoryDataProviderBinding<ElementType> extends Binding<E
      */
     public InMemoryDataProvider<ElementType> getDataProvider() {
         return dataProvider;
+    }
+
+    @Override
+    protected void onValueChanged() {
+        this.dataProvider.refreshAll();
     }
 }

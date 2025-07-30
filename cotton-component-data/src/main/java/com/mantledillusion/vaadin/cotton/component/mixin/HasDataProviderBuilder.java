@@ -162,7 +162,7 @@ public interface HasDataProviderBuilder<C extends HasDataProvider<T>, T, CF exte
         return configure(hasDataProvider -> {
             CF filter = ConfigurableFilter.supplyFilter(filterSupplier);
             set(ConfigurableFilter.class, filter);
-            InMemoryDataProviderBinding<T> binding = binder.bindHasDataProvider(hasDataProvider, property, filter);
+            InMemoryDataProviderBinding<ModelType, T> binding = binder.bindHasDataProvider(hasDataProvider, property, filter);
             filter.addConfigurationChangedListener(() -> binding.getDataProvider().refreshAll());
         }, true);
     }

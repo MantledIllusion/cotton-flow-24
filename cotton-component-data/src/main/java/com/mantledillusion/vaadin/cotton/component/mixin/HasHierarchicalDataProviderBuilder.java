@@ -108,7 +108,7 @@ public interface HasHierarchicalDataProviderBuilder<C extends HasHierarchicalDat
         return configure(hasDataProvider -> {
             CF filter = filterSupplier != null ? filterSupplier.get() : null;
             set(ConfigurableFilter.class, filter);
-            InMemoryDataProviderBinding<T> binding = binder.bindHasHierarchicalDataProvider(hasDataProvider, property, filter);
+            InMemoryDataProviderBinding<ModelType, T> binding = binder.bindHasHierarchicalDataProvider(hasDataProvider, property, filter);
             if (filter != null) {
                 filter.addConfigurationChangedListener(() -> binding.getDataProvider().refreshAll());
             }

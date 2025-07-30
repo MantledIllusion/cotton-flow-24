@@ -2,17 +2,13 @@ package com.mantledillusion.vaadin.cotton.model;
 
 import com.mantledillusion.data.epiphy.Property;
 import com.mantledillusion.data.epiphy.context.Context;
-import com.mantledillusion.data.epiphy.context.TraversingMode;
 import com.mantledillusion.data.epiphy.context.function.*;
 import com.mantledillusion.data.epiphy.context.reference.ReferencedValue;
 import com.mantledillusion.essentials.expression.Expression;
 import com.mantledillusion.vaadin.cotton.component.Configurer;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasEnabled;
-import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.data.binder.HasDataProvider;
 import com.vaadin.flow.data.provider.HasListDataView;
-import com.vaadin.flow.data.provider.InMemoryDataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.provider.hierarchy.HasHierarchicalDataProvider;
 import com.vaadin.flow.data.provider.hierarchy.TreeData;
@@ -27,6 +23,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -532,79 +529,90 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	}
 
 	// ######################################################################################################################################
-	// ###################################################### HASDATAPROVIDER BINDING #######################################################
+	// ########################################################## ELEMENT BINDING ###########################################################
 	// ######################################################################################################################################
 
-	private interface ElementHandle<ElementType> {
+	/**
+	 * Binds the given {@link ElementBinding.ElementContainer} to the given property.
+	 *
+	 * @param <ElementType> The container's element type that is provided by the property.
+	 * @param elementContainer The container to synchronize property updates with; might <b>not</b> be null.
+	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
+	 * @return The {@link Binding} to further configure the binding with, never null
+	 */
+	public <ElementType> ElementBinding<ModelType, ElementType> bindElementContainer(ElementBinding.ElementContainer<ElementType> elementContainer,
+																					 Property<ModelType, ElementType> property) {
+		Consumer<Binding<ElementType>> registration = removeBinding(property);
 
-		boolean contains(ElementType element);
-
-		Iterable<ElementType> get();
-
-		void add(ElementType parent, ElementType element, ElementType sibling);
-
-		void remove(ElementType element);
+		return addBinding(property, new ElementBinding<>(this, this.baseBindingAuditor, registration, property, elementContainer));
 	}
 
-	private class DataProviderBinding<ElementType> extends InMemoryDataProviderBinding<ElementType> {
+	// ######################################################################################################################################
+	// ################################################### HASORDEREDCOMPONENTS BINDING #####################################################
+	// ######################################################################################################################################
 
-		private final Property<ModelType, ElementType> property;
-		private final ElementHandle<ElementType> elementHandle;
+	/**
+	 * Binds the given {@link HasOrderedComponents}' child components to the given property, using the given component
+	 * generator to populate new elements.
+	 *
+	 * @see #bindElementContainer(ElementBinding.ElementContainer, Property)
+	 * @param <ElementType> The container's element type that is provided by the property.
+	 * @param hasOrderedComponents The {@link HasOrderedComponents} to bind to any updates to the properties' elements; might <b>not</b> be null.
+	 * @param componentGenerator A {@link Function} to generate a {@link Component} from a new element with; might <b>not</b> be null.
+	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
+	 * @return The {@link Binding} to further configure the binding with, never null
+	 */
+	public <ElementType> ElementBinding<ModelType, ElementType> bindHasOrderedComponents(HasOrderedComponents hasOrderedComponents,
+																						 Function<ElementType, Component> componentGenerator,
+																						 Property<ModelType, ElementType> property) {
+		return bindElementContainer(new ElementBinding.ElementContainer<>() {
 
-		private DataProviderBinding(Auditor baseAuditor, Consumer<Binding<ElementType>> registration,
-									Property<ModelType, ElementType> property,
-									InMemoryDataProvider<ElementType> dataProvider,
-									ElementHandle<ElementType> elementHandle) {
-			super(baseAuditor, registration, dataProvider);
-			this.property = property;
-			this.elementHandle = elementHandle;
-		}
+					private static final String ELEMENT_NAME = "_element";
 
-		@Override
-		void valueChanged(Context context, UpdateType type, UpdateDirection direction) {
-			boolean changed = false;
-
-			if (type != UpdateType.ADD) {
-				for (ElementType element: this.elementHandle.get()) {
-					if (this.property.contextualize(ModelContainer.this.getModel(), element).isEmpty()) {
-						if (direction.isUpStream) {
-							this.elementHandle.remove(element);
-						}
-						changed = true;
+					@Override
+					public boolean contains(ElementType element) {
+						return find(element).isPresent();
 					}
-				}
-			}
 
-			if (type != UpdateType.REMOVE) {
-				ElementType subSibling = null;
-				for (Context subContext: this.property.contextualize(ModelContainer.this.getModel(), context, TraversingMode.PARENT)) {
-					if (direction.isUpStream) {
-						subSibling = addElement(null, subSibling, subContext);
+					@Override
+					@SuppressWarnings("unchecked")
+					public Iterable<ElementType> get() {
+						return () -> hasOrderedComponents.getChildren()
+								.map(child -> (ElementType) ComponentUtil.getData(child, ELEMENT_NAME))
+								.iterator();
 					}
-					changed = true;
-				}
-			}
 
-			if (changed) {
-				getDataProvider().refreshAll();
-			}
-		}
+					@Override
+					public void add(ElementType parent, ElementType element, ElementType sibling) {
+						Component elementComponent = componentGenerator.apply(element);
+						ComponentUtil.setData(elementComponent, ELEMENT_NAME, element);
+						Optional.ofNullable(sibling)
+								.flatMap(this::find)
+								.ifPresentOrElse(
+										siblingComponent -> hasOrderedComponents.addComponentAtIndex(
+												hasOrderedComponents.indexOf(siblingComponent),
+												elementComponent
+										),
+										() -> hasOrderedComponents.add(elementComponent)
+								);
+					}
 
-		private ElementType addElement(ElementType parent, ElementType childSibling, Context childContext) {
-			ElementType child = this.property.get(ModelContainer.this.getModel(), childContext);
-			if (child != parent) {
-				if (!this.elementHandle.contains(child)) {
-					this.elementHandle.add(parent, child, childSibling);
-				}
+					@Override
+					public void remove(ElementType element) {
+						find(element).ifPresent(hasOrderedComponents::remove);
+					}
 
-				ElementType subSibling = null;
-				for (Context subContext: this.property.contextualize(ModelContainer.this.getModel(), childContext, TraversingMode.CHILD)) {
-					subSibling = addElement(child, subSibling, subContext);
-				}
-			}
-			return child;
-		}
+					private Optional<Component> find(ElementType element) {
+						return hasOrderedComponents.getChildren()
+								.filter(child -> ComponentUtil.getData(child, ELEMENT_NAME) == element)
+								.findFirst();
+					}
+				}, property);
 	}
+
+	// ######################################################################################################################################
+	// ###################################################### HASDATAPROVIDER BINDING #######################################################
+	// ######################################################################################################################################
 
 	/**
 	 * Binds the given {@link HasListDataView} to the given property of this {@link ModelContainer}.
@@ -614,8 +622,8 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
 	 * @return The {@link Binding} to further configure the binding with, never null
 	 */
-	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasListDataView(HasListDataView<ElementType, ?> hasListDataView,
-																					  Property<ModelType, ElementType> property) {
+	public <ElementType> InMemoryDataProviderBinding<ModelType, ElementType> bindHasListDataView(HasListDataView<ElementType, ?> hasListDataView,
+																								 Property<ModelType, ElementType> property) {
 		return bindHasListDataView(hasListDataView, property, null);
 	}
 
@@ -628,17 +636,17 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param filter The filter to apply to the elements; might be null.
 	 * @return The {@link Binding} to further configure the binding with, never null
 	 */
-	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasListDataView(HasListDataView<ElementType, ?> hasListDataView,
-																					  Property<ModelType, ElementType> property,
-																					  SerializablePredicate<ElementType> filter) {
+	public <ElementType> InMemoryDataProviderBinding<ModelType, ElementType> bindHasListDataView(HasListDataView<ElementType, ?> hasListDataView,
+																								 Property<ModelType, ElementType> property,
+																								 SerializablePredicate<ElementType> filter) {
 		Consumer<Binding<ElementType>> registration = removeBinding(property);
 		List<ElementType> elements = new ArrayList<>();
 		ListDataProvider<ElementType> dataProvider = new ListDataProvider<>(Collections.unmodifiableList(elements));
 		dataProvider.setFilter(filter);
 		hasListDataView.setItems(dataProvider);
 
-		return addBinding(property, new DataProviderBinding<>(this.baseBindingAuditor, registration,
-				property, dataProvider, new ElementHandle<ElementType>() {
+		return addBinding(property, new InMemoryDataProviderBinding<>(this, this.baseBindingAuditor, registration,
+				property, dataProvider, new ElementBinding.ElementContainer<>() {
 
 			@Override
 			public boolean contains(ElementType element) {
@@ -670,8 +678,8 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
 	 * @return The {@link Binding} to further configure the binding with, never null
 	 */
-	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasDataProvider(HasDataProvider<ElementType> hasDataProvider,
-																					  Property<ModelType, ElementType> property) {
+	public <ElementType> InMemoryDataProviderBinding<ModelType, ElementType> bindHasDataProvider(HasDataProvider<ElementType> hasDataProvider,
+																								 Property<ModelType, ElementType> property) {
 		return bindHasDataProvider(hasDataProvider, property, null);
 	}
 
@@ -684,17 +692,17 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param filter The filter to apply to the elements; might be null.
 	 * @return The {@link Binding} to further configure the binding with, never null
 	 */
-	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasDataProvider(HasDataProvider<ElementType> hasDataProvider,
-																					  Property<ModelType, ElementType> property,
-																					  SerializablePredicate<ElementType> filter) {
+	public <ElementType> InMemoryDataProviderBinding<ModelType, ElementType> bindHasDataProvider(HasDataProvider<ElementType> hasDataProvider,
+																								 Property<ModelType, ElementType> property,
+																								 SerializablePredicate<ElementType> filter) {
 		Consumer<Binding<ElementType>> registration = removeBinding(property);
 		List<ElementType> elements = new ArrayList<>();
 		ListDataProvider<ElementType> dataProvider = new ListDataProvider<>(Collections.unmodifiableList(elements));
 		dataProvider.setFilter(filter);
 		hasDataProvider.setDataProvider(dataProvider);
 
-		return addBinding(property, new DataProviderBinding<>(this.baseBindingAuditor, registration,
-				property, dataProvider, new ElementHandle<ElementType>() {
+		return addBinding(property, new InMemoryDataProviderBinding<>(this, this.baseBindingAuditor, registration,
+				property, dataProvider, new ElementBinding.ElementContainer<>() {
 
 			@Override
 			public boolean contains(ElementType element) {
@@ -726,8 +734,8 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param property The {@link Property} to bind to; might <b>not</b> be null.
 	 * @return The {@link Binding} to further configure the binding with, never null
 	 */
-	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasHierarchicalDataProvider(HasHierarchicalDataProvider<ElementType> hasDataProvider,
-																								  Property<ModelType, ElementType> property) {
+	public <ElementType> InMemoryDataProviderBinding<ModelType, ElementType> bindHasHierarchicalDataProvider(HasHierarchicalDataProvider<ElementType> hasDataProvider,
+																											 Property<ModelType, ElementType> property) {
 		return bindHasHierarchicalDataProvider(hasDataProvider, property, null);
 	}
 
@@ -740,17 +748,17 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param filter The filter to apply to the elements; might be null.
 	 * @return The {@link Binding} to further configure the binding with, never null
 	 */
-	public <ElementType> InMemoryDataProviderBinding<ElementType> bindHasHierarchicalDataProvider(HasHierarchicalDataProvider<ElementType> hasDataProvider,
-																								  Property<ModelType, ElementType> property,
-																								  SerializablePredicate<ElementType> filter) {
+	public <ElementType> InMemoryDataProviderBinding<ModelType, ElementType> bindHasHierarchicalDataProvider(HasHierarchicalDataProvider<ElementType> hasDataProvider,
+																											 Property<ModelType, ElementType> property,
+																											 SerializablePredicate<ElementType> filter) {
 		Consumer<Binding<ElementType>> registration = removeBinding(property);
 		TreeData<ElementType> elements = new TreeData<>();
 		TreeDataProvider<ElementType> dataProvider = new TreeDataProvider<>(elements);
 		dataProvider.setFilter(filter);
 		hasDataProvider.setDataProvider(dataProvider);
 
-		return addBinding(property, new DataProviderBinding<>(this.baseBindingAuditor, registration,
-				property, dataProvider, new ElementHandle<ElementType>() {
+		return addBinding(property, new InMemoryDataProviderBinding<>(this, this.baseBindingAuditor, registration,
+				property, dataProvider, new ElementBinding.ElementContainer<>() {
 
 			@Override
 			public boolean contains(ElementType element) {
