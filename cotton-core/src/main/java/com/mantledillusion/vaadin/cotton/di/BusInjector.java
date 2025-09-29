@@ -64,7 +64,7 @@ class BusInjector {
                                     + parameterType.getSimpleName() + ", but also declares an extension of the type "
                                     + extensionType.getSimpleName() + " which is not assignable.");
                         } else {
-                            addSubscriber(parameters[0].getType(), subscriber, method);
+                            addSubscriber(extensionType, subscriber, method);
                         }
                     }
                 }
