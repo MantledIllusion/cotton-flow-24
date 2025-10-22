@@ -11,15 +11,13 @@ import com.vaadin.flow.component.dialog.Dialog;
  */
 public abstract class AbstractFrame extends AbstractView {
 
-    private Dialog dialog;
-
     @Override
     protected final Dialog buildUI() throws Exception {
         DialogBuilder builder = DialogBuilder.create();
         Component content = buildUI(builder);
-        this.dialog = builder.build();
-        this.dialog.add(content);
-        return this.dialog;
+        Dialog dialog = builder.build();
+        dialog.add(content);
+        return dialog;
     }
 
     @Override
@@ -35,7 +33,7 @@ public abstract class AbstractFrame extends AbstractView {
      * @see Dialog#open()
      */
     public void show() {
-        this.dialog.open();
+        getContent().open();
     }
 
     /**
@@ -45,7 +43,7 @@ public abstract class AbstractFrame extends AbstractView {
      * @return True if the frame is showing, false otherwise.
      */
     public boolean isShowing() {
-        return this.dialog.isOpened();
+        return getContent().isOpened();
     }
 
     /**
@@ -54,6 +52,6 @@ public abstract class AbstractFrame extends AbstractView {
      * @see Dialog#close()
      */
     public void hide() {
-        this.dialog.close();
+        getContent().close();
     }
 }
