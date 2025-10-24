@@ -753,4 +753,26 @@ public abstract class AbstractGridBuilder<C extends Grid<T>, T, CF extends Confi
     public B addDropListener(ComponentEventListener<GridDropEvent<T>> listener) {
         return configure(grid -> grid.addDropListener(listener));
     }
+
+    /**
+     * Builder method, configures the component to display if the grid is empty.
+     *
+     * @see Grid#setEmptyStateComponent(Component)
+     * @param component The component to set; might be null.
+     * @return this
+     */
+    public B setEmptyStateComponent(Component component) {
+        return configure(grid -> grid.setEmptyStateComponent(component));
+    }
+
+    /**
+     * Builder method, configures the text to display if the grid is empty.
+     *
+     * @see Grid#setEmptyStateText(String)
+     * @param text The text to set; might be null.
+     * @return this
+     */
+    public B setEmptyStateText(String text) {
+        return configure(grid -> grid.setEmptyStateText(text));
+    }
 }
