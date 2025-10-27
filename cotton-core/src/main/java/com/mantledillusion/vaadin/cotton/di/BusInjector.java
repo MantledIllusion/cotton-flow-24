@@ -53,7 +53,7 @@ class BusInjector {
                                 + Subscribe.class.getSimpleName() + " and declares no parameters, but does also not "
                                 + "declare at least one event extension class which is required when not using a parameter.");
                     } else {
-                        addSubscriber(parameters[0].getType(), subscriber, method);
+                        addSubscriber(parameters[0].getType(), subscriber, method, true);
                     }
                 } else {
                     Class<?> parameterType = parameters.length == 0 ? Object.class : parameters[0].getType();
@@ -64,14 +64,14 @@ class BusInjector {
                                     + parameterType.getSimpleName() + ", but also declares an extension of the type "
                                     + extensionType.getSimpleName() + " which is not assignable.");
                         } else {
-                            addSubscriber(extensionType, subscriber, method);
+                            addSubscriber(extensionType, subscriber, method, parameters.length == 1);
                         }
                     }
                 }
             }
         }
 
-        private void addSubscriber(Class<?> eventType, Object subscriber, Method method) {
+        private void addSubscriber(Class<?> eventType, Object subscriber, Method method, boolean asParameter) {
             if (!method.canAccess(subscriber)) {
                 try {
                     method.setAccessible(true);
@@ -84,7 +84,11 @@ class BusInjector {
             this.subscribers.computeIfAbsent(eventType, type -> new ArrayList<>())
                     .add(event -> {
                         try {
-                            method.invoke(subscriber, event);
+                            if (asParameter) {
+                                method.invoke(subscriber, event);
+                            } else {
+                                method.invoke(subscriber);
+                            }
                         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                             throw new RuntimeException("The method '" + method.getName() + "' failed to handle the event '" + event + "'", e);
                         }
