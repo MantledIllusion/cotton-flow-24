@@ -1,1 +1,2 @@
 com.mantledillusion.vaadin.cotton.router.CottonReRouter
+com.mantledillusion.vaadin.cotton.metrics.CottonMetricsTrailSupport

@@ -130,6 +130,10 @@
 			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-i18n</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>com.mantledillusion.vaadin</groupId>
+            <artifactId>cotton-metrics</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>com.mantledillusion.vaadin</groupId>
 			<artifactId>cotton-responsive</artifactId>

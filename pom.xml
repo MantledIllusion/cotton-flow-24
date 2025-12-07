@@ -15,6 +15,7 @@
 
 		<epiphy.version>4.0.0</epiphy.version>
 		<expression-essentials.version>1.0.0</expression-essentials.version>
+        <trail-metrics.version>2.4.1</trail-metrics.version>
 		<yauaa.version>7.26.1</yauaa.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -238,6 +239,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mantledillusion.vaadin</groupId>
+				<artifactId>cotton-metrics</artifactId>
+				<version>${cotton.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mantledillusion.vaadin</groupId>
 				<artifactId>cotton-responsive</artifactId>
 				<version>${cotton.version}</version>
 			</dependency>
@@ -296,6 +302,7 @@
 		<module>cotton-data</module>
 		<module>cotton-eventbus</module>
 		<module>cotton-i18n</module>
+		<module>cotton-metrics</module>
 		<module>cotton-responsive</module>
 		<module>cotton-responsive-yauaa</module>
 		<module>cotton-server</module>
