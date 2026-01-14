@@ -2,11 +2,10 @@ package com.mantledillusion.vaadin.cotton.router;
 
 import com.mantledillusion.vaadin.cotton.auth.Authorization;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterListener;
-import com.vaadin.flow.router.NavigationState;
-import com.vaadin.flow.router.RouteAccessDeniedError;
+import com.vaadin.flow.router.*;
+import org.apache.commons.lang3.reflect.TypeUtils;
 
+import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
 
 /**
@@ -19,15 +18,32 @@ import java.util.Arrays;
  */
 public class RoleReRouter implements BeforeEnterListener {
 
+    @SuppressWarnings("rawtypes")
+    private static final TypeVariable<Class<HasErrorParameter>> HAS_ERROR_PARAMETER_EXCEPTION_TYPE_VARIABLE = HasErrorParameter.class.getTypeParameters()[0];
+
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         // DETERMINE WHETHER
-        if (event.getNavigationTarget().equals(RouteAccessDeniedError.class)) {
+        if (isHasErrorParameterAccessDenied(event.getNavigationTarget())) {
             event.getSource().resolveNavigationTarget(event.getLocation())
                     .map(NavigationState::getNavigationTarget)
                     .filter(target -> target.isAnnotationPresent(Reroute.class))
                     .map(target -> target.getAnnotation(Reroute.class))
                     .ifPresent(reroute -> reroute(event, reroute));
+        }
+    }
+
+    private boolean isHasErrorParameterAccessDenied(Class<?> navigationTarget) {
+        // CHECK WHETHER THE NAVIGATION TARGET IMPLEMENTS HasErrorParameter ...
+        if (TypeUtils.isAssignable(navigationTarget, HasErrorParameter.class)) {
+            // ... AND IF THE IMPLEMENTED GENERIC PARAMETERS ...
+            var hasErrorParameterTypeArguments = TypeUtils.getTypeArguments(navigationTarget, HasErrorParameter.class);
+            // ... FOR HasErrorParameter's EXCEPTION TYPE VARIABLE ...
+            var hasErrorParameterExceptionType = hasErrorParameterTypeArguments.get(HAS_ERROR_PARAMETER_EXCEPTION_TYPE_VARIABLE);
+            // ... IS ASSIGNABLE TO AccessDeniedException
+            return TypeUtils.isAssignable(hasErrorParameterExceptionType, AccessDeniedException.class);
+        } else {
+            return false;
         }
     }
 
