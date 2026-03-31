@@ -2,7 +2,6 @@ package com.mantledillusion.vaadin.cotton.model;
 
 import com.mantledillusion.essentials.expression.Expression;
 import com.mantledillusion.vaadin.cotton.auth.Authorization;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -12,7 +11,9 @@ import java.util.stream.Stream;
 
 class Auditor {
 
-    private final Map<Binding.AccessMode, Pair<Boolean, Expression<String>>> audits;
+    private record Audit(Boolean requiresAuthentication, Expression<String> rightExpression) {}
+
+    private final Map<Binding.AccessMode, Audit> audits;
     private Supplier<Binding.AuditMode> auditModeSupplier = () -> Binding.AuditMode.GENEROUS;
 
     Auditor(Auditor baseAuditor) {
@@ -34,15 +35,15 @@ class Auditor {
         if (mode == null) {
             throw new IllegalArgumentException("Cannot append a null access mode");
         }
-        this.audits.put(mode, Pair.of(requiresAuthentication, rightExpression));
+        this.audits.put(mode, new Audit(requiresAuthentication, rightExpression));
     }
 
     Binding.AccessMode audit() {
         Binding.AuditMode auditMode = this.auditModeSupplier.get();
 
         return this.audits.entrySet().stream()
-                .flatMap(entry -> !entry.getValue().getLeft()
-                        || Optional.ofNullable(entry.getValue().getRight())
+                .flatMap(entry -> !entry.getValue().requiresAuthentication
+                        || Optional.ofNullable(entry.getValue().rightExpression)
                             .map(Authorization::isPermitted)
                             .orElse(Authorization.isPermitted())
                                 ? Stream.of(entry.getKey())

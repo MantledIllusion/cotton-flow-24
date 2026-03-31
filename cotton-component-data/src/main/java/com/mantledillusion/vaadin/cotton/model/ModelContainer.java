@@ -17,7 +17,6 @@ import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.server.VaadinSessionState;
 import com.vaadin.flow.shared.Registration;
-import org.apache.commons.lang3.ObjectUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -59,7 +58,7 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 	 * @param context The {@link Context} to use, might be null.
 	 */
 	public ModelContainer(Context context) {
-        this.context = ObjectUtils.defaultIfNull(context, Context.EMPTY);
+        this.context = Optional.ofNullable(context).orElse(Context.EMPTY);
     }
 
 	// ######################################################################################################################################
@@ -476,7 +475,7 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 
 		Consumer<Binding<FieldValueType>> registration = removeBinding(property);
 		Procedure valueReader = () -> hasValue
-				.setValue(ObjectUtils.defaultIfNull(this.get(property), hasValue.getEmptyValue()));
+				.setValue(Optional.ofNullable(this.get(property)).orElse(hasValue.getEmptyValue()));
 		Procedure valueWriter;
 		if (property.isWritable()) {
 			valueWriter = () -> this.set(property, hasValue.getValue());
@@ -514,7 +513,7 @@ public class ModelContainer<ModelType> implements AuditingConfigurer<ModelContai
 
 		Consumer<Binding<FieldValueType>> registration = removeBinding(property);
 		Procedure valueReader = () -> hasValue.setValue(
-				ObjectUtils.defaultIfNull(converter.toField(this.get(property)), hasValue.getEmptyValue()));
+				Optional.ofNullable(converter.toField(this.get(property))).orElse(hasValue.getEmptyValue()));
 		Procedure valueWriter;
 		if (property.isWritable()) {
 			valueWriter = () -> this.set(property, converter.toProperty(hasValue.getValue()));

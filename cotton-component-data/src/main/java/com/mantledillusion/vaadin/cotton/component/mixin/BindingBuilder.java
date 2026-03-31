@@ -7,7 +7,6 @@ import com.mantledillusion.vaadin.cotton.component.Configurer;
 import com.mantledillusion.vaadin.cotton.model.AuditingConfigurer;
 import com.mantledillusion.vaadin.cotton.model.Binding;
 import com.vaadin.flow.component.Component;
-import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +19,12 @@ import java.util.function.Function;
  */
 public class BindingBuilder<C, V, B extends ConfigurationBuilder<C, B>> implements Configurer<C>, AuditingConfigurer<BindingBuilder<C, V, B>> {
 
+    private record Auditor(Binding.AccessMode accessMode, Boolean requiresLogin, Expression<String> rightExpression) {}
+
     private final ConfigurationCustomizer<BindingBuilder<C, V, B>> customizer;
     private final Function<C, Binding<V>> bindingCallback;
 
-    private final List<Triple<Binding.AccessMode, Boolean, Expression<String>>> bindingAuditors = new ArrayList<>();
+    private final List<Auditor> bindingAuditors = new ArrayList<>();
     private V maskedValue;
 
     BindingBuilder(ConfigurationCustomizer<BindingBuilder<C, V, B>> customizer, Function<C, Binding<V>> bindingCallback) {
@@ -36,12 +37,12 @@ public class BindingBuilder<C, V, B extends ConfigurationBuilder<C, B>> implemen
         customizer.customize(this);
         Binding<V> binding = this.bindingCallback.apply(component)
                 .withMaskedValue(this.maskedValue);
-        this.bindingAuditors.forEach(auditor -> binding.setAudit(auditor.getLeft(), auditor.getMiddle(), auditor.getRight()));
+        this.bindingAuditors.forEach(auditor -> binding.setAudit(auditor.accessMode, auditor.requiresLogin, auditor.rightExpression));
     }
 
     @Override
     public BindingBuilder<C, V, B> setAudit(Binding.AccessMode mode, boolean requiresLogin, Expression<String> rightExpression) {
-        this.bindingAuditors.add(Triple.of(mode, requiresLogin, rightExpression));
+        this.bindingAuditors.add(new Auditor(mode, requiresLogin, rightExpression));
         return this;
     }
 

@@ -3,7 +3,6 @@ package com.mantledillusion.vaadin.cotton.metrics;
 import com.mantledillusion.metrics.trail.MetricsTrail;
 import com.mantledillusion.metrics.trail.MetricsTrailSupport;
 import com.vaadin.flow.server.*;
-import org.apache.commons.lang3.BooleanUtils;
 
 public class CottonMetricsTrailSupport implements VaadinServiceInitListener, SessionDestroyListener, VaadinRequestInterceptor {
 
@@ -42,7 +41,7 @@ public class CottonMetricsTrailSupport implements VaadinServiceInitListener, Ses
     public void sessionDestroy(SessionDestroyEvent event) {
         VaadinSession session = event.getSession();
         session.lock();
-        if (BooleanUtils.isFalse((Boolean) session.getAttribute(FOREIGN_TRAIL))) {
+        if (session.getAttribute(FOREIGN_TRAIL) == Boolean.FALSE) {
             MetricsTrailSupport.end(session.getAttribute(MetricsTrail.class));
         }
         session.unlock();
@@ -52,7 +51,7 @@ public class CottonMetricsTrailSupport implements VaadinServiceInitListener, Ses
     public void requestEnd(VaadinRequest request, VaadinResponse response, VaadinSession session) {
         if (MetricsTrailSupport.has()) {
             WrappedSession wrappedSession = request.getWrappedSession();
-            if (BooleanUtils.isFalse((Boolean) wrappedSession.getAttribute(FOREIGN_TRAIL))) {
+            if (wrappedSession.getAttribute(FOREIGN_TRAIL) == Boolean.FALSE) {
                 MetricsTrailSupport.release();
             }
         }

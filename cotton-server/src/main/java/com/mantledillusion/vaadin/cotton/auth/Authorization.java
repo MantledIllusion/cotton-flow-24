@@ -147,6 +147,9 @@ public class Authorization {
      * @return A set of roles a {@link Principal} has to apply to, never null, might be empty
      */
     public static Set<String> getPermissions(Class<?> type) {
-        return Set.of(type.getAnnotation(RolesAllowed.class).value());
+        return Optional.ofNullable(type.getAnnotation(RolesAllowed.class))
+                .map(RolesAllowed::value)
+                .map(Set::of)
+                .orElse(Set.of());
     }
 }
