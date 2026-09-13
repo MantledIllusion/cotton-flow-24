@@ -50,8 +50,8 @@ public class CottonMetricsTrailSupport implements VaadinServiceInitListener, Ses
     @Override
     public void requestEnd(VaadinRequest request, VaadinResponse response, VaadinSession session) {
         if (MetricsTrailSupport.has()) {
-            WrappedSession wrappedSession = request.getWrappedSession();
-            if (wrappedSession.getAttribute(FOREIGN_TRAIL) == Boolean.FALSE) {
+            WrappedSession wrappedSession = request.getWrappedSession(false);
+            if (wrappedSession != null && wrappedSession.getAttribute(FOREIGN_TRAIL) == Boolean.FALSE) {
                 MetricsTrailSupport.release();
             }
         }
