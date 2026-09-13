@@ -16,7 +16,7 @@
 		<epiphy.version>4.0.0</epiphy.version>
 		<expression-essentials.version>1.0.0</expression-essentials.version>
         <trail-metrics.version>2.5.0</trail-metrics.version>
-		<yauaa.version>7.26.1</yauaa.version>
+		<yauaa.version>8.2.0</yauaa.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
